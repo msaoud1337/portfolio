@@ -1,0 +1,106 @@
+{
+  "name": "expresso_extention",
+  "version": "3.8.0",
+  "license": "MIT",
+  "engines": {
+    "yarn": ">=1.22.0",
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "build-stats": "cross-env ANALYZE=true npm run build",
+    "export": "next export",
+    "build-prod": "run-s clean build export",
+    "clean": "rimraf .next out",
+    "lint": "next lint",
+    "format": "next lint --fix && prettier '**/*.{json,yaml}' --write --ignore-path .gitignore",
+    "check-types": "tsc --noEmit --pretty",
+    "commit": "cz",
+    "prepare": "husky install",
+    "postbuild": "next-sitemap"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
+    "@iconify/icons-eva": "^1.2.6",
+    "@iconify/react": "^4.1.0",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/lab": "^5.0.0-alpha.132",
+    "@mui/material": "^5.13.3",
+    "formik": "^2.4.2",
+    "framer-motion": "^10.16.4",
+    "next": "^13.2.1",
+    "next-seo": "^5.15.0",
+    "next-sitemap": "^4.0.2",
+    "notistack": "^3.0.1",
+    "numeral": "^2.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/cz-commitlint": "^17.4.4",
+    "@next/bundle-analyzer": "^13.2.1",
+    "@next/env": "^13.2.3",
+    "@semantic-release/changelog": "^6.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.14.1",
+    "@types/numeral": "^2.0.2",
+    "@types/react": "^18.0.28",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "autoprefixer": "^10.4.13",
+    "commitizen": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "^13.2.1",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.3",
+    "inquirer": "^8.0.0",
+    "lint-staged": "^13.1.2",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.4",
+    "rimraf": "^4.1.2",
+    "semantic-release": "^20.1.1",
+    "typescript": "^4.9.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  }
+}

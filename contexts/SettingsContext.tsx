@@ -58,7 +58,6 @@ const PRIMARY_COLOR = [
 ];
 
 function SetColor(themeColor: ThemeColor) {
-  let color;
   const DEFAULT = PRIMARY_COLOR[0];
   const PURPLE = PRIMARY_COLOR[1];
   const CYAN = PRIMARY_COLOR[2];
@@ -68,30 +67,24 @@ function SetColor(themeColor: ThemeColor) {
 
   switch (themeColor) {
     case 'purple':
-      color = PURPLE;
-      break;
+      return PURPLE;
     case 'cyan':
-      color = CYAN;
-      break;
+      return CYAN;
     case 'blue':
-      color = BLUE;
-      break;
+      return BLUE;
     case 'orange':
-      color = ORANGE;
-      break;
+      return ORANGE;
     case 'red':
-      color = RED;
-      break;
+      return RED;
     default:
-      color = DEFAULT;
+      return DEFAULT;
   }
-  return color;
 }
 
 const initialState: SettingsContextProps = {
-  themeMode: 'light',
+  themeMode: 'dark',
   themeDirection: 'ltr',
-  themeColor: 'default',
+  themeColor: 'cyan',
   onChangeMode: () => {},
   onChangeDirection: () => {},
   onChangeColor: () => {},

@@ -22,6 +22,7 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
@@ -32,6 +33,7 @@
     "@mui/material": "^5.13.3",
     "formik": "^2.4.2",
     "framer-motion": "^10.16.4",
+    "lodash": "^4.17.21",
     "next": "^13.2.1",
     "next-seo": "^5.15.0",
     "next-sitemap": "^4.0.2",
@@ -39,6 +41,7 @@
     "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "stylis-plugin-rtl": "^2.1.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {

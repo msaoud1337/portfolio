@@ -1,23 +1,33 @@
 import { useEffect, useState } from 'react';
 
 export default function useLocalStorage<ValueType>(key: string, defaultValue: ValueType) {
+  const isClient = typeof window !== 'undefined';
+
   const [value, setValue] = useState(() => {
-    const storedValue = localStorage.getItem(key);
-    return storedValue === null ? defaultValue : JSON.parse(storedValue);
+    if (isClient) {
+      const storedValue = localStorage.getItem(key);
+      return storedValue === null ? defaultValue : JSON.parse(storedValue);
+    }
+    return defaultValue;
   });
 
   useEffect(() => {
+    if (!isClient) {
+      return;
+    }
+
     const listener = (e: StorageEvent) => {
       if (e.storageArea === localStorage && e.key === key) {
         setValue(e.newValue ? JSON.parse(e.newValue) : e.newValue);
       }
     };
+
     window.addEventListener('storage', listener);
 
     return () => {
-      window.removeEventListener('storage', listener);
+      return window.removeEventListener('storage', listener);
     };
-  }, [key, defaultValue]);
+  }, [isClient, key, defaultValue]);
 
   const setValueInLocalStorage = (newValue: ValueType) => {
     setValue((currentValue: any) => {

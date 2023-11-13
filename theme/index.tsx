@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 
 import useSettings from '../hooks/useSettings';
 import breakpoints from './breakpoints';
+import ComponentsOverrides from './overrides';
 import palette from './palette';
 import shadows, { customShadows } from './shadows';
 import shape from './shape';
@@ -33,7 +34,7 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
   );
 
   const theme = createTheme(themeOptions);
-  // theme.components = componentsOverride(theme);
+  theme.components = ComponentsOverrides(theme);
 
   return (
     <StyledEngineProvider injectFirst>

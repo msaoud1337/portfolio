@@ -35,6 +35,8 @@ declare module '@mui/material/styles/createPalette' {
 declare module '@mui/material' {
   interface Color {
     0: string;
+    1000: string;
+    1000_8: string;
     500_8: string;
     500_12: string;
     500_16: string;
@@ -100,6 +102,8 @@ const GREY = {
   700: '#454F5B',
   800: '#212B36',
   900: '#161C24',
+  1000: '#0F1924',
+  1000_8: alpha('#0F1924', 0.08),
   500_8: alpha('#919EAB', 0.08),
   500_12: alpha('#919EAB', 0.12),
   500_16: alpha('#919EAB', 0.16),
@@ -149,8 +153,8 @@ const palette = {
   },
   dark: {
     ...COMMON,
-    text: { primary: '#fff', secondary: GREY[500], disabled: GREY[600], red: 'red' },
-    background: { paper: GREY[800], default: GREY[900], neutral: GREY[500_16] },
+    text: { primary: '#fff', secondary: GREY[400], disabled: GREY[600] },
+    background: { paper: GREY[1000], default: GREY[900], neutral: GREY[1000_8] },
     action: { active: GREY[500], ...COMMON.action },
   },
 };

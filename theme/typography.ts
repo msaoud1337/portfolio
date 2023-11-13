@@ -2,6 +2,23 @@ function pxToRem(value: number) {
   return `${value / 16}rem`;
 }
 
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    paragraph: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    paragraph?: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    paragraph: true;
+  }
+}
+
 function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: number }) {
   return {
     '@media (min-width:600px)': {
@@ -16,7 +33,7 @@ function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg: numbe
   };
 }
 
-const FONT_PRIMARY = 'Public Sans, sans-serif'; // Google Font
+const FONT_PRIMARY = 'Poppins, sans-serif'; // Google Font
 
 const typography = {
   fontFamily: FONT_PRIMARY,
@@ -76,6 +93,11 @@ const typography = {
   body2: {
     lineHeight: 22 / 14,
     fontSize: pxToRem(14),
+  },
+  paragraph: {
+    lineHeight: 2,
+    fontSize: pxToRem(15),
+    fontWeight: 300,
   },
   caption: {
     lineHeight: 1.5,

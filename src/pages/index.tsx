@@ -1,16 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  Grid,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from '@mui/material';
+import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import ResumeArticle from 'components/ResumeArticle';
 import MainLayout from 'layouts/MainLayout';
 import { type ReactElement, useState } from 'react';
 
@@ -22,7 +12,7 @@ const Article = () => {
   const [value, setValue] = useState('About');
 
   const TAB_CONFIG = [
-    { value: 'About', element: <></> },
+    { value: 'About', element: <ResumeArticle /> },
     { value: 'Resume', element: <></> },
     { value: 'Science', element: <></> },
     { value: 'Project', element: <></> },
@@ -37,7 +27,7 @@ const Article = () => {
       allowScrollButtonsMobile
       onChange={(_, newValue) => setValue(newValue)}
       sx={{
-        backgroundColor: 'background.neutral',
+        backgroundColor: (theme) => theme.palette.background.neutral,
         borderRadius: { xs: 'unset', sm: '0 0 0 18px' },
       }}
     >
@@ -56,38 +46,32 @@ const Article = () => {
             flexDirection: { xs: 'column-reverse', sm: 'row', justifyContent: 'space-between' },
           }}
         >
-          <Typography px={4.8} pt={4} variant="h4">
+          <Typography
+            px={4.8}
+            py={4}
+            variant="h4"
+            sx={{
+              position: 'relative',
+              '&.MuiTypography-root::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: 0,
+                left: 38.4,
+                width: '40px',
+                height: '5px',
+                borderRadius: '3px',
+                backgroundColor: 'primary.main',
+              },
+            }}
+          >
             {value}
           </Typography>
           {tabs}
         </Box>
-        <Box px={4.8}>
-          <Typography variant="paragraph" color={'text.secondary'}>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en
-            page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis
-            les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour
-            réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq
-            siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu
-            n'en
-          </Typography>
-        </Box>
-        <Box px={4.8} pt={2}>
-          <Typography variant="h4" mb={2}>
-            Currently involved in:
-          </Typography>
-          <Card>
-            <Box bgcolor={'background.neutral'}>
-              <CardHeader title="Search for an internship"></CardHeader>
-              <CardContent>
-                <Typography variant="paragraph" color={(theme) => theme.palette.grey[300]}>
-                  Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise
-                  en page avant impression. Le Lorem Ipsum est le faux texte standard de
-                  l'imprimerie depuis les anné...
-                </Typography>
-              </CardContent>
-            </Box>
-          </Card>
-        </Box>
+        {TAB_CONFIG.map((tab) => {
+          const isMatchedValue = tab.value === value;
+          return isMatchedValue && <Box>{tab.element}</Box>;
+        })}
       </Stack>
     </Card>
   );
@@ -97,10 +81,10 @@ function Index() {
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 } }}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <SideBarConfig />
         </Grid>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={12} sm={12} md={9}>
           <Article />
         </Grid>
       </Grid>

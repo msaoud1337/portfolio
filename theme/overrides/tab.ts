@@ -5,6 +5,7 @@ export default function Tabs(theme: Theme) {
     MuiTabs: {
       styleOverrides: {
         root: {
+          // backgroundColor: theme.palette.mode === 'dark' ? '#1b252f' : 'unset',
           paddingInline: theme.spacing(4),
           borderBottom: `1px solid ${theme.palette.divider}`,
           borderLeft: `1px solid ${theme.palette.divider}`,

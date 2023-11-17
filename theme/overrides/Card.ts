@@ -8,6 +8,8 @@ export default function Card(theme: Theme) {
           boxShadow: theme.customShadows.z16,
           borderRadius: theme.shape.borderRadiusSm,
           border: `1px solid ${theme.palette.divider}`,
+          backgroundImage: 'unset',
+          backgroundColor: theme.palette.background.neutral,
         },
       },
     },

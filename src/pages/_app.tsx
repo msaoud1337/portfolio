@@ -1,6 +1,7 @@
 import '@/styles/global.css';
 
 import RtlLayout from 'components/RltLayout';
+import SnackbarOverride from 'components/snackbarOverride';
 import ThemePrimaryColor from 'components/TeamPrimaryColor';
 import { SettingsProvider } from 'contexts/SettingsContext';
 import type { NextPage } from 'next';
@@ -22,7 +23,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <SettingsProvider>
       <ThemeProvider>
         <ThemePrimaryColor>
-          <RtlLayout>{getLayout(<Component {...pageProps} />)}</RtlLayout>
+          <RtlLayout>
+            <SnackbarOverride>{getLayout(<Component {...pageProps} />)}</SnackbarOverride>
+          </RtlLayout>
         </ThemePrimaryColor>
       </ThemeProvider>
     </SettingsProvider>

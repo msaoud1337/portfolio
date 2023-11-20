@@ -8,13 +8,18 @@ import {
   SvgIcon,
   Tooltip,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { aboutMeText, internShipText } from '@/utils/texts';
 
-import DialogSlide from './dialog';
+import DialogSlide from '../dialog';
+
+const MOBILEICONSIZE = '29px';
+const DESKTOPICONSIZE = '35px';
 
 const array = [
   { href: '/js.svg', title: 'javascript' },
@@ -65,8 +70,15 @@ type CardsProps = {
 };
 
 const Cards = ({ text, icon, title }: CardsProps) => {
+  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
   const [maxHeight, setMaxHeight] = useState<number | string>('60px');
   const [nbline, setnbline] = useState<number | string>(2);
+
+  useLayoutEffect(() => {
+    if (isMobile) {
+      setMaxHeight('120px');
+    } else setMaxHeight('60px');
+  }, [isMobile]);
 
   return (
     <Card
@@ -93,10 +105,19 @@ const Cards = ({ text, icon, title }: CardsProps) => {
         animate={{ height: maxHeight }}
         exit={{ height: maxHeight }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        sx={{ display: 'flex' }}
+        sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}
         color={'primary.main'}
       >
-        <SvgIcon sx={{ mr: 1 }} fontSize="large" color={'inherit'}>
+        <SvgIcon
+          sx={{
+            mr: 1,
+            mb: 1,
+            height: { xs: MOBILEICONSIZE, sm: DESKTOPICONSIZE },
+            width: { xs: MOBILEICONSIZE, sm: DESKTOPICONSIZE },
+          }}
+          fontSize="large"
+          color={'inherit'}
+        >
           {icon}
         </SvgIcon>
         <Box>
@@ -122,12 +143,11 @@ const Cards = ({ text, icon, title }: CardsProps) => {
 
 export default function ResumeArticle() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const INTERSTINGS = [
     {
       title: 'FrontEnd Web Dev',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="190px" height="190px" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <g fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0l-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234" />
             <path
@@ -145,7 +165,7 @@ export default function ResumeArticle() {
     {
       title: 'Mobile Dev',
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="190" height="190" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
             <path strokeLinejoin="round" d="m12 19.01l.01-.011" />
             <path d="M18 18v3.4a.6.6 0 0 1-.6.6H6.6a.6.6 0 0 1-.6-.6V18M18 6V2.6a.6.6 0 0 0-.6-.6H6.6a.6.6 0 0 0-.6.6V6" />

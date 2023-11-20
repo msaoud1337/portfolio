@@ -1,16 +1,27 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
-import ResumeArticle from 'components/ResumeArticle';
+import ResumeArticle from 'components/tabs/ResumeArticle';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
-import { type ReactElement, useState } from 'react';
+import dynamic from 'next/dynamic';
+import type { Dispatch, ReactElement, SetStateAction } from 'react';
+import { useState } from 'react';
 
-const Article = () => {
-  const [value, setValue] = useState('About');
+type Props = {
+  value: string;
+  setValue: Dispatch<SetStateAction<string>>;
+};
 
+const Article = ({ value, setValue }: Props) => {
+  const FeedBackSsr = dynamic(
+    import('../../components/tabs/cv/CvPart').then((res) => res.default),
+    {
+      ssr: false,
+    }
+  );
   const TAB_CONFIG = [
     { value: 'About', element: <ResumeArticle /> },
-    { value: 'Resume', element: <></> },
+    { value: 'Resume', element: <FeedBackSsr /> },
     { value: 'Science', element: <></> },
     { value: 'Project', element: <></> },
     { value: 'Contact', element: <></> },
@@ -75,15 +86,17 @@ const Article = () => {
 };
 
 function Index() {
+  const [value, setValue] = useState('Resume');
+
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={3}>
-            <SideBarConfig />
+            <SideBarConfig value={value} />
           </Grid>
           <Grid item xs={12} sm={12} md={9}>
-            <Article />
+            <Article value={value} setValue={setValue} />
           </Grid>
         </Grid>
       </Box>

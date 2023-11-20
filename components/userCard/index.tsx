@@ -168,14 +168,22 @@ const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
   );
 };
 
-export default function SideBarConfig() {
-  const [components, setComponents] = useState<any>([]);
-  const [stackHeight, setStackHeight] = useState(0);
+type SideBarConfigProps = {
+  value: string;
+};
+
+export default function SideBarConfig({ value }: SideBarConfigProps) {
+  const [components, setComponents] = useState<JSX.Element[]>([]);
   const theme = useTheme();
   const stackRef = useRef<HTMLDivElement>(null);
+  const accordionRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
   const isMobileOrTabllet = !isDesktop;
   const [isOpenAccordion, setAccordion] = useState(false);
+  const [elementsHeight, setElementsHeight] = useState({
+    stack: 0,
+    accordion: 0,
+  });
 
   const userAvatar = (
     <Box
@@ -214,7 +222,7 @@ export default function SideBarConfig() {
           />
         </path>
       </svg>
-      <ImageBox src="me.png" />
+      <ImageBox src="/me.png" />
     </Box>
   );
 
@@ -251,13 +259,19 @@ export default function SideBarConfig() {
     </motion.div>
   );
 
-  const downloadButton = (
-    <Stack justifyContent={'center'}>
-      <Button sx={{ m: 'auto' }} variant="contained" endIcon={<CloudDownloadIcon />}>
-        Download cv
-      </Button>
-    </Stack>
-  );
+  const downloadButton =
+    value === 'Resume' ? (
+      <motion.div key={'190'} {...varFadeInUp}>
+        <Divider key={2} component={motion.div} {...varFadeInUp} sx={{ pt: 2, mb: 3 }} />
+        <Stack justifyContent={'center'}>
+          <Button sx={{ m: 'auto' }} variant="contained" endIcon={<CloudDownloadIcon />}>
+            Download cv
+          </Button>
+        </Stack>
+      </motion.div>
+    ) : (
+      <></>
+    );
 
   const componentsArray = useMemo(() => {
     const userLinks = userLinksConfig(theme.palette.primary.main).map((item, id) => (
@@ -287,10 +301,6 @@ export default function SideBarConfig() {
       </Stack>,
       <Divider key={1} component={motion.div} {...varFadeInUp} sx={{ mb: 2 }} />,
       ...userLinks,
-      <Divider key={2} component={motion.div} {...varFadeInUp} sx={{ pt: 2, mb: 3 }} />,
-      <motion.div key={3} {...varFadeInUp}>
-        {downloadButton}
-      </motion.div>,
     ];
   }, [theme.palette.primary.main]);
 
@@ -317,19 +327,25 @@ export default function SideBarConfig() {
           </Stack>
         </motion.div>
       </AccordionSummary>
-      <AccordionDetails sx={{ py: 2 }}>
-        {userLinksConfig(theme.palette.primary.main).map((item, id) => (
-          <UserLinks
-            key={id}
-            tooltip={item.tooltip}
-            title={item.title}
-            name={item.name}
-            icon={item.icon}
-            href={item.href}
-          />
-        ))}
-        <Divider component={motion.div} {...varFadeInUp} sx={{ mb: 3 }} />
-        {downloadButton}
+      <AccordionDetails ref={accordionRef} sx={{ py: 2 }}>
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{ height: elementsHeight.accordion }}
+          exit={{ height: 0 }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
+        >
+          {userLinksConfig(theme.palette.primary.main).map((item, id) => (
+            <UserLinks
+              key={id}
+              tooltip={item.tooltip}
+              title={item.title}
+              name={item.name}
+              icon={item.icon}
+              href={item.href}
+            />
+          ))}
+          {downloadButton}
+        </motion.div>
       </AccordionDetails>
     </Accordion>
   );
@@ -337,7 +353,7 @@ export default function SideBarConfig() {
   useEffect(() => {
     const addComponentWithDelay = async () => {
       for (const element of componentsArray) {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         setComponents((prevState: any) =>
           !prevState.includes(element) ? [...prevState, element] : [...prevState]
         );
@@ -347,10 +363,29 @@ export default function SideBarConfig() {
     addComponentWithDelay();
   }, [isDesktop]);
 
+  useEffect(() => {
+    if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
+      setComponents((prev) => [...prev, downloadButton]);
+    } else if (value !== 'Resume' && components.some((component) => component?.key === '190')) {
+      setComponents((prev) => prev.filter((component) => component?.key !== '190'));
+    }
+  }, [value]);
+
   useLayoutEffect(() => {
+    console.log(stackRef.current?.offsetHeight, accordionRef, components.length);
+    if (isOpenAccordion) setAccordion(false);
     const updateStackHeight = () => {
       const newHeight = stackRef.current?.offsetHeight || 0;
-      setStackHeight(newHeight);
+      setElementsHeight({ ...elementsHeight, stack: newHeight });
+      if (accordionRef.current) {
+        if (value !== 'Resume')
+          setElementsHeight({
+            ...elementsHeight,
+            accordion: 276 - 32,
+          });
+        // 32 for the padding top and bottom
+        else setElementsHeight({ ...elementsHeight, accordion: 353 - 32 }); // 32 for the padding top and bottom
+      }
     };
 
     updateStackHeight();
@@ -360,12 +395,12 @@ export default function SideBarConfig() {
     return () => {
       window.removeEventListener('resize', updateStackHeight);
     };
-  }, [stackRef.current?.offsetHeight]);
+  }, [stackRef.current?.offsetHeight, accordionRef, components.length]);
 
   const desktopCard = isDesktop && (
     <motion.div
       initial={{ height: 0 }}
-      animate={{ height: stackHeight }}
+      animate={{ height: elementsHeight.stack }}
       exit={{ height: 0 }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >

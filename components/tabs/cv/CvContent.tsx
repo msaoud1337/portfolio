@@ -12,11 +12,21 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 const PdfViewer = () => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   return (
-    <Box sx={{ height: '100vh' }}>
+    <Box
+      sx={{
+        height: '100vh',
+        '& .rpv-default-layout__toolbar, & .rpv-default-layout__sidebar-headers': {
+          backgroundColor: 'background.neutral',
+          color: 'text.primary',
+        },
+        '.rpv-core__minimal-button': { color: 'white' },
+      }}
+    >
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.10.111/build/pdf.worker.min.js">
         <Viewer fileUrl={'/my-cv.pdf'} plugins={[defaultLayoutPluginInstance]} />
       </Worker>
     </Box>
   );
 };
+
 export default PdfViewer;

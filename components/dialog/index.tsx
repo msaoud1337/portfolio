@@ -23,7 +23,6 @@ type DialogProps = {
   isFullScreen?: true;
 };
 export default function DialogSlide({ content, onClose, isOpen, isFullScreen }: DialogProps) {
-  console.log('isOpen');
   return (
     <React.Fragment>
       <Dialog
@@ -47,7 +46,11 @@ export default function DialogSlide({ content, onClose, isOpen, isFullScreen }: 
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">{content}</DialogContentText>
+          {typeof content === 'string' ? (
+            <DialogContentText id="alert-dialog-slide-description">{content}</DialogContentText>
+          ) : (
+            content
+          )}
         </DialogContent>
       </Dialog>
     </React.Fragment>

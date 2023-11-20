@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import DialogSlide from 'components/dialog';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
@@ -14,6 +14,9 @@ export default function MyCvPDF() {
   const [open, setOpen] = useState(true);
   return (
     <>
+      <Box>
+        <PDFGenerator />
+      </Box>
       <Button variant="contained" onClick={() => setOpen(true)}>
         open
       </Button>

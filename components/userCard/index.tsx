@@ -93,7 +93,6 @@ const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
   const handleOpenNewMail = () => {
     if (title === 'EMAIL') window.location.href = 'mailto:medaminesaoud8020@gmail.com';
     if (title === 'PHONE') {
-      console.log('here');
       const tempInput = document.createElement('input');
       tempInput.value = '0617031650';
       document.body.appendChild(tempInput);
@@ -284,7 +283,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
         href={item.href}
       />
     ));
-
     return [
       <Stack
         key={0}
@@ -302,7 +300,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       <Divider key={1} component={motion.div} {...varFadeInUp} sx={{ mb: 2 }} />,
       ...userLinks,
     ];
-  }, [theme.palette.primary.main]);
+  }, [theme]);
 
   const tablettMobileCard = isMobileOrTabllet && (
     <Accordion expanded={isOpenAccordion} onChange={() => setAccordion((prevState) => !prevState)}>
@@ -360,8 +358,9 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       }
     };
 
+    setComponents([]);
     addComponentWithDelay();
-  }, [isDesktop]);
+  }, [isDesktop, theme]);
 
   useEffect(() => {
     if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
@@ -372,7 +371,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   }, [value]);
 
   useLayoutEffect(() => {
-    console.log(stackRef.current?.offsetHeight, accordionRef, components.length);
     if (isOpenAccordion) setAccordion(false);
     const updateStackHeight = () => {
       const newHeight = stackRef.current?.offsetHeight || 0;

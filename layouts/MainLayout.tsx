@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 import type { IMetaProps } from './Meta';
 import { Meta } from './Meta';
+import SideBarLayout from './SideBar.Layout';
 
 type IMainProps = {
   meta: IMetaProps;
@@ -19,7 +20,10 @@ function MainLayout({ meta, children }: IMainProps) {
   return (
     <>
       <Meta {...meta} />
-      <RootStyle>{children}</RootStyle>
+      <RootStyle>
+        <SideBarLayout />
+        {children}
+      </RootStyle>
     </>
   );
 }

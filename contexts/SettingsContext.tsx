@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext } from 'react';
-import type { SettingsContextProps, ThemeColor, ThemeDirection, ThemeMode } from 'types/settings';
+import type { SettingsContextProps, ThemeColor } from 'types/settings';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 import palette from '../theme/palette';
@@ -105,24 +105,24 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     themeColor: initialState.themeColor,
   });
 
-  const onChangeMode = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSettings({
-      ...settings,
-      themeMode: (event.target as HTMLInputElement).value as ThemeMode,
-    });
+  const onChangeMode = (_: React.ChangeEvent<HTMLInputElement>) => {
+    // setSettings({
+    //   ...settings,
+    //   themeMode: (event.target as HTMLInputElement).value as ThemeMode,
+    // });
   };
 
-  const onChangeDirection = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSettings({
-      ...settings,
-      themeDirection: (event.target as HTMLInputElement).value as ThemeDirection,
-    });
+  const onChangeDirection = (_: React.ChangeEvent<HTMLInputElement>) => {
+    // setSettings({
+    //   ...settings,
+    //   themeDirection: (event.target as HTMLInputElement).value as ThemeDirection,
+    // });
   };
 
-  const onChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeColor = (color: ThemeColor) => {
     setSettings({
       ...settings,
-      themeColor: (event.target as HTMLInputElement).value as ThemeColor,
+      themeColor: color as ThemeColor,
     });
   };
 

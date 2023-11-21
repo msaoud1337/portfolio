@@ -13,6 +13,10 @@ export default function ThemePrimaryColor({ children }: ThemePrimaryColorProps) 
   const defaultTheme = useTheme();
   const { setColor } = useSettings();
 
+  console.log('csetCOlor', setColor?.main);
+
+  console.log(defaultTheme.palette.primary.main);
+
   const themeOptions = useMemo(
     () => ({
       ...defaultTheme,

@@ -2,10 +2,10 @@ import '@/styles/global.css';
 
 import RtlLayout from 'components/RltLayout';
 import SnackbarOverride from 'components/snackbarOverride';
-import ThemePrimaryColor from 'components/TeamPrimaryColor';
 import { SettingsProvider } from 'contexts/SettingsContext';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import type { ReactElement, ReactNode } from 'react';
 import ThemeProvider from 'theme';
 
@@ -16,17 +16,23 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const SsrOff = dynamic(
+  import('components/TeamPrimaryColor').then((res) => res.default),
+  {
+    ssr: false,
+  }
+);
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <SettingsProvider>
       <ThemeProvider>
-        <ThemePrimaryColor>
+        <SsrOff>
           <RtlLayout>
             <SnackbarOverride>{getLayout(<Component {...pageProps} />)}</SnackbarOverride>
           </RtlLayout>
-        </ThemePrimaryColor>
+        </SsrOff>
       </ThemeProvider>
     </SettingsProvider>
   );

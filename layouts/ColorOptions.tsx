@@ -33,7 +33,7 @@ type BackgroundType = {
   dark: string;
 };
 
-export default function SideBarLayout() {
+export default function ColorOptions() {
   const { colorOption, themeMode, themeColor, onChangeColor } = useSettings();
 
   const options = colorOption.map((option) => ({

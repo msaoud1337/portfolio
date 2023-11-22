@@ -24,7 +24,7 @@ function MainLayout({ meta, children }: IMainProps) {
   const isVisibleRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const onEnterHandle = () => {
     isVisibleRef.current = true;
@@ -32,12 +32,12 @@ function MainLayout({ meta, children }: IMainProps) {
     setIsVisible(true);
   };
 
-  // if (isVisible) {
-  //   timeoutRef.current = setTimeout(() => {
-  //     isVisibleRef.current = false;
-  //     setIsVisible(false);
-  //   }, 2000);
-  // }
+  if (isVisible) {
+    timeoutRef.current = setTimeout(() => {
+      isVisibleRef.current = false;
+      setIsVisible(false);
+    }, 2000);
+  }
 
   const isVisibleContent = isVisible && (
     <AnimatePresence>
@@ -50,11 +50,6 @@ function MainLayout({ meta, children }: IMainProps) {
             duration: 0.64,
             ease: [0.43, 0.13, 0.23, 0.96],
           },
-        }}
-        exit={{
-          x: -140,
-          opacity: 1,
-          transition: { duration: 0.64, ease: [0.43, 0.13, 0.23, 0.96] },
         }}
       >
         <ThemeSettings />
@@ -73,11 +68,6 @@ function MainLayout({ meta, children }: IMainProps) {
             duration: 0.64,
             ease: [0.43, 0.13, 0.23, 0.96],
           },
-        }}
-        exit={{
-          x: -140,
-          opacity: 1,
-          transition: { duration: 0.64, ease: [0.43, 0.13, 0.23, 0.96] },
         }}
       >
         <Box

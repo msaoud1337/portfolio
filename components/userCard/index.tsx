@@ -204,8 +204,11 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       >
         <defs>
           <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: 'white' }}></stop>
-            <stop offset="100%" style={{ stopColor: theme.palette.primary.main }}></stop>
+            <stop offset="0%" style={{ stopColor: theme.palette.primary.main }}></stop>
+            <stop
+              offset="100%"
+              style={{ stopColor: theme.palette.mode === 'dark' ? 'white' : 'black' }}
+            ></stop>
           </linearGradient>
         </defs>
         <path fill="url(#gradient)">

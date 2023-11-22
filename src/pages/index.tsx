@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import MyProject from 'components/tabs/projects';
 import ResumeArticle from 'components/tabs/ResumeArticle';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
@@ -14,7 +15,7 @@ type Props = {
 
 const Article = ({ value, setValue }: Props) => {
   const FeedBackSsr = dynamic(
-    import('../../components/tabs/cv/CvPart').then((res) => res.default),
+    import('../../components/tabs/cv').then((res) => res.default),
     {
       ssr: false,
     }
@@ -22,8 +23,7 @@ const Article = ({ value, setValue }: Props) => {
   const TAB_CONFIG = [
     { value: 'About', element: <ResumeArticle /> },
     { value: 'Resume', element: <FeedBackSsr /> },
-    { value: 'Science', element: <></> },
-    { value: 'Project', element: <></> },
+    { value: 'Project', element: <MyProject /> },
     { value: 'Contact', element: <></> },
   ];
 
@@ -78,7 +78,13 @@ const Article = ({ value, setValue }: Props) => {
         </Box>
         {TAB_CONFIG.map((tab, id) => {
           const isMatchedValue = tab.value === value;
-          return isMatchedValue && <Box key={id}>{tab.element}</Box>;
+          return (
+            isMatchedValue && (
+              <Box px={4.8} key={id}>
+                {tab.element}
+              </Box>
+            )
+          );
         })}
       </Stack>
     </Card>

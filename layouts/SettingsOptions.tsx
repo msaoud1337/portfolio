@@ -91,6 +91,7 @@ export default function SettingsOptions() {
         bgcolor={'background.neutral'}
         gap={2}
         borderRadius={1}
+        sx={{ boxShadow: (theme) => theme.shadows[12] }}
       >
         <ThemeOptions isDarkMode={isDarkMode} />
         <Divider />

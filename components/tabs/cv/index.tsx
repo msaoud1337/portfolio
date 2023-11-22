@@ -27,7 +27,7 @@ export default function MyCvPDF() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box px={4.75}>
+    <Box>
       <Stack mb={2} direction={'row'} justifyContent={'flex-end'} gap={1}>
         <Button
           onClick={() => setOpen(true)}

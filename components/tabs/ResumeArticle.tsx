@@ -182,7 +182,7 @@ export default function ResumeArticle() {
   return (
     <>
       <AnimatePresence>
-        <Box component={motion.div} {...varFadeInDown} px={4.8} pb={3}>
+        <Box component={motion.div} {...varFadeInDown} pb={3}>
           <Typography variant="paragraph" color={'text.secondary'}>
             {aboutMeText}
           </Typography>

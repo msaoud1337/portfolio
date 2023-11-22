@@ -1,4 +1,5 @@
 import { Box, Card, Stack, Typography } from '@mui/material';
+import DialogSlide from 'components/dialog';
 import { Reorder } from 'framer-motion';
 import { useState } from 'react';
 
@@ -33,20 +34,28 @@ type ProjectCardProps = {
 const ProjectCard = ({ content, imagePath, techs, title }: ProjectCardProps) => {
   return (
     <Card>
-      <Stack flexDirection={'row'}>
-        <Box component={'img'} src={imagePath} sx={{ weight: '100%', width: '200px' }} />
+      <Stack direction={{ xs: 'column', sm: 'row' }}>
+        <Box
+          component={'img'}
+          src={imagePath}
+          sx={{
+            width: { xs: '100%', sm: '200px' },
+            height: { xs: '300px', sm: 'unset' },
+            objectFit: 'cover',
+          }}
+        />
         <Stack p={2} justifyContent={'space-between'}>
           <Typography variant="subtitle1" color={'primary.main'}>
             {title}
           </Typography>
           <Typography
             variant="paragraph"
-            color={'text.primary'}
+            color={'text.secondary'}
             sx={{
               display: '-webkit-box',
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: { xs: 2, sm: 3 },
             }}
           >
             {content}
@@ -85,10 +94,13 @@ const initialItems = Projects.map((project, index) => ({
 export default function MyProject() {
   const [items, setItems] = useState(initialItems);
   return (
-    <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
-      {items.map((item) => (
-        <Item key={item.id} item={item} />
-      ))}
-    </Stack>
+    <>
+      <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
+        {items.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </Stack>
+      <DialogSlide isOpen={false} onClose={() => {}} content={''} />
+    </>
   );
 }

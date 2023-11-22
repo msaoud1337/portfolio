@@ -231,7 +231,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: { xs: 'flex-start', md: 'center' },
+          alignItems: { xs: 'center', md: isMobileOrTabllet ? 'flex-start' : 'center' },
           gap: isMobileOrTabllet ? 1 : 2,
           mb: 2,
         }}
@@ -302,50 +302,61 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
     ];
   }, [theme]);
 
+  const widthRef = useRef<HTMLDivElement | null>(null);
+
   const tablettMobileCard = isMobileOrTabllet && (
-    <Accordion expanded={isOpenAccordion} onChange={() => setAccordion((prevState) => !prevState)}>
-      <AccordionSummary sx={{ backgroundColor: 'background.neutral' }}>
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: 'auto' }}
-          exit={{ height: 0 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
+    <AnimatePresence>
+      <motion.div>
+        <Accordion
+          ref={widthRef}
+          expanded={isOpenAccordion}
+          onChange={() => setAccordion((prevState) => !prevState)}
         >
-          <Stack
-            sx={{
-              flexDirection: { xs: 'row', sm: 'row', md: 'column' },
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              spacing: { xs: 2, sm: 2, md: 2 },
-            }}
-          >
-            {userAvatar}
-            {fullNameSection}
-          </Stack>
-        </motion.div>
-      </AccordionSummary>
-      <AccordionDetails ref={accordionRef} sx={{ py: 2 }}>
-        <motion.div
-          initial={{ height: 0 }}
-          animate={{ height: elementsHeight.accordion }}
-          exit={{ height: 0 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-        >
-          {userLinksConfig(theme.palette.primary.main).map((item, id) => (
-            <UserLinks
-              key={id}
-              tooltip={item.tooltip}
-              title={item.title}
-              name={item.name}
-              icon={item.icon}
-              href={item.href}
-            />
-          ))}
-          {downloadButton}
-        </motion.div>
-      </AccordionDetails>
-    </Accordion>
+          <AccordionSummary sx={{ backgroundColor: 'background.neutral' }}>
+            <motion.div
+              initial={{ height: 0, width: 0 }}
+              animate={{ height: 'auto', width: widthRef.current?.offsetWidth }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+            >
+              <Stack
+                sx={{
+                  flexDirection: { xs: 'row', sm: 'row', md: 'column' },
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  justifyContent: { xs: 'center', sm: 'flex-start' },
+                  spacing: { xs: 2, sm: 2, md: 2 },
+                  // rowGap: { xs : 4, sm: 'unset' }
+                }}
+              >
+                {userAvatar}
+                {fullNameSection}
+              </Stack>
+            </motion.div>
+          </AccordionSummary>
+          <AccordionDetails ref={accordionRef} sx={{ py: 2 }}>
+            <motion.div
+              initial={{ height: 0 }}
+              animate={{ height: elementsHeight.accordion }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+            >
+              {userLinksConfig(theme.palette.primary.main).map((item, id) => (
+                <UserLinks
+                  key={id}
+                  tooltip={item.tooltip}
+                  title={item.title}
+                  name={item.name}
+                  icon={item.icon}
+                  href={item.href}
+                />
+              ))}
+              {downloadButton}
+            </motion.div>
+          </AccordionDetails>
+        </Accordion>
+      </motion.div>
+    </AnimatePresence>
   );
 
   useEffect(() => {
@@ -371,7 +382,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   }, [value]);
 
   useLayoutEffect(() => {
-    if (isOpenAccordion) setAccordion(false);
     const updateStackHeight = () => {
       const newHeight = stackRef.current?.offsetHeight || 0;
       setElementsHeight({ ...elementsHeight, stack: newHeight });
@@ -381,7 +391,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
             ...elementsHeight,
             accordion: 276 - 32,
           });
-        // 32 for the padding top and bottom
         else setElementsHeight({ ...elementsHeight, accordion: 353 - 32 }); // 32 for the padding top and bottom
       }
     };
@@ -413,17 +422,15 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   );
 
   return (
-    <AnimatePresence>
-      <Card
-        sx={{
-          bgcolor: 'background.paper',
-          p: isDesktop ? 2 : 0,
-          pb: isDesktop ? 3 : 0,
-        }}
-      >
-        {tablettMobileCard}
-        {desktopCard}
-      </Card>
-    </AnimatePresence>
+    <Card
+      sx={{
+        bgcolor: 'background.paper',
+        p: isDesktop ? 2 : 0,
+        pb: isDesktop ? 3 : 0,
+      }}
+    >
+      {tablettMobileCard}
+      {desktopCard}
+    </Card>
   );
 }

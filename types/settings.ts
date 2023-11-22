@@ -21,7 +21,7 @@ export type SettingsContextProps = {
     name: string;
     value: string;
   }[];
-  onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeMode: (color: ThemeMode) => void;
   onChangeDirection: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeColor: (color: string) => void;
 };

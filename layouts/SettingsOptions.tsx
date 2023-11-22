@@ -1,4 +1,5 @@
-import { Box, Stack } from '@mui/material';
+import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
+import { Box, Divider, IconButton, Stack, useTheme } from '@mui/material';
 import useSettings from 'hooks/useSettings';
 
 import { getLinearBackgrounds } from '@/utils/themeColors';
@@ -33,12 +34,50 @@ type BackgroundType = {
   dark: string;
 };
 
-export default function ColorOptions() {
+const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
+  const { divider } = useTheme().palette;
+  const { onChangeMode, themeMode } = useSettings();
+  const border = `1px solid ${divider}`;
+
+  const buttonStyle = {
+    height: '45px',
+    width: '45px',
+    ':hover': { transform: 'scale(1.1)', border },
+  };
+
+  const onLightChangeMode = () => {
+    if (themeMode !== 'light') onChangeMode('light');
+  };
+
+  const onDarkChangeMode = () => {
+    if (themeMode === 'light') onChangeMode('dark');
+  };
+
+  return (
+    <Stack gap={2}>
+      <IconButton
+        onClick={onLightChangeMode}
+        sx={{ ...buttonStyle, border: !isDarkMode ? border : 'unset' }}
+      >
+        <SunIcon height={35} width={35} />
+      </IconButton>
+      <IconButton
+        onClick={onDarkChangeMode}
+        sx={{ ...buttonStyle, border: isDarkMode ? border : 'unset', transform: 'scale(1.1)' }}
+      >
+        <MoonIcon height={35} width={35} />
+      </IconButton>
+    </Stack>
+  );
+};
+
+export default function SettingsOptions() {
   const { colorOption, themeMode, themeColor, onChangeColor } = useSettings();
+  const isDarkMode = themeMode === 'dark';
 
   const options = colorOption.map((option) => ({
     ...option,
-    mode: themeMode === 'light' ? 'light' : 'dark',
+    mode: isDarkMode ? 'dark' : 'light',
   }));
 
   const background: BackgroundType[] = getLinearBackgrounds();
@@ -56,6 +95,8 @@ export default function ColorOptions() {
         gap={2}
         borderRadius={1}
       >
+        <ThemeOptions isDarkMode={isDarkMode} />
+        <Divider />
         {options.map((option, index) => (
           <Box key={index} onClick={() => onChangeColor(option.name)}>
             <ColorBox

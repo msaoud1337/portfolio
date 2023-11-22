@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext } from 'react';
-import type { SettingsContextProps, ThemeColor } from 'types/settings';
+import type { SettingsContextProps, ThemeColor, ThemeMode } from 'types/settings';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 import palette from '../theme/palette';
@@ -105,11 +105,11 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     themeColor: initialState.themeColor,
   });
 
-  const onChangeMode = (_: React.ChangeEvent<HTMLInputElement>) => {
-    // setSettings({
-    //   ...settings,
-    //   themeMode: (event.target as HTMLInputElement).value as ThemeMode,
-    // });
+  const onChangeMode = (color: ThemeMode) => {
+    setSettings({
+      ...settings,
+      themeMode: color,
+    });
   };
 
   const onChangeDirection = (_: React.ChangeEvent<HTMLInputElement>) => {

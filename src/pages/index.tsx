@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material';
+import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import ResumeArticle from 'components/tabs/ResumeArticle';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
@@ -45,7 +45,6 @@ const Article = ({ value, setValue }: Props) => {
     </Tabs>
   );
 
-  console.log(useTheme().palette.primary);
   return (
     <Card>
       <Stack spacing={2} bgcolor={'background.paper'}>

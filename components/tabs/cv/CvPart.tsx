@@ -34,6 +34,7 @@ export default function MyCvPDF() {
           endIcon={<EyeIcon height={18} width={18} />}
           size="small"
           variant="contained"
+          sx={{ color: 'primary.contrastText' }}
         >
           Full Page
         </Button>

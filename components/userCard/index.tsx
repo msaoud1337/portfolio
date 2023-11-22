@@ -263,7 +263,11 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       <motion.div key={'190'} {...varFadeInUp}>
         <Divider key={2} component={motion.div} {...varFadeInUp} sx={{ pt: 2, mb: 3 }} />
         <Stack justifyContent={'center'}>
-          <Button sx={{ m: 'auto' }} variant="contained" endIcon={<CloudDownloadIcon />}>
+          <Button
+            sx={{ m: 'auto', color: 'primary.contrastText' }}
+            variant="contained"
+            endIcon={<CloudDownloadIcon />}
+          >
             Download cv
           </Button>
         </Stack>

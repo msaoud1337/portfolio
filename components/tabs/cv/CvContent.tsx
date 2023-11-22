@@ -26,7 +26,7 @@ const PdfViewer = () => {
               backgroundColor: 'background.neutral',
               color: 'text.primary',
             },
-            '.rpv-core__minimal-button': { color: 'white' },
+            '.rpv-core__minimal-button': { color: 'text.primary' },
           }}
         >
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.10.111/build/pdf.worker.min.js">

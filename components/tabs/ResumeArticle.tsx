@@ -259,7 +259,12 @@ export default function ResumeArticle() {
           </Box>
         </Box>
       </AnimatePresence>
-      <DialogSlide content={aboutMeText} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <DialogSlide
+        content={aboutMeText}
+        title="Search for an internship"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
     </>
   );
 }

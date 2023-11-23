@@ -23,6 +23,7 @@ export default function SnackBarOverride({ children }: { children: React.ReactNo
     '&.notistack-MuiContent-success': {
       backgroundColor: theme.palette.background.neutral,
       boxShadow: theme.customShadows.primary,
+      color: theme.palette.text.primary,
     },
   }));
 

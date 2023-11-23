@@ -21,8 +21,15 @@ type DialogProps = {
   isOpen: boolean;
   onClose: VoidFunction;
   isFullScreen?: true;
+  title?: string;
 };
-export default function DialogSlide({ content, onClose, isOpen, isFullScreen }: DialogProps) {
+export default function DialogSlide({
+  content,
+  onClose,
+  isOpen,
+  isFullScreen,
+  title,
+}: DialogProps) {
   return (
     <React.Fragment>
       <Dialog
@@ -34,8 +41,8 @@ export default function DialogSlide({ content, onClose, isOpen, isFullScreen }: 
         aria-describedby="alert-dialog-slide-description"
         fullScreen={isFullScreen || false}
       >
-        <DialogTitle>
-          Search for an internship
+        <DialogTitle mb={!title ? 1 : 0}>
+          {title}
           <IconButton
             edge="end"
             onClick={onClose}

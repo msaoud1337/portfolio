@@ -131,6 +131,7 @@ const DialogContent = ({ dialogContent }: DialongContentProps) => {
 
 export default function MyProject() {
   const [items, setItems] = useState(initialItems);
+  const [isDragging, setIsDragging] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState<UseStateType>({
     dialogContent: undefined,
     isOpen: false,
@@ -140,17 +141,20 @@ export default function MyProject() {
       <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
         {items.map((item) => (
           <Reorder.Item
-            onClick={() =>
-              setIsOpenDialog({
-                dialogContent: {
-                  title: item.title,
-                  techs: item.techs,
-                  contents: item.contentDetails,
-                  description: item.description,
-                },
-                isOpen: true,
-              })
-            }
+            onDragStart={() => setIsDragging(true)}
+            onDragEnd={() => setIsDragging(false)}
+            onClick={() => {
+              if (!isDragging)
+                setIsOpenDialog({
+                  dialogContent: {
+                    title: item.title,
+                    techs: item.techs,
+                    contents: item.contentDetails,
+                    description: item.description,
+                  },
+                  isOpen: true,
+                });
+            }}
             key={item.id}
             as={'div'}
             value={item}

@@ -234,7 +234,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: { xs: 'center', md: isMobileOrTabllet ? 'flex-start' : 'center' },
+          alignItems: { xs: 'flex-start', md: 'center' },
           gap: isMobileOrTabllet ? 1 : 2,
           mb: 2,
         }}
@@ -331,7 +331,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
                   flexDirection: { xs: 'row', sm: 'row', md: 'column' },
                   alignItems: 'center',
                   flexWrap: 'wrap',
-                  justifyContent: { xs: 'center', sm: 'flex-start' },
+                  justifyContent: 'flex-start',
                   spacing: { xs: 2, sm: 2, md: 2 },
                   // rowGap: { xs : 4, sm: 'unset' }
                 }}
@@ -398,7 +398,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
             ...elementsHeight,
             accordion: 276 - 32,
           });
-        else setElementsHeight({ ...elementsHeight, accordion: 353 - 32 }); // 32 for the padding top and bottom
+        else setElementsHeight({ ...elementsHeight, accordion: 353 - 32 });
       }
     };
 
@@ -419,7 +419,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       <Stack ref={stackRef} sx={{ height: 'auto' }}>
-        {components.map((item: any, index: number) => (
+        {components.map((item, index) => (
           <motion.div key={index} {...parentAnimation}>
             {item}
           </motion.div>

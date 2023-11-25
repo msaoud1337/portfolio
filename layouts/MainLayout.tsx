@@ -32,16 +32,20 @@ function MainLayout({ meta, children }: IMainProps) {
     setIsVisible(true);
   };
 
-  if (isVisible) {
-    timeoutRef.current = setTimeout(() => {
-      isVisibleRef.current = false;
-      setIsVisible(false);
-    }, 2000);
-  }
+  const onLeaveHandle = () => {
+    if (isVisible) {
+      timeoutRef.current = setTimeout(() => {
+        isVisibleRef.current = false;
+        setIsVisible(false);
+      }, 2000);
+    }
+  };
 
   const isVisibleContent = isVisible && (
     <AnimatePresence>
       <motion.div
+        onMouseLeave={onLeaveHandle}
+        onMouseEnter={onEnterHandle}
         initial={{ x: -140, opacity: 0 }}
         animate={{
           x: 0,

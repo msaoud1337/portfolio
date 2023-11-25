@@ -8,7 +8,7 @@ export default function Button(theme: Theme) {
       styleOverrides: {
         root: {
           boxShadow: theme.customShadows.primary,
-          color: theme.palette.grey[800],
+          color: theme.palette.primary.contrastText,
           '&:hover': {
             boxShadow: 'none',
             color: theme.palette.text.primary,

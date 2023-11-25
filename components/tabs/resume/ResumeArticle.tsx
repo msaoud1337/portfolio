@@ -16,7 +16,7 @@ import { useLayoutEffect, useState } from 'react';
 
 import { aboutMeText, internShipText } from '@/utils/texts';
 
-import DialogSlide from '../dialog';
+import DialogSlide from '../../dialog';
 
 const MOBILEICONSIZE = '29px';
 const DESKTOPICONSIZE = '35px';

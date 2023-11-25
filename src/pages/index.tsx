@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
+import MyContact from 'components/tabs/contact';
 import MyProject from 'components/tabs/projects';
-import ResumeArticle from 'components/tabs/ResumeArticle';
+import ResumeArticle from 'components/tabs/resume/ResumeArticle';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
 import dynamic from 'next/dynamic';
@@ -24,7 +25,7 @@ const Article = ({ value, setValue }: Props) => {
     { value: 'About', element: <ResumeArticle /> },
     { value: 'Resume', element: <FeedBackSsr /> },
     { value: 'Project', element: <MyProject /> },
-    { value: 'Contact', element: <></> },
+    { value: 'Contact', element: <MyContact /> },
   ];
 
   const tabs = (
@@ -65,7 +66,7 @@ const Article = ({ value, setValue }: Props) => {
                 position: 'absolute',
                 bottom: 0,
                 left: 38.4,
-                width: '40px',
+                width: '50px',
                 height: '5px',
                 borderRadius: '3px',
                 backgroundColor: 'primary.main',

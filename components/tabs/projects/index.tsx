@@ -96,36 +96,34 @@ const initialItems = Projects.map((project, index) => ({
 const DialogContent = ({ dialogContent }: DialongContentProps) => {
   const { title, contents, techs, description } = dialogContent;
   return (
-    <Box>
-      <Typography mb={1} variant="subtitle1" color={'primary.main'}>
+    <Stack py={1} gap={1}>
+      <Typography variant="subtitle1" color={'primary.main'}>
         {title}
       </Typography>
-      <Typography mb={1} variant="subtitle2" color={'primary.secondary'}>
-        {`_ ${description}`}
+      <Typography variant="paragraph" color={'primary.secondary'}>
+        {`${description}`}
       </Typography>
-      <Stack>
-        <Typography mb={1} variant="subtitle2">
-          {contents.objectif.title}
-          {': '}
-          <Typography variant="paragraph" color={'text.secondary'}>
-            {contents.objectif.text}
-          </Typography>
+      <Typography mb={1} variant="subtitle2">
+        {contents.objectif.title}
+        {': '}
+        <Typography variant="paragraph" color={'text.secondary'}>
+          {contents.objectif.text}
         </Typography>
-        <Typography mb={1} variant="subtitle2">
-          {contents.functionalities.title}
-          {':'}
-          <Stack>
-            {contents.functionalities.steps.map((step, index) => (
-              <Typography key={index} variant="paragraph" color={'text.secondary'}>
-                {'- '}
-                {step}
-              </Typography>
-            ))}
-          </Stack>
-        </Typography>
-      </Stack>
+      </Typography>
+      <Typography mb={1} variant="subtitle2">
+        {contents.functionalities.title}
+        {':'}
+        <Stack>
+          {contents.functionalities.steps.map((step, index) => (
+            <Typography key={index} variant="paragraph" color={'text.secondary'}>
+              {'- '}
+              {step}
+            </Typography>
+          ))}
+        </Stack>
+      </Typography>
       <Typography variant="subtitle1">technologies : {techs}</Typography>
-    </Box>
+    </Stack>
   );
 };
 

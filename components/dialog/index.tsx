@@ -47,7 +47,7 @@ export default function DialogSlide({
             edge="end"
             onClick={onClose}
             aria-label="close"
-            sx={{ position: 'absolute', right: 18, top: 2, color: 'primary.main' }}
+            sx={{ position: 'absolute', right: 18, top: 4, color: 'primary.main' }}
           >
             <XMarkIcon height={24} width={24} color="inherit" />
           </IconButton>

@@ -160,7 +160,7 @@ export default function ResumeArticle() {
       ),
       animation: varFadeInRight,
       content:
-        'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard',
+        "I'm currently immersed in frontend web development, specifically improving my skills in React and Next.js to create more dynamic and robust web applications.",
     },
     {
       title: 'Mobile Dev',
@@ -175,7 +175,7 @@ export default function ResumeArticle() {
       ),
       animation: varFadeInRightSlow,
       content:
-        'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard',
+        "I'm interested in mobile development and eager to learn, despite currently having no experience in it.",
     },
   ];
 

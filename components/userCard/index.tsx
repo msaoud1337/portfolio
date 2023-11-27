@@ -369,10 +369,12 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   useEffect(() => {
     const addComponentWithDelay = async () => {
       for (const element of componentsArray) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        setComponents((prevState: any) =>
-          !prevState.includes(element) ? [...prevState, element] : [...prevState]
-        );
+        if (isDesktop) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+          setComponents((prevState) =>
+            !prevState.includes(element) ? [...prevState, element] : [...prevState]
+          );
+        }
       }
     };
 
@@ -381,12 +383,14 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   }, [isDesktop, theme]);
 
   useEffect(() => {
-    if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
-      setComponents((prev) => [...prev, downloadButton]);
-    } else if (value !== 'Resume' && components.some((component) => component?.key === '190')) {
-      setComponents((prev) => prev.filter((component) => component?.key !== '190'));
+    if (components.length >= 6) {
+      if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
+        setComponents((prev) => [...prev, downloadButton]);
+      } else if (value !== 'Resume' && components.some((component) => component?.key === '190')) {
+        setComponents((prev) => prev.filter((component) => component?.key !== '190'));
+      }
     }
-  }, [value]);
+  }, [value, components.length]);
 
   useLayoutEffect(() => {
     const updateStackHeight = () => {

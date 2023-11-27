@@ -93,7 +93,7 @@ const Article = ({ value, setValue }: Props) => {
 };
 
 function Index() {
-  const [value, setValue] = useState('About');
+  const [value, setValue] = useState('Resume');
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>

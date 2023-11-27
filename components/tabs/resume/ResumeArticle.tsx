@@ -12,56 +12,16 @@ import {
   useTheme,
 } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { INTERSTINGS, SKILLS_ICONS } from '@/utils';
+import { varFadeInDown, varFadeInRight } from '@/utils/animations';
 import { aboutMeText, internShipText } from '@/utils/texts';
 
 import DialogSlide from '../../dialog';
 
 const MOBILEICONSIZE = '29px';
 const DESKTOPICONSIZE = '35px';
-
-const array = [
-  { href: '/js.svg', title: 'javascript' },
-  { href: '/ts.svg', title: 'typescript' },
-  { href: '/react.svg', title: 'reactjs' },
-  { href: '/next.svg', title: 'nextjs' },
-  { href: '/mui.svg', title: 'material Ui' },
-  { href: '/github.svg', title: 'github' },
-  { href: '/git.svg', title: 'git' },
-  { href: '/html.svg', title: 'html' },
-  { href: '/css.svg', title: 'css' },
-  {
-    href: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg',
-    title: 'c',
-  },
-];
-
-const DISTANCE = 400;
-
-const TRANSITION_ENTER1 = {
-  duration: 0.64,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-const TRANSITION_ENTER2 = {
-  duration: 1.6,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-export const varFadeInDown = {
-  initial: { y: -DISTANCE, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: TRANSITION_ENTER1 },
-};
-
-export const varFadeInRight = {
-  initial: { x: DISTANCE, opacity: 0 },
-  animate: { x: 0, opacity: 1, transition: TRANSITION_ENTER1 },
-};
-
-export const varFadeInRightSlow = {
-  initial: { x: DISTANCE, opacity: 0 },
-  animate: { x: 0, opacity: 1, transition: TRANSITION_ENTER2 },
-};
 
 type CardsProps = {
   text: string;
@@ -70,11 +30,12 @@ type CardsProps = {
 };
 
 const Cards = ({ text, icon, title }: CardsProps) => {
-  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
+  const { breakpoints } = useTheme();
+  const isMobile = useMediaQuery(breakpoints.only('xs'));
   const [maxHeight, setMaxHeight] = useState<number | string>('60px');
   const [nbline, setnbline] = useState<number | string>(2);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isMobile) {
       setMaxHeight('120px');
     } else setMaxHeight('60px');
@@ -87,7 +48,8 @@ const Cards = ({ text, icon, title }: CardsProps) => {
         setnbline('unset');
       }}
       onMouseLeave={() => {
-        setMaxHeight('60px');
+        if (isMobile) setMaxHeight('120px');
+        else setMaxHeight('60px');
         setnbline(2);
       }}
       sx={{
@@ -143,41 +105,6 @@ const Cards = ({ text, icon, title }: CardsProps) => {
 
 export default function ResumeArticle() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const INTERSTINGS = [
-    {
-      title: 'FrontEnd Web Dev',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0l-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234" />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M11 19h2m1-13l2 2l-2 2m-4-4L8 8l2 2"
-            />
-          </g>
-        </svg>
-      ),
-      animation: varFadeInRight,
-      content:
-        'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard',
-    },
-    {
-      title: 'Mobile Dev',
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
-            <path strokeLinejoin="round" d="m12 19.01l.01-.011" />
-            <path d="M18 18v3.4a.6.6 0 0 1-.6.6H6.6a.6.6 0 0 1-.6-.6V18M18 6V2.6a.6.6 0 0 0-.6-.6H6.6a.6.6 0 0 0-.6.6V6" />
-            <path strokeLinejoin="round" d="M15.5 8.5L19 12l-3.5 3.5m-7-7L5 12l3.5 3.5" />
-          </g>
-        </svg>
-      ),
-      animation: varFadeInRightSlow,
-      content:
-        'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard',
-    },
-  ];
 
   return (
     <>
@@ -240,13 +167,13 @@ export default function ResumeArticle() {
               My Current web dev skills:
             </Typography>
             <Stack direction={'row'} flexWrap={'wrap'} gap={1} pb={2}>
-              {array.map((icon, id) => {
+              {SKILLS_ICONS.map((icon, id) => {
                 const iconTRansition = {
                   duration: 0.64 + id / 4,
                   ease: [0.43, 0.13, 0.23, 0.96],
                 };
                 const iconFadeToRight = {
-                  initial: { x: DISTANCE, opacity: 0 },
+                  initial: { x: 400, opacity: 0 },
                   animate: { x: 0, opacity: 1, transition: iconTRansition },
                 };
                 return (
@@ -260,10 +187,10 @@ export default function ResumeArticle() {
         </Box>
       </AnimatePresence>
       <DialogSlide
-        content={aboutMeText}
-        title="Search for an internship"
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        title="Search for an internship"
+        content={aboutMeText}
       />
     </>
   );

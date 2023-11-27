@@ -1,13 +1,10 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
-import MyContact from 'components/tabs/contact';
-import MyProject from 'components/tabs/projects';
-import ResumeArticle from 'components/tabs/resume/ResumeArticle';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
-import dynamic from 'next/dynamic';
 import type { Dispatch, ReactElement, SetStateAction } from 'react';
 import { useState } from 'react';
+
+import { TAB_CONFIG } from '@/utils';
 
 type Props = {
   value: string;
@@ -15,25 +12,11 @@ type Props = {
 };
 
 const Article = ({ value, setValue }: Props) => {
-  const FeedBackSsr = dynamic(
-    import('../../components/tabs/cv').then((res) => res.default),
-    {
-      ssr: false,
-    }
-  );
-  const TAB_CONFIG = [
-    { value: 'About', element: <ResumeArticle /> },
-    { value: 'Resume', element: <FeedBackSsr /> },
-    { value: 'Project', element: <MyProject /> },
-    { value: 'Contact', element: <MyContact /> },
-  ];
-
   const tabs = (
     <Tabs
       value={value}
       scrollButtons="auto"
       variant="scrollable"
-      allowScrollButtonsMobile
       onChange={(_, newValue) => setValue(newValue)}
       sx={{
         borderRadius: { xs: 'unset', sm: '0 0 0 18px' },

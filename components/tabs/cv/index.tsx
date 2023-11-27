@@ -4,18 +4,6 @@ import DialogSlide from 'components/dialog';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 
-const DISTANCE = 400;
-
-const TRANSITION_ENTER1 = {
-  duration: 0.64,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-export const varFadeInDown = {
-  initial: { y: -DISTANCE, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: TRANSITION_ENTER1 },
-};
-
 const PDFGenerator = dynamic(
   import('./CvContent').then((res) => res.default),
   {

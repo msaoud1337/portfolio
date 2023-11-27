@@ -1,3 +1,18 @@
+import type { Palette } from '@mui/material';
+import MyContact from 'components/tabs/contact';
+import MyProject from 'components/tabs/projects';
+import ResumeArticle from 'components/tabs/resume/ResumeArticle';
+
+import MyCvPDF from '../../components/tabs/cv';
+import { varFadeInRight, varFadeInRightSlow } from './animations';
+
+export const TAB_CONFIG = [
+  { value: 'About', element: <ResumeArticle /> },
+  { value: 'Resume', element: <MyCvPDF /> },
+  { value: 'Project', element: <MyProject /> },
+  { value: 'Contact', element: <MyContact /> },
+];
+
 export const userLinksConfig = (color: string) => {
   return [
     {
@@ -96,3 +111,88 @@ export const userLinksConfig = (color: string) => {
     },
   ];
 };
+
+export const SKILLS_ICONS = [
+  { href: '/js.svg', title: 'javascript' },
+  { href: '/ts.svg', title: 'typescript' },
+  { href: '/react.svg', title: 'reactjs' },
+  { href: '/next.svg', title: 'nextjs' },
+  { href: '/mui.svg', title: 'material Ui' },
+  { href: '/github.svg', title: 'github' },
+  { href: '/git.svg', title: 'git' },
+  { href: '/html.svg', title: 'html' },
+  { href: '/css.svg', title: 'css' },
+  {
+    href: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg',
+    title: 'c',
+  },
+];
+
+export const INTERSTINGS = [
+  {
+    title: 'FrontEnd Web Dev',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0l-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11 19h2m1-13l2 2l-2 2m-4-4L8 8l2 2"
+          />
+        </g>
+      </svg>
+    ),
+    animation: varFadeInRight,
+    content:
+      "I'm currently immersed in frontend web development, specifically improving my skills in React and Next.js to create more dynamic and robust web applications.",
+  },
+  {
+    title: 'Mobile Dev',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
+          <path strokeLinejoin="round" d="m12 19.01l.01-.011" />
+          <path d="M18 18v3.4a.6.6 0 0 1-.6.6H6.6a.6.6 0 0 1-.6-.6V18M18 6V2.6a.6.6 0 0 0-.6-.6H6.6a.6.6 0 0 0-.6.6V6" />
+          <path strokeLinejoin="round" d="M15.5 8.5L19 12l-3.5 3.5m-7-7L5 12l3.5 3.5" />
+        </g>
+      </svg>
+    ),
+    animation: varFadeInRightSlow,
+    content:
+      "I'm interested in mobile development and eager to learn, despite currently having no experience in it.",
+  },
+];
+
+export const AvatarBackgroundBlop = ({ palette }: { palette: Palette }) => (
+  <svg
+    viewBox="0 0 500 500"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+    width="100%"
+    height={'100%'}
+    id="blobSvg"
+  >
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style={{ stopColor: palette.primary.main }}></stop>
+        <stop
+          offset="100%"
+          style={{ stopColor: palette.mode === 'dark' ? 'white' : 'black' }}
+        ></stop>
+      </linearGradient>
+    </defs>
+    <path fill="url(#gradient)">
+      <animate
+        attributeName="d"
+        dur="5000ms"
+        repeatCount="indefinite"
+        values={`
+        M447.5,301Q409,352,371.5,392.5Q334,433,278.5,435.5Q223,438,155,438Q87,438,67.5,373.5Q48,309,52,251Q56,193,78.5,135.5Q101,78,160,56Q219,34,284.5,33Q350,32,404,74Q458,116,472,183Q486,250,447.5,301Z;
+        M445.9455,310.84515Q440.08995,371.6903,391.1903,411.15397Q342.29065,450.61764,283.68166,437.57266Q225.07266,424.52769,175.72663,408.46455Q126.3806,392.40141,104.28977,345.51905Q82.19894,298.63668,67.54497,245.30018Q52.89101,191.96367,83.68166,142.75432Q114.47231,93.54497,169.32698,81.39012Q224.18166,69.23527,286.57266,50.61764Q348.96367,32,380.16437,89.02681Q411.36508,146.05362,431.58307,198.02681Q451.80106,250,445.9455,310.84515Z;
+        M447.5,301Q409,352,371.5,392.5Q334,433,278.5,435.5Q223,438,155,438Q87,438,67.5,373.5Q48,309,52,251Q56,193,78.5,135.5Q101,78,160,56Q219,34,284.5,33Q350,32,404,74Q458,116,472,183Q486,250,447.5,301Z
+        `}
+      />
+    </path>
+  </svg>
+);

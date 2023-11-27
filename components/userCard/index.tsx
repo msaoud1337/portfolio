@@ -21,39 +21,8 @@ import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import { userLinksConfig } from '@/utils';
-
-const DISTANCE = 600;
-
-const TRANSITION_ENTER = {
-  duration: 0.64,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-const TRANSITION_ENTER_FASTER = {
-  duration: 0.32,
-  ease: [0.43, 0.13, 0.23, 0.96],
-};
-
-export const varFadeInUp = {
-  initial: { y: DISTANCE, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: TRANSITION_ENTER },
-};
-
-export const varFadeInUpFaster = {
-  initial: { y: DISTANCE, opacity: 0 },
-  animate: { y: 0, opacity: 1, transition: TRANSITION_ENTER_FASTER },
-};
-
-export const varFadeInRight = {
-  initial: { x: DISTANCE, opacity: 0 },
-  animate: { x: 0, opacity: 1, transition: TRANSITION_ENTER },
-};
-
-const parentAnimation = {
-  initial: { x: 0, opacity: 1 },
-  animate: { transition: { duration: 0.32, ease: [0.68, -0.55, 0.27, 1.55] } },
-};
+import { AvatarBackgroundBlop, userLinksConfig } from '@/utils';
+import { parentAnimation, varFadeInUp, varFadeInUpFaster } from '@/utils/animations';
 
 const ImageBox = styled('img')(() => ({
   position: 'absolute',
@@ -173,10 +142,10 @@ type SideBarConfigProps = {
 
 export default function SideBarConfig({ value }: SideBarConfigProps) {
   const [components, setComponents] = useState<JSX.Element[]>([]);
-  const theme = useTheme();
+  const { palette, breakpoints } = useTheme();
   const stackRef = useRef<HTMLDivElement>(null);
   const accordionRef = useRef<HTMLDivElement>(null);
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const isDesktop = useMediaQuery(breakpoints.up('md'));
   const isMobileOrTabllet = !isDesktop;
   const [isOpenAccordion, setAccordion] = useState(false);
   const [elementsHeight, setElementsHeight] = useState({
@@ -194,36 +163,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
         position: 'relative',
       }}
     >
-      <svg
-        viewBox="0 0 500 500"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        width="100%"
-        height={'100%'}
-        id="blobSvg"
-      >
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: theme.palette.primary.main }}></stop>
-            <stop
-              offset="100%"
-              style={{ stopColor: theme.palette.mode === 'dark' ? 'white' : 'black' }}
-            ></stop>
-          </linearGradient>
-        </defs>
-        <path fill="url(#gradient)">
-          <animate
-            attributeName="d"
-            dur="5000ms"
-            repeatCount="indefinite"
-            values={`
-            M447.5,301Q409,352,371.5,392.5Q334,433,278.5,435.5Q223,438,155,438Q87,438,67.5,373.5Q48,309,52,251Q56,193,78.5,135.5Q101,78,160,56Q219,34,284.5,33Q350,32,404,74Q458,116,472,183Q486,250,447.5,301Z;
-            M445.9455,310.84515Q440.08995,371.6903,391.1903,411.15397Q342.29065,450.61764,283.68166,437.57266Q225.07266,424.52769,175.72663,408.46455Q126.3806,392.40141,104.28977,345.51905Q82.19894,298.63668,67.54497,245.30018Q52.89101,191.96367,83.68166,142.75432Q114.47231,93.54497,169.32698,81.39012Q224.18166,69.23527,286.57266,50.61764Q348.96367,32,380.16437,89.02681Q411.36508,146.05362,431.58307,198.02681Q451.80106,250,445.9455,310.84515Z;
-            M447.5,301Q409,352,371.5,392.5Q334,433,278.5,435.5Q223,438,155,438Q87,438,67.5,373.5Q48,309,52,251Q56,193,78.5,135.5Q101,78,160,56Q219,34,284.5,33Q350,32,404,74Q458,116,472,183Q486,250,447.5,301Z
-            `}
-          />
-        </path>
-      </svg>
+      <AvatarBackgroundBlop palette={palette} />
       <ImageBox src="/me.png" />
     </Box>
   );
@@ -247,7 +187,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
             bgcolor: 'background.neutral',
             '&.MuiChip-root': {
               borderRadius: 1,
-              border: `2px solid ${theme.palette.background.paper}`,
+              border: `2px solid ${palette.background.paper}`,
             },
           }}
           label={
@@ -280,7 +220,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
     );
 
   const componentsArray = useMemo(() => {
-    const userLinks = userLinksConfig(theme.palette.primary.main).map((item, id) => (
+    const userLinks = userLinksConfig(palette.primary.main).map((item, id) => (
       <UserLinks
         key={id}
         tooltip={item.tooltip}
@@ -307,7 +247,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       <Divider key={1} component={motion.div} {...varFadeInUp} sx={{ mb: 2 }} />,
       ...userLinks,
     ];
-  }, [theme]);
+  }, [palette]);
 
   const widthRef = useRef<HTMLDivElement | null>(null);
 
@@ -333,12 +273,31 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
                   flexWrap: 'wrap',
                   justifyContent: 'flex-start',
                   spacing: { xs: 2, sm: 2, md: 2 },
-                  // rowGap: { xs : 4, sm: 'unset' }
                 }}
               >
                 {userAvatar}
                 {fullNameSection}
               </Stack>
+              <Button
+                size={isDesktop ? 'medium' : 'small'}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  minWidth: { xs: '100px', md: '150px' },
+                  borderRadius: '0 0 0 18px',
+                  color: 'primary.contrastText',
+                  ':hover': {
+                    color: 'primary.contrastText',
+                  },
+                  background: `linear-gradient(to right, ${palette.primary.main}, ${
+                    palette.mode === 'light' ? palette.primary.dark : palette.primary.light
+                  })`,
+                }}
+                variant="contained"
+              >
+                {isOpenAccordion ? 'Collapse' : 'Extend'}
+              </Button>
             </motion.div>
           </AccordionSummary>
           <AccordionDetails ref={accordionRef} sx={{ py: 2 }}>
@@ -348,7 +307,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
               exit={{ height: 0 }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
-              {userLinksConfig(theme.palette.primary.main).map((item, id) => (
+              {userLinksConfig(palette.primary.main).map((item, id) => (
                 <UserLinks
                   key={id}
                   tooltip={item.tooltip}
@@ -369,24 +328,28 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   useEffect(() => {
     const addComponentWithDelay = async () => {
       for (const element of componentsArray) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
-        setComponents((prevState: any) =>
-          !prevState.includes(element) ? [...prevState, element] : [...prevState]
-        );
+        if (isDesktop) {
+          await new Promise((resolve) => setTimeout(resolve, 800));
+          setComponents((prevState) =>
+            !prevState.includes(element) ? [...prevState, element] : [...prevState]
+          );
+        }
       }
     };
 
     setComponents([]);
     addComponentWithDelay();
-  }, [isDesktop, theme]);
+  }, [isDesktop, palette]);
 
   useEffect(() => {
-    if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
-      setComponents((prev) => [...prev, downloadButton]);
-    } else if (value !== 'Resume' && components.some((component) => component?.key === '190')) {
-      setComponents((prev) => prev.filter((component) => component?.key !== '190'));
+    if (components.length >= 6) {
+      if (value === 'Resume' && !components.some((component) => component?.key === '190')) {
+        setComponents((prev) => [...prev, downloadButton]);
+      } else if (value !== 'Resume' && components.some((component) => component?.key === '190')) {
+        setComponents((prev) => prev.filter((component) => component?.key !== '190'));
+      }
     }
-  }, [value]);
+  }, [value, components.length]);
 
   useLayoutEffect(() => {
     const updateStackHeight = () => {
@@ -409,7 +372,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
     return () => {
       window.removeEventListener('resize', updateStackHeight);
     };
-  }, [stackRef.current?.offsetHeight, accordionRef, components.length]);
+  }, [stackRef.current?.offsetHeight, components.length, value]);
 
   const desktopCard = isDesktop && (
     <motion.div

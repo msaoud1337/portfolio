@@ -14,13 +14,14 @@ type Props = {
   setValue: Dispatch<SetStateAction<string>>;
 };
 
+const FeedBackSsr = dynamic(
+  import('../../components/tabs/cv').then((res) => res.default),
+  {
+    ssr: false,
+  }
+);
+
 const Article = ({ value, setValue }: Props) => {
-  const FeedBackSsr = dynamic(
-    import('../../components/tabs/cv').then((res) => res.default),
-    {
-      ssr: false,
-    }
-  );
   const TAB_CONFIG = [
     { value: 'About', element: <ResumeArticle /> },
     { value: 'Resume', element: <FeedBackSsr /> },
@@ -93,7 +94,7 @@ const Article = ({ value, setValue }: Props) => {
 };
 
 function Index() {
-  const [value, setValue] = useState('Resume');
+  const [value, setValue] = useState('About');
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>

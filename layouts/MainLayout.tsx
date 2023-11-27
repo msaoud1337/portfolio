@@ -21,25 +21,23 @@ const RootStyle = styled('div')({
 });
 
 function MainLayout({ meta, children }: IMainProps) {
-  const isVisibleRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   const [isVisible, setIsVisible] = useState(false);
 
   const onEnterHandle = () => {
-    isVisibleRef.current = true;
     clearTimeout(timeoutRef.current!);
     setIsVisible(true);
   };
 
   const onLeaveHandle = () => {
-    if (isVisible) {
-      timeoutRef.current = setTimeout(() => {
-        isVisibleRef.current = false;
-        setIsVisible(false);
-      }, 2000);
-    }
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 3500);
   };
+
+  if (isVisible) {
+    onLeaveHandle();
+  }
 
   const isVisibleContent = isVisible && (
     <AnimatePresence>

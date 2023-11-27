@@ -12,7 +12,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { aboutMeText, internShipText } from '@/utils/texts';
 
@@ -70,11 +70,12 @@ type CardsProps = {
 };
 
 const Cards = ({ text, icon, title }: CardsProps) => {
-  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
+  const { breakpoints } = useTheme();
+  const isMobile = useMediaQuery(breakpoints.only('xs'));
   const [maxHeight, setMaxHeight] = useState<number | string>('60px');
   const [nbline, setnbline] = useState<number | string>(2);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isMobile) {
       setMaxHeight('120px');
     } else setMaxHeight('60px');
@@ -87,7 +88,8 @@ const Cards = ({ text, icon, title }: CardsProps) => {
         setnbline('unset');
       }}
       onMouseLeave={() => {
-        setMaxHeight('60px');
+        if (isMobile) setMaxHeight('120px');
+        else setMaxHeight('60px');
         setnbline(2);
       }}
       sx={{

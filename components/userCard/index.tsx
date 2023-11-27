@@ -333,12 +333,29 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
                   flexWrap: 'wrap',
                   justifyContent: 'flex-start',
                   spacing: { xs: 2, sm: 2, md: 2 },
-                  // rowGap: { xs : 4, sm: 'unset' }
                 }}
               >
                 {userAvatar}
                 {fullNameSection}
               </Stack>
+              <Button
+                size={isDesktop ? 'medium' : 'small'}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  minWidth: { xs: '100px', md: '150px' },
+                  borderRadius: '0 0 0 18px',
+                  color: 'primary.contrastText',
+                  ':hover': {
+                    color: 'primary.contrastText',
+                  },
+                  background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+                }}
+                variant="contained"
+              >
+                {isOpenAccordion ? 'Collapse' : 'Extend'}
+              </Button>
             </motion.div>
           </AccordionSummary>
           <AccordionDetails ref={accordionRef} sx={{ py: 2 }}>

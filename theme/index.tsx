@@ -17,7 +17,7 @@ type ThemeConfigProps = {
 };
 
 export default function ThemeConfig({ children }: ThemeConfigProps) {
-  const { themeMode, themeDirection } = useSettings();
+  const { themeMode } = useSettings();
   const isLight = themeMode === 'light';
 
   const themeOptions: ThemeOptions = useMemo(
@@ -26,11 +26,10 @@ export default function ThemeConfig({ children }: ThemeConfigProps) {
       shape,
       typography,
       breakpoints,
-      direction: themeDirection,
       shadows: isLight ? shadows.light : shadows.dark,
       customShadows: isLight ? customShadows.light : customShadows.dark,
     }),
-    [isLight, themeDirection]
+    [isLight]
   );
 
   const theme = createTheme(themeOptions);

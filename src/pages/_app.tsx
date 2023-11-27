@@ -1,6 +1,5 @@
 import '@/styles/global.css';
 
-import RtlLayout from 'components/RltLayout';
 import SnackbarOverride from 'components/snackbarOverride';
 import { SettingsProvider } from 'contexts/SettingsContext';
 import type { NextPage } from 'next';
@@ -22,6 +21,7 @@ const SsrOff = dynamic(
     ssr: false,
   }
 );
+
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -29,9 +29,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <SettingsProvider>
       <ThemeProvider>
         <SsrOff>
-          <RtlLayout>
-            <SnackbarOverride>{getLayout(<Component {...pageProps} />)}</SnackbarOverride>
-          </RtlLayout>
+          <SnackbarOverride>{getLayout(<Component {...pageProps} />)}</SnackbarOverride>
         </SsrOff>
       </ThemeProvider>
     </SettingsProvider>

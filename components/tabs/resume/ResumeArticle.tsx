@@ -123,10 +123,7 @@ export default function ResumeArticle() {
               {...varFadeInRight}
               sx={{ cursor: 'pointer' }}
             >
-              <CardHeader
-                title="Search for an internship"
-                sx={{ color: 'primary.main' }}
-              ></CardHeader>
+              <CardHeader title="Search for an internship" sx={{ color: 'primary.main' }} />
               <CardContent>
                 <Typography
                   variant="paragraph"

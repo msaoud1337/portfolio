@@ -31,6 +31,7 @@ const Meta = (props: IMetaProps) => {
           href={`${router.basePath}/favicon-16x16.png`}
           key="icon16"
         />
+        <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css" rel="stylesheet" />
         <link rel="icon" href={`${router.basePath}/favicon.ico`} key="favicon" />
       </Head>
       <NextSeo

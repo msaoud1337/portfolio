@@ -1,5 +1,5 @@
 import { CogIcon } from '@heroicons/react/24/solid';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AnimatePresence, motion } from 'framer-motion';
 import { type ReactNode, useRef, useState } from 'react';
@@ -23,6 +23,7 @@ const RootStyle = styled('div')({
 function MainLayout({ meta, children }: IMainProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isMobile = useMediaQuery(useTheme().breakpoints.only('sm'));
 
   const onEnterHandle = () => {
     clearTimeout(timeoutRef.current!);
@@ -35,7 +36,7 @@ function MainLayout({ meta, children }: IMainProps) {
     }, 3500);
   };
 
-  if (isVisible) {
+  if (isVisible && isMobile) {
     onLeaveHandle();
   }
 

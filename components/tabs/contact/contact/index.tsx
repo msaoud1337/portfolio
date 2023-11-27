@@ -91,8 +91,9 @@ export default function ContactMe() {
           <Stack direction={'row'} justifyContent={'flex-end'} gap={2}>
             <Button
               disabled={isSubmitting}
-              type="submit"
-              size={fieldSize === 'medium' ? 'large' : 'medium'}
+              // type="submit"
+              onClick={() => formik.resetForm()}
+              size={fieldSize === 'medium' ? 'large' : 'small'}
               sx={{ color: 'primary.main' }}
               variant="outlined"
             >

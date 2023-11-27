@@ -4,7 +4,7 @@ export const Projects = [
     image: 'donvip.jpg',
     description:
       'Our Coach Management System is a modern application that optimizes coaching services. Built with TypeScript and Next.js, it simplifies the coordination of coaches, clients, and sessions.',
-    techs: 'Ts, NextJs,',
+    techs: 'Ts, NextJs, Mui v5, Redux(toolkit), Redux Thunk, Axios, Css',
     contentDetails: {
       objectif: {
         title: 'Objectif',
@@ -26,7 +26,7 @@ export const Projects = [
     image: 'diet.jpg',
     description:
       'Our Diet and Program Management App is a user-friendly web application designed for personalized diet plans and fitness programs. Developed with TypeScript and Next.js, it empowers individuals to achieve their health goals.',
-    techs: 'Ts, NextJs,',
+    techs: 'Ts, NextJs, Mui v5, Redux(toolkit), Redux Thunk, Axios, Css',
     contentDetails: {
       objectif: {
         title: 'Objectif',
@@ -48,7 +48,7 @@ export const Projects = [
     image: 'doc.png',
     description:
       "Our Doctor's Client and Visit Management App is a specialized web application designed for efficient client information management by doctors. Developed with TypeScript and Next.js, it simplifies the process of maintaining visit history and purposes of visits.",
-    techs: 'Ts, NextJs,',
+    techs: 'Ts, NextJs, Mui v5, Redux(toolkit), Redux Thunk, Axios, Css',
     contentDetails: {
       objectif: {
         title: 'Objectif',

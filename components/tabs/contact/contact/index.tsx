@@ -27,8 +27,6 @@ export default function ContactMe() {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       emailjs.send('service_mf63rmf', 'template_pebeznp', values, '6v5cEUoEJm6khhUo4').then(
         () => {
           enqueueSnackbar('Your email has been sent successfully! 🚀', {
@@ -46,8 +44,6 @@ export default function ContactMe() {
   });
 
   const { getFieldProps, errors, touched, isSubmitting } = formik;
-
-  console.log(isSubmitting);
 
   return (
     <FormikProvider value={formik}>
@@ -92,7 +88,7 @@ export default function ContactMe() {
             error={Boolean(touched.content && errors.content)}
             helperText={touched.content && errors.content}
           />
-          <Stack direction={'row'} justifyContent={'space-between'}>
+          <Stack direction={'row'} justifyContent={'flex-end'} gap={2}>
             <Button
               disabled={isSubmitting}
               type="submit"

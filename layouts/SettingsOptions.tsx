@@ -45,7 +45,7 @@ const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
     ':hover': { transform: 'scale(1.1)', border },
   };
 
-  const onClickMode = () => {
+  const onClickHandle = () => {
     if (themeMode !== 'light') return onChangeMode('light');
     onChangeMode('dark');
   };
@@ -53,14 +53,24 @@ const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <Stack gap={2}>
       <IconButton
-        onClick={onClickMode}
-        sx={{ ...buttonStyle, border: !isDarkMode ? border : 'unset' }}
+        onClick={onClickHandle}
+        sx={{
+          ...buttonStyle,
+          border: !isDarkMode ? border : 'unset',
+          transform: !isDarkMode ? 'scale(1.1)' : 'unset',
+          backgroundColor: (theme) => (!isDarkMode ? theme.palette.background.paper : 'unset'),
+        }}
       >
         <SunIcon height={35} width={35} />
       </IconButton>
       <IconButton
-        onClick={onClickMode}
-        sx={{ ...buttonStyle, border: isDarkMode ? border : 'unset', transform: 'scale(1.1)' }}
+        onClick={onClickHandle}
+        sx={{
+          ...buttonStyle,
+          border: isDarkMode ? border : 'unset',
+          transform: isDarkMode ? 'scale(1.1)' : 'unset',
+          backgroundColor: (theme) => (isDarkMode ? theme.palette.background.paper : 'unset'),
+        }}
       >
         <MoonIcon height={35} width={35} />
       </IconButton>
@@ -82,6 +92,7 @@ export default function SettingsOptions() {
     <Box
       pl={2}
       height={'100vh'}
+      width={'auto'}
       sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
     >
       <Stack

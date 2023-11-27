@@ -83,10 +83,8 @@ function SetColor(themeColor: ThemeColor) {
 
 const initialState: SettingsContextProps = {
   themeMode: 'dark',
-  themeDirection: 'ltr',
-  themeColor: 'cyan',
+  themeColor: 'purple',
   onChangeMode: () => {},
-  onChangeDirection: () => {},
   onChangeColor: () => {},
   setColor: PRIMARY_COLOR[0],
   colorOption: [],
@@ -101,7 +99,6 @@ type SettingsProviderProps = {
 function SettingsProvider({ children }: SettingsProviderProps) {
   const [settings, setSettings] = useLocalStorage('settings', {
     themeMode: initialState.themeMode,
-    themeDirection: initialState.themeDirection,
     themeColor: initialState.themeColor,
   });
 
@@ -110,13 +107,6 @@ function SettingsProvider({ children }: SettingsProviderProps) {
       ...settings,
       themeMode: color,
     });
-  };
-
-  const onChangeDirection = (_: React.ChangeEvent<HTMLInputElement>) => {
-    // setSettings({
-    //   ...settings,
-    //   themeDirection: (event.target as HTMLInputElement).value as ThemeDirection,
-    // });
   };
 
   const onChangeColor = (color: ThemeColor) => {
@@ -131,7 +121,6 @@ function SettingsProvider({ children }: SettingsProviderProps) {
       value={{
         ...settings,
         onChangeMode,
-        onChangeDirection,
         onChangeColor,
         setColor: SetColor(settings.themeColor),
         colorOption: PRIMARY_COLOR.map((color) => ({

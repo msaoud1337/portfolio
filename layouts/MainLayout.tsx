@@ -37,7 +37,6 @@ function MainLayout({ meta, children }: IMainProps) {
   };
 
   if (isVisible && isMobile) {
-    console.log('is here');
     onLeaveHandle();
   } else if (isVisible && !isMobile) {
     timeoutRef.current = setTimeout(() => {

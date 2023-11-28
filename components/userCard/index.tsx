@@ -59,6 +59,8 @@ const Wraper = ({ children, href }: WraperProps) =>
 
 const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
   const { enqueueSnackbar } = useSnackbar();
+  const isTabletOrMObile = useMediaQuery(useTheme().breakpoints.between('xs', 'md'));
+
   const handleOpenNewMail = () => {
     if (title === 'EMAIL') window.location.href = 'mailto:medaminesaoud8020@gmail.com';
     if (title === 'PHONE') {
@@ -71,7 +73,7 @@ const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
       enqueueSnackbar('0617031650 copied', {
         variant: 'success',
       });
-      window.location.href = 'tel:0617031650';
+      if (isTabletOrMObile) window.location.href = 'tel:0617031650';
     }
   };
 
@@ -203,7 +205,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
           }}
           label={
             <Typography variant="caption" color={'text.secondary'}>
-              FullStack Developer
+              Frontend Developer
             </Typography>
           }
           size="medium"

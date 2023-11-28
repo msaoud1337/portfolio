@@ -23,7 +23,7 @@ const RootStyle = styled('div')({
 function MainLayout({ meta, children }: IMainProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const isMobile = useMediaQuery(useTheme().breakpoints.only('sm'));
+  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
 
   const onEnterHandle = () => {
     clearTimeout(timeoutRef.current!);
@@ -38,6 +38,10 @@ function MainLayout({ meta, children }: IMainProps) {
 
   if (isVisible && isMobile) {
     onLeaveHandle();
+  } else if (isVisible && !isMobile) {
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
   }
 
   const isVisibleContent = isVisible && (

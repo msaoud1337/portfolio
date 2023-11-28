@@ -82,7 +82,7 @@ function SetColor(themeColor: ThemeColor) {
 }
 
 const initialState: SettingsContextProps = {
-  themeMode: 'dark',
+  themeMode: 'light',
   themeColor: 'purple',
   onChangeMode: () => {},
   onChangeColor: () => {},

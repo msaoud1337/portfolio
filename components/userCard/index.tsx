@@ -153,6 +153,16 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
     accordion: 0,
   });
 
+  const handleDownload = () => {
+    const fileUrl = 'my-cv.pdf';
+    const anchor = document.createElement('a');
+    anchor.href = fileUrl;
+    anchor.download = 'msaoudCv.pdf';
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+  };
+
   const userAvatar = (
     <Box
       component={motion.div}
@@ -210,6 +220,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
             sx={{ m: 'auto', color: 'primary.contrastText' }}
             variant="contained"
             endIcon={<CloudDownloadIcon />}
+            onClick={handleDownload}
           >
             Download cv
           </Button>
@@ -325,6 +336,23 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
     </AnimatePresence>
   );
 
+  const desktopCard = isDesktop && (
+    <motion.div
+      initial={{ height: 0 }}
+      animate={{ height: elementsHeight.stack }}
+      exit={{ height: 0 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+    >
+      <Stack ref={stackRef} sx={{ height: 'auto' }}>
+        {components.map((item, index) => (
+          <motion.div key={index} {...parentAnimation}>
+            {item}
+          </motion.div>
+        ))}
+      </Stack>
+    </motion.div>
+  );
+
   useEffect(() => {
     const addComponentWithDelay = async () => {
       for (const element of componentsArray) {
@@ -373,23 +401,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       window.removeEventListener('resize', updateStackHeight);
     };
   }, [stackRef.current?.offsetHeight, components.length, value]);
-
-  const desktopCard = isDesktop && (
-    <motion.div
-      initial={{ height: 0 }}
-      animate={{ height: elementsHeight.stack }}
-      exit={{ height: 0 }}
-      transition={{ duration: 0.5, ease: 'easeInOut' }}
-    >
-      <Stack ref={stackRef} sx={{ height: 'auto' }}>
-        {components.map((item, index) => (
-          <motion.div key={index} {...parentAnimation}>
-            {item}
-          </motion.div>
-        ))}
-      </Stack>
-    </motion.div>
-  );
 
   return (
     <Card

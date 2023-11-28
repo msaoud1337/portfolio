@@ -71,6 +71,7 @@ const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
       enqueueSnackbar('0617031650 copied', {
         variant: 'success',
       });
+      window.location.href = 'tel:0617031650';
     }
   };
 

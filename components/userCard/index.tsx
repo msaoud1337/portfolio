@@ -357,20 +357,35 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   );
 
   useEffect(() => {
-    const addComponentWithDelay = async () => {
-      for (const element of componentsArray) {
-        if (isDesktop) {
-          await new Promise((resolve) => setTimeout(resolve, 800));
+    if (components.length > 0) {
+      const addComponentWithDelay = async () => {
+        for (const element of componentsArray) {
           setComponents((prevState) =>
             !prevState.includes(element) ? [...prevState, element] : [...prevState]
           );
         }
-      }
-    };
+      };
 
-    setComponents([]);
-    addComponentWithDelay();
+      setComponents([]);
+      addComponentWithDelay();
+    }
   }, [isDesktop, palette]);
+
+  useEffect(() => {
+    if (components.length === 0) {
+      const addComponentWithDelay = async () => {
+        for (const element of componentsArray) {
+          if (isDesktop) {
+            await new Promise((resolve) => setTimeout(resolve, 800));
+            setComponents((prevState) =>
+              !prevState.includes(element) ? [...prevState, element] : [...prevState]
+            );
+          }
+        }
+      };
+      addComponentWithDelay();
+    }
+  }, []);
 
   useEffect(() => {
     if (components.length >= 6) {

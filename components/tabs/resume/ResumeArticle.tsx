@@ -187,7 +187,7 @@ export default function ResumeArticle() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="Search for an internship"
-        content={aboutMeText}
+        content={internShipText}
       />
     </>
   );

@@ -40,8 +40,8 @@ function MainLayout({ meta, children }: IMainProps) {
     onLeaveHandle();
   } else if (isVisible && !isMobile) {
     timeoutRef.current = setTimeout(() => {
-      setIsVisible(false);
-    }, 5000);
+      if (timeoutRef.current) setIsVisible(false);
+    }, 10000);
   }
 
   const isVisibleContent = isVisible && (

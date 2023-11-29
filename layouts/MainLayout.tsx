@@ -1,8 +1,9 @@
+import { XCircleIcon } from '@heroicons/react/24/outline';
 import { CogIcon } from '@heroicons/react/24/solid';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AnimatePresence, motion } from 'framer-motion';
-import { type ReactNode, useRef, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 
 import type { IMetaProps } from './Meta';
 import { Meta } from './Meta';
@@ -21,34 +22,19 @@ const RootStyle = styled('div')({
 });
 
 function MainLayout({ meta, children }: IMainProps) {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
 
   const onEnterHandle = () => {
-    clearTimeout(timeoutRef.current!);
     setIsVisible(true);
   };
 
   const onLeaveHandle = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsVisible(false);
-    }, 3500);
+    setIsVisible(false);
   };
-
-  if (isVisible && isMobile) {
-    onLeaveHandle();
-  } else if (isVisible && !isMobile) {
-    timeoutRef.current = setTimeout(() => {
-      if (timeoutRef.current) setIsVisible(false);
-    }, 10000);
-  }
 
   const isVisibleContent = isVisible && (
     <AnimatePresence>
       <motion.div
-        onMouseLeave={onLeaveHandle}
-        onMouseEnter={onEnterHandle}
         initial={{ x: -140, opacity: 0 }}
         animate={{
           x: 0,
@@ -59,6 +45,24 @@ function MainLayout({ meta, children }: IMainProps) {
           },
         }}
       >
+        <Box
+          onClick={onLeaveHandle}
+          sx={{
+            p: 0.5,
+            left: 85,
+            bottom: '50%',
+            color: 'text.primary',
+            position: 'absolute',
+            bgcolor: 'background.neutral',
+            borderRadius: '0 24px 24px 0px',
+            boxShadow: (theme) => theme.customShadows.z12,
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <XCircleIcon height={35} width={35} />
+        </Box>
         <ThemeSettings />
       </motion.div>
     </AnimatePresence>
@@ -82,7 +86,6 @@ function MainLayout({ meta, children }: IMainProps) {
           sx={{
             p: 0.5,
             px: '4px',
-            left: 0,
             bottom: '50%',
             color: 'text.primary',
             position: 'absolute',

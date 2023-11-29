@@ -45,15 +45,18 @@ const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
     ':hover': { transform: 'scale(1.1)', border },
   };
 
-  const onClickHandle = () => {
+  const handleDark = () => {
+    if (themeMode !== 'dark') return onChangeMode('dark');
+  };
+
+  const handleLight = () => {
     if (themeMode !== 'light') return onChangeMode('light');
-    onChangeMode('dark');
   };
 
   return (
     <Stack gap={2}>
       <IconButton
-        onClick={onClickHandle}
+        onClick={handleLight}
         sx={{
           ...buttonStyle,
           border: !isDarkMode ? border : 'unset',
@@ -64,7 +67,7 @@ const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
         <SunIcon height={35} width={35} />
       </IconButton>
       <IconButton
-        onClick={onClickHandle}
+        onClick={handleDark}
         sx={{
           ...buttonStyle,
           border: isDarkMode ? border : 'unset',

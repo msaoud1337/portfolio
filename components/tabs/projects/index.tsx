@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Typography } from '@mui/material';
+import { Box, Card, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import DialogSlide from 'components/dialog';
 import { Reorder } from 'framer-motion';
 import { useState } from 'react';
@@ -36,6 +36,7 @@ const ProjectCard = ({ description, imagePath, techs, title }: ProjectCardProps)
     <Card sx={{ cursor: 'pointer', ':hover': { bgcolor: (theme) => theme.palette.grey[50016] } }}>
       <Stack direction={{ xs: 'column', sm: 'row' }}>
         <Box
+          draggable={false}
           component={'img'}
           src={imagePath}
           sx={{
@@ -130,6 +131,7 @@ const DialogContent = ({ dialogContent }: DialongContentProps) => {
 export default function MyProject() {
   const [items, setItems] = useState(initialItems);
   const [isDragging, setIsDragging] = useState(false);
+  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
   const [isOpenDialog, setIsOpenDialog] = useState<UseStateType>({
     dialogContent: undefined,
     isOpen: false,
@@ -139,6 +141,7 @@ export default function MyProject() {
       <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
         {items.map((item) => (
           <Reorder.Item
+            drag={!isMobile}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => setIsDragging(false)}
             onClick={() => {

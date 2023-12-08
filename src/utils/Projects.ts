@@ -4,7 +4,7 @@ export const Projects = [
     image: 'donvip.jpg',
     description:
       'Our Coach Management System is a modern application that optimizes coaching services. Built with TypeScript and Next.js, it simplifies the coordination of coaches, clients, and sessions.',
-    techs: 'Ts, NextJs, Mui v5, Redux(toolkit), Redux Thunk, Axios, Css',
+    techs: 'Typescript, NextJs, Mui v5, Redux(toolkit), Redux Thunk, ReactApexCharts, Axios, Css',
     contentDetails: {
       objectif: {
         title: 'Objectif',

@@ -44,7 +44,7 @@ const ProjectCard = ({ description, imagePath, techs, title }: ProjectCardProps)
             minHeight: { xs: '300px', sm: '200px' },
             maxWidth: { xs: '100%', sm: '200px' },
             maxHeight: { xs: '300px', sm: '200px' },
-            objectFit: { xs: 'cover', sm: 'fill' },
+            objectFit: { xs: 'cover', sm: 'unset' },
           }}
         />
         <Stack p={2} justifyContent={'space-between'}>
@@ -73,11 +73,53 @@ const ProjectCard = ({ description, imagePath, techs, title }: ProjectCardProps)
               WebkitLineClamp: 1,
             }}
           >
-            Technologies : {techs}
+            Technologies :
+            <Typography variant="paragraph" color={'text.secondary'}>
+              {` ${techs}`}
+            </Typography>
           </Typography>
         </Stack>
       </Stack>
     </Card>
+  );
+};
+
+const DialogContent = ({ dialogContent }: DialongContentProps) => {
+  const { title, contents, techs, description } = dialogContent;
+  return (
+    <Stack py={1} gap={1}>
+      <Typography variant="subtitle1" color={'primary.main'}>
+        {title}
+      </Typography>
+      <Typography variant="paragraph" color={'primary.secondary'}>
+        {`${description}`}
+      </Typography>
+      <Typography variant="subtitle2">
+        {contents.objectif.title}
+        {': '}
+        <Typography variant="paragraph" color={'text.secondary'}>
+          {contents.objectif.text}
+        </Typography>
+      </Typography>
+      <Typography variant="subtitle2">
+        {contents.functionalities.title}
+        {':'}
+        <Stack>
+          {contents.functionalities.steps.map((step, index) => (
+            <Typography key={index} variant="paragraph" color={'text.secondary'}>
+              {'- '}
+              {step}
+            </Typography>
+          ))}
+        </Stack>
+      </Typography>
+      <Typography variant="subtitle1">
+        technologies :
+        <Typography variant="paragraph" color={'text.secondary'}>
+          {` ${techs}`}
+        </Typography>
+      </Typography>
+    </Stack>
   );
 };
 
@@ -94,40 +136,6 @@ const initialItems = Projects.map((project, index) => ({
   ),
 }));
 
-const DialogContent = ({ dialogContent }: DialongContentProps) => {
-  const { title, contents, techs, description } = dialogContent;
-  return (
-    <Stack py={1} gap={1}>
-      <Typography variant="subtitle1" color={'primary.main'}>
-        {title}
-      </Typography>
-      <Typography variant="paragraph" color={'primary.secondary'}>
-        {`${description}`}
-      </Typography>
-      <Typography mb={1} variant="subtitle2">
-        {contents.objectif.title}
-        {': '}
-        <Typography variant="paragraph" color={'text.secondary'}>
-          {contents.objectif.text}
-        </Typography>
-      </Typography>
-      <Typography mb={1} variant="subtitle2">
-        {contents.functionalities.title}
-        {':'}
-        <Stack>
-          {contents.functionalities.steps.map((step, index) => (
-            <Typography key={index} variant="paragraph" color={'text.secondary'}>
-              {'- '}
-              {step}
-            </Typography>
-          ))}
-        </Stack>
-      </Typography>
-      <Typography variant="subtitle1">technologies : {techs}</Typography>
-    </Stack>
-  );
-};
-
 export default function MyProject() {
   const [items, setItems] = useState(initialItems);
   const [isDragging, setIsDragging] = useState(false);
@@ -136,12 +144,13 @@ export default function MyProject() {
     dialogContent: undefined,
     isOpen: false,
   });
+
   return (
     <>
       <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
         {items.map((item) => (
           <Reorder.Item
-            drag={!isMobile}
+            drag={!isMobile ? 'y' : false}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={() => setIsDragging(false)}
             onClick={() => {

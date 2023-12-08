@@ -9,7 +9,7 @@ import { varFadeInRight, varFadeInRightSlow } from './animations';
 export const TAB_CONFIG = [
   { value: 'About', element: <ResumeArticle /> },
   { value: 'Resume', element: <MyCvPDF /> },
-  { value: 'Project', element: <MyProject /> },
+  { value: 'Projects', element: <MyProject /> },
   { value: 'Contact', element: <MyContact /> },
 ];
 

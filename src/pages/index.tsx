@@ -1,23 +1,26 @@
 import { Box, Card, Container, Grid, Stack, Tab, Tabs, Typography } from '@mui/material';
 import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
-import type { Dispatch, ReactElement, SetStateAction } from 'react';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import type { ReactElement } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TAB_CONFIG } from '@/utils';
 
 type Props = {
-  value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  tabValue: string;
 };
 
-const Article = ({ value, setValue }: Props) => {
+const Article = ({ tabValue }: Props) => {
+  const pushRouter = useRouter().push;
   const tabs = (
     <Tabs
-      value={value}
+      value={tabValue}
       scrollButtons="auto"
       variant="scrollable"
-      onChange={(_, newValue) => setValue(newValue)}
+      onChange={(_, newValue) => {
+        pushRouter(`/?tab=${newValue}`);
+      }}
       sx={{
         borderRadius: { xs: 'unset', sm: '0 0 0 18px' },
         backgroundColor: (theme) => theme.palette.background.neutral,
@@ -56,12 +59,12 @@ const Article = ({ value, setValue }: Props) => {
               },
             }}
           >
-            {value}
+            {tabValue}
           </Typography>
           {tabs}
         </Box>
         {TAB_CONFIG.map((tab, id) => {
-          const isMatchedValue = tab.value === value;
+          const isMatchedValue = tab.value === tabValue;
           return (
             isMatchedValue && (
               <Box px={4.8} key={id}>
@@ -77,6 +80,11 @@ const Article = ({ value, setValue }: Props) => {
 
 function Index() {
   const [value, setValue] = useState('About');
+  const routerTabValue = useRouter().query.tab as string;
+
+  useEffect(() => {
+    if (routerTabValue) setValue(routerTabValue);
+  }, [routerTabValue]);
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>
@@ -86,7 +94,7 @@ function Index() {
             <SideBarConfig value={value} />
           </Grid>
           <Grid item xs={12} sm={12} md={9}>
-            <Article value={value} setValue={setValue} />
+            <Article tabValue={value} />
           </Grid>
         </Grid>
       </Box>

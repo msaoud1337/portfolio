@@ -3,7 +3,7 @@ import { CogIcon } from '@heroicons/react/24/solid';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AnimatePresence, motion } from 'framer-motion';
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useMemo, useState } from 'react';
 
 import type { IMetaProps } from './Meta';
 import { Meta } from './Meta';
@@ -116,11 +116,13 @@ function MainLayout({ meta, children }: IMainProps) {
     </Box>
   );
 
+  const Memorizaed = useMemo(() => <VisibleBox />, [isVisible]);
+
   return (
     <>
       <Meta {...meta} />
       <RootStyle>
-        <VisibleBox />
+        {Memorizaed}
         {children}
       </RootStyle>
     </>

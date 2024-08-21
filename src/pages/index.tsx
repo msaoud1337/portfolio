@@ -18,6 +18,7 @@ const Article = ({ tabValue }: Props) => {
       value={tabValue}
       scrollButtons="auto"
       variant="scrollable"
+      aria-label="Portfolio Tabs"
       onChange={(_, newValue) => {
         pushRouter(`/?tab=${newValue}`);
       }}
@@ -33,7 +34,7 @@ const Article = ({ tabValue }: Props) => {
   );
 
   return (
-    <Card>
+    <Card component="section">
       <Stack spacing={2} bgcolor={'background.paper'}>
         <Box
           sx={{
@@ -42,6 +43,7 @@ const Article = ({ tabValue }: Props) => {
           }}
         >
           <Typography
+            component="h1"
             px={4.8}
             py={4}
             variant="h4"
@@ -67,7 +69,7 @@ const Article = ({ tabValue }: Props) => {
           const isMatchedValue = tab.value === tabValue;
           return (
             isMatchedValue && (
-              <Box px={4.8} key={id}>
+              <Box px={4.8} key={id} component="article">
                 {tab.element}
               </Box>
             )
@@ -87,24 +89,33 @@ function Index() {
   }, [routerTabValue]);
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>
-      <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={3}>
-            <SideBarConfig value={value} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={9}>
-            <Article tabValue={value} />
-          </Grid>
+    <Container
+      component={'main'}
+      maxWidth="lg"
+      sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2, px: { sm: '10%', md: 'unset' } }}
+    >
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} md={3}>
+          <SideBarConfig value={value} />
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={12} md={9}>
+          <Article tabValue={value} />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout meta={{ title: 'Msaoud - Personal Portfolio', description: '' }}>{page}</MainLayout>
+    <MainLayout
+      meta={{
+        title: 'Msaoud - Personal Portfolio',
+        description: 'A portfolio showcasing the work of Msaoud',
+      }}
+    >
+      {page}
+    </MainLayout>
   );
 };
 

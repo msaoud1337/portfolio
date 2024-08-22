@@ -3,7 +3,6 @@ import SideBarConfig from 'components/userCard';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
 import type { ReactElement } from 'react';
-import { useEffect, useState } from 'react';
 
 import { TAB_CONFIG } from '@/utils';
 
@@ -79,22 +78,17 @@ const Article = ({ tabValue }: Props) => {
 };
 
 function Index() {
-  const [value, setValue] = useState('About');
-  const routerTabValue = useRouter().query.tab as string;
-
-  useEffect(() => {
-    if (routerTabValue) setValue(routerTabValue);
-  }, [routerTabValue]);
+  const tabValue = useRouter().query.tab as string;
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={3}>
-            <SideBarConfig value={value} />
+            <SideBarConfig value={tabValue} />
           </Grid>
           <Grid item xs={12} sm={12} md={9}>
-            <Article tabValue={value} />
+            <Article tabValue={tabValue} />
           </Grid>
         </Grid>
       </Box>
@@ -104,7 +98,14 @@ function Index() {
 
 Index.getLayout = function getLayout(page: ReactElement) {
   return (
-    <MainLayout meta={{ title: 'Msaoud - Personal Portfolio', description: '' }}>{page}</MainLayout>
+    <MainLayout
+      meta={{
+        title: 'Msaoud - Personal Portfolio',
+        description: 'A portfolio showcasing the work of Msaoud',
+      }}
+    >
+      {page}
+    </MainLayout>
   );
 };
 

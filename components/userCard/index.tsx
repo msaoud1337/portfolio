@@ -26,13 +26,13 @@ import { parentAnimation, varFadeInUp, varFadeInUpFaster } from '@/utils/animati
 
 const ImageBox = styled('img')(() => ({
   position: 'absolute',
-  top: '50%',
+  top: '52%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   objectFit: 'contain',
-  maxHeight: '80%',
-  maxWidth: '80%',
-  borderRadius: '40%',
+  maxHeight: '70%',
+  maxWidth: '70%',
+  borderRadius: '30%',
 }));
 
 type UserLinksProps = {
@@ -177,7 +177,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       }}
     >
       <AvatarBackgroundBlop palette={palette} />
-      <ImageBox src="/me.png" />
+      <ImageBox src="/imageOneBgT.png" />
     </Box>
   );
 

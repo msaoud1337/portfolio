@@ -85,10 +85,10 @@ function Index() {
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={3}>
-            <SideBarConfig value={tabValue} />
+            <SideBarConfig value={tabValue || 'About'} />
           </Grid>
           <Grid item xs={12} sm={12} md={9}>
-            <Article tabValue={tabValue} />
+            <Article tabValue={tabValue || 'About'} />
           </Grid>
         </Grid>
       </Box>

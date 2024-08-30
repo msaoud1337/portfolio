@@ -84,8 +84,8 @@ function MainLayout({ meta, children }: IMainProps) {
           sx={{
             justifyContent: 'center',
             alignItems: isLight ? 'flex-end' : 'flex-start',
-            px: 8,
-            pt: 2,
+            py: 2,
+            paddingInline: { xs: 2, sm: '12%', md: 3 },
           }}
         >
           <Box

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { createContext } from 'react';
-import type { SettingsContextProps, ThemeColor, ThemeMode } from 'types/settings';
+import type { SettingsContextProps, ThemeColor } from 'types/settings';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 import palette from '../theme/palette';
@@ -102,10 +102,10 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     themeColor: initialState.themeColor,
   });
 
-  const onChangeMode = (color: ThemeMode) => {
+  const onChangeMode = () => {
     setSettings({
       ...settings,
-      themeMode: color,
+      themeMode: settings.themeMode === 'light' ? 'night' : 'light',
     });
   };
 

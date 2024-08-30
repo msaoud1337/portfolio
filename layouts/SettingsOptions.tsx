@@ -46,11 +46,11 @@ const ThemeOptions = ({ isDarkMode }: { isDarkMode: boolean }) => {
   };
 
   const handleDark = () => {
-    if (themeMode !== 'dark') return onChangeMode('dark');
+    if (themeMode !== 'dark') return onChangeMode();
   };
 
   const handleLight = () => {
-    if (themeMode !== 'light') return onChangeMode('light');
+    if (themeMode !== 'light') return onChangeMode();
   };
 
   return (

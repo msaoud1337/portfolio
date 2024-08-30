@@ -15,6 +15,7 @@ const Article = ({ tabValue }: Props) => {
   const tabs = (
     <Tabs
       value={tabValue}
+      component={'div'}
       scrollButtons="auto"
       variant="scrollable"
       onChange={(_, newValue) => {
@@ -81,13 +82,13 @@ function Index() {
   const tabValue = useRouter().query.tab as string;
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: { xs: 2, sm: 4, md: 6 }, pb: 2 }}>
+    <Container maxWidth="lg" sx={{ paddingTop: { xs: 0, sm: 2, md: 4 }, pb: 2 }}>
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={12} md={3} paddingTop={0}>
             <SideBarConfig value={tabValue || 'About'} />
           </Grid>
-          <Grid item xs={12} sm={12} md={9}>
+          <Grid item xs={12} sm={12} md={9} paddingTop={0}>
             <Article tabValue={tabValue || 'About'} />
           </Grid>
         </Grid>

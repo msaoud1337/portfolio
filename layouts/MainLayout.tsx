@@ -1,9 +1,11 @@
+import { Box, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { cubicBezier, motion } from 'framer-motion';
+import useSettings from 'hooks/useSettings';
 import { type ReactNode } from 'react';
 
 import type { IMetaProps } from './Meta';
 import { Meta } from './Meta';
-// import ThemeSettings from './SettingsOptions';
 
 type IMainProps = {
   meta: IMetaProps;
@@ -12,117 +14,120 @@ type IMainProps = {
 
 const RootStyle = styled('div')({
   display: 'flex',
+  flexDirection: 'column',
   minHeight: '100vh',
   overflow: 'hidden',
   position: 'relative',
 });
 
+const AnimatedNightIcon = () => {
+  return (
+    <motion.svg
+      animate={{ rotate: [0, 360] }}
+      transition={{
+        duration: 5,
+        ease: 'linear',
+        repeat: Infinity,
+      }}
+      stroke="currentColor"
+      fill="none"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      height="20"
+      width="20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </motion.svg>
+  );
+};
+
+const AnimatedLightIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
+  );
+};
+
 function MainLayout({ meta, children }: IMainProps) {
-  // const [isVisible, setIsVisible] = useState(false);
+  const { onChangeMode, themeMode } = useSettings();
 
-  // const onEnterHandle = () => {
-  //   setIsVisible(true);
-  // };
-
-  // const onLeaveHandle = () => {
-  //   setIsVisible(false);
-  // };
-
-  // const isVisibleContent = isVisible && (
-  //   <AnimatePresence>
-  //     <motion.div
-  //       initial={{ x: -140, opacity: 0 }}
-  //       animate={{
-  //         x: 0,
-  //         opacity: 1,
-  //         transition: {
-  //           duration: 0.64,
-  //           ease: [0.43, 0.13, 0.23, 0.96],
-  //         },
-  //       }}
-  //     >
-  //       <Box
-  //         onClick={onLeaveHandle}
-  //         sx={{
-  //           p: 0.5,
-  //           left: 85,
-  //           bottom: '50%',
-  //           color: 'text.primary',
-  //           position: 'absolute',
-  //           bgcolor: 'background.neutral',
-  //           borderRadius: '0 24px 24px 0px',
-  //           boxShadow: (theme) => theme.customShadows.z12,
-  //           border: (theme) => `1px solid ${theme.palette.divider}`,
-  //           display: 'flex',
-  //           justifyContent: 'center',
-  //         }}
-  //       >
-  //         <XCircleIcon height={35} width={35} />
-  //       </Box>
-  //       <ThemeSettings />
-  //     </motion.div>
-  //   </AnimatePresence>
-  // );
-
-  // const isNotVisibleContent = !isVisible && (
-  //   <AnimatePresence>
-  //     <motion.div
-  //       initial={{ x: -140, opacity: 0 }}
-  //       animate={{
-  //         x: 0,
-  //         opacity: 1,
-  //         transition: {
-  //           duration: 0.64,
-  //           ease: [0.43, 0.13, 0.23, 0.96],
-  //         },
-  //       }}
-  //     >
-  //       <Box
-  //         onClick={onEnterHandle}
-  //         sx={{
-  //           p: 0.5,
-  //           px: '4px',
-  //           bottom: '50%',
-  //           color: 'text.primary',
-  //           position: 'absolute',
-  //           bgcolor: 'background.neutral',
-  //           borderRadius: '0 24px 16px 24px',
-  //           boxShadow: (theme) => theme.customShadows.z12,
-  //           border: (theme) => `1px solid ${theme.palette.divider}`,
-  //         }}
-  //       >
-  //         <CogIcon style={{ paddingTop: 2 }} height={35} width={35} />
-  //       </Box>
-  //     </motion.div>
-  //   </AnimatePresence>
-  // );
-
-  // const VisibleBox = () => (
-  //   <Box
-  //     sx={{
-  //       position: 'fixed',
-  //       top: 0,
-  //       bottom: 0,
-  //       left: 0,
-  //       zIndex: 1337,
-  //     }}
-  //   >
-  //     {isNotVisibleContent}
-  //     {isVisibleContent}
-  //   </Box>
-  // );
-
-  // const Memorizaed = useMemo(() => <VisibleBox />, [isVisible]);
+  const isLight = themeMode === 'light';
 
   return (
     <>
       <Meta {...meta} />
       <RootStyle>
-        {/* {Memorizaed} */}
+        <Stack
+          component={'nav'}
+          sx={{
+            justifyContent: 'center',
+            alignItems: isLight ? 'flex-end' : 'flex-start',
+            px: 8,
+            pt: 2,
+          }}
+        >
+          <Box
+            key={21}
+            component={motion.span}
+            layoutId="themeIcon"
+            transition={{
+              duration: 1.2,
+              ease: cubicBezier(0.35, 0.17, 0.3, 1),
+            }}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '40px',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                border: '1px solid rgba(145, 158, 171, 0.24)',
+                p: 1,
+                borderRadius: '50%',
+                cursor: 'pointer',
+                '&:hover': {
+                  boxShadow: (theme) => `0px 0px 3px 2px ${theme.palette.primary.main}`,
+                },
+                '&:active': {
+                  boxShadow: (theme) => `0px 0px 3px 5px ${theme.palette.primary.main}`,
+                },
+              }}
+              onClick={() => onChangeMode()}
+            >
+              {!isLight ? <AnimatedNightIcon /> : <AnimatedLightIcon />}
+            </Box>
+          </Box>
+        </Stack>
         {children}
       </RootStyle>
     </>
   );
 }
-
 export default MainLayout;

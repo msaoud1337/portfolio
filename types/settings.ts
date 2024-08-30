@@ -17,6 +17,6 @@ export type SettingsContextProps = {
     name: string;
     value: string;
   }[];
-  onChangeMode: (color: ThemeMode) => void;
+  onChangeMode: () => void;
   onChangeColor: (color: string) => void;
 };

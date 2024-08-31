@@ -82,7 +82,7 @@ function Index() {
   const tabValue = useRouter().query.tab as string;
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: { xs: 0, sm: 2, md: 4 }, pb: 2 }}>
+    <Container maxWidth="lg" sx={{ pb: 2 }}>
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={3} paddingTop={0}>

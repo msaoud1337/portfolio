@@ -108,19 +108,22 @@ export const userLinksConfig = (color: string) => {
 };
 
 export const SKILLS_ICONS = [
-  { href: '/js.svg', title: 'javascript' },
-  { href: '/ts.svg', title: 'typescript' },
-  { href: '/react.svg', title: 'reactjs' },
-  { href: '/next.svg', title: 'nextjs' },
-  { href: '/mui.svg', title: 'material Ui' },
-  { href: '/github.svg', title: 'github' },
-  { href: '/git.svg', title: 'git' },
-  { href: '/html.svg', title: 'html' },
-  { href: '/css.svg', title: 'css' },
+  { href: '/js.svg', title: 'Javascript' },
+  { href: '/ts.svg', title: 'Typescript' },
+  { href: '/react.svg', title: 'ReactJs' },
+  { href: '/remix.svg', title: 'RemixJs' },
+  { href: '/next.svg', title: 'NextJs' },
+  { href: '/mui.svg', title: 'Material Ui' },
+  { href: '/github.svg', title: 'Github' },
+  { href: '/git.svg', title: 'Git' },
+  { href: '/html.svg', title: 'Html' },
+  { href: '/css.svg', title: 'Css' },
+  { href: '/tailwind.svg', title: 'Tailwind' },
   {
     href: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg',
     title: 'c',
   },
+  { href: '/nest.svg', title: 'NestJs' },
 ];
 
 export const INTERSTINGS = [

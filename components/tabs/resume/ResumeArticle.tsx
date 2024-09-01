@@ -11,12 +11,13 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import type { MotionValue } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 import { INTERSTINGS, SKILLS_ICONS } from '@/utils';
 import { varFadeInDown, varFadeInRight } from '@/utils/animations';
-import { aboutMeText, internShipText } from '@/utils/texts';
+import { aboutMeText, jobSearchText } from '@/utils/texts';
 
 import DialogSlide from '../../dialog';
 
@@ -27,6 +28,50 @@ type CardsProps = {
   text: string;
   title: string;
   icon: JSX.Element;
+};
+
+const IconContainer = ({ mouseX, icon }: { mouseX: MotionValue; icon: JSX.Element }) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+
+  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+  const heightTransformIcon = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+
+  const width = useSpring(widthTransform, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+  const height = useSpring(heightTransform, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+
+  const widthIcon = useSpring(widthTransformIcon, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+  const heightIcon = useSpring(heightTransformIcon, {
+    mass: 0.1,
+    stiffness: 150,
+    damping: 12,
+  });
+
+  return (
+    <motion.div ref={ref} style={{ width, height }}>
+      <motion.div style={{ width: widthIcon, height: heightIcon }}>{icon}</motion.div>
+    </motion.div>
+  );
 };
 
 const Cards = ({ text, icon, title }: CardsProps) => {
@@ -105,6 +150,7 @@ const Cards = ({ text, icon, title }: CardsProps) => {
 
 export default function ResumeArticle() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const mouseX = useMotionValue(Infinity);
 
   return (
     <>
@@ -123,19 +169,10 @@ export default function ResumeArticle() {
               {...varFadeInRight}
               sx={{ cursor: 'pointer' }}
             >
-              <CardHeader title="Search for an internship" sx={{ color: 'primary.main' }} />
+              <CardHeader title="Seeking Jobs" sx={{ color: 'primary.main' }} />
               <CardContent>
-                <Typography
-                  variant="paragraph"
-                  color={'text.secondary'}
-                  sx={{
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    WebkitLineClamp: 3,
-                  }}
-                >
-                  {internShipText}
+                <Typography variant="paragraph" color={'text.secondary'}>
+                  {jobSearchText}
                 </Typography>
               </CardContent>
             </Card>
@@ -161,9 +198,17 @@ export default function ResumeArticle() {
           </Box>
           <Box pt={2}>
             <Typography variant="h4" mb={2}>
-              My Current web dev skills:
+              Development Skills:
             </Typography>
-            <Stack direction={'row'} flexWrap={'wrap'} gap={1} pb={2}>
+            <Stack
+              pb={2}
+              gap={1}
+              component={motion.div}
+              flexWrap={'wrap'}
+              direction={'row'}
+              onMouseMove={(e) => mouseX.set(e.pageX)}
+              onMouseLeave={() => mouseX.set(Infinity)}
+            >
               {SKILLS_ICONS.map((icon, id) => {
                 const iconTRansition = {
                   duration: 0.64 + id / 4,
@@ -174,9 +219,20 @@ export default function ResumeArticle() {
                   animate: { x: 0, opacity: 1, transition: iconTRansition },
                 };
                 return (
-                  <Tooltip key={id} title={icon.title}>
-                    <motion.img height={40} width={40} {...iconFadeToRight} src={icon.href} />
-                  </Tooltip>
+                  <IconContainer
+                    key={id}
+                    mouseX={mouseX}
+                    icon={
+                      <Tooltip title={icon.title}>
+                        <motion.img
+                          height={'100%'}
+                          width={'100%'}
+                          {...iconFadeToRight}
+                          src={icon.href}
+                        />
+                      </Tooltip>
+                    }
+                  />
                 );
               })}
             </Stack>
@@ -187,7 +243,7 @@ export default function ResumeArticle() {
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         title="Search for an internship"
-        content={internShipText}
+        content={jobSearchText}
       />
     </>
   );

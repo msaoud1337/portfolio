@@ -1,4 +1,4 @@
 export const aboutMeText =
   'Passionate React/Next.js developer with a love for clean and efficient code. I specialize in crafting user-centric experiences and building robust web applications. From turning wireframes into responsive UIs to optimizing performance, I thrive on transforming ideas into reality. Eager to contribute my skills and collaborate on exciting projects';
-export const internShipText =
-  "I'm currently in search of an internship opportunity where I can apply and further develop the skills I've acquired recently, particularly in React, Nextjs, Javascript, Typscript and more. The learning journey has been quite impactful, expanding my knowledge and expertise. I'm enthusiastic about the prospect of contributing these skills in a practical, real-world professional setting.";
+export const jobSearchText =
+  'I am actively seeking a professional opportunity where I can leverage and further develop my skills in React, Next.js, JavaScript, TypeScript, and more. My recent experiences have significantly expanded my expertise, and I am excited about the chance to apply these skills in a dynamic, real-world environment. I am eager to contribute to a team and take on new challenges in a professional setting.';

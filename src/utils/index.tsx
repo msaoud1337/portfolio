@@ -57,9 +57,9 @@ export const userLinksConfig = (color: string) => {
     },
     {
       title: 'EMAIL',
-      name: 'medaminesaoud8020@gmail.com',
+      name: 'medsaoud.amine@gmail.com',
       href: '',
-      tooltip: 'medaminesaoud8020@gmail.com',
+      tooltip: 'medsaoud.amine@gmail.com',
       icon: (
         <svg height="25" viewBox="0 0 24 24" width="25" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(1.5 4)">
@@ -77,30 +77,17 @@ export const userLinksConfig = (color: string) => {
       ),
     },
     {
-      title: 'PHONE',
-      name: '06 17 03 16 50',
-      href: '',
-      tooltip: '+212 6 17 03 16 50',
+      title: 'LOCATION',
+      name: 'Morocco, Khouribga',
+      href: 'https://www.google.com/maps/place/Khouribga/@32.8807847,-6.9996947,12z/data=!3m1!4b1!4m6!3m5!1s0xda427fa6cc01abd:0x81e42d2370814027!8m2!3d32.8867434!4d-6.9114722!16zL20vMDRsdHF0?entry=ttu&g_ep=EgoyMDI0MDgyOC4wIKXMDSoASAFQAw%3D%3D',
+      tooltip: 'Morocco, Khouribga',
       icon: (
-        <svg
-          viewBox="0 0 24 24"
-          height="25"
-          width="25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-          <g id="SVGRepo_iconCarrier">
-            {' '}
-            <path
-              d="M12 18H12.01M9.2 21H14.8C15.9201 21 16.4802 21 16.908 20.782C17.2843 20.5903 17.5903 20.2843 17.782 19.908C18 19.4802 18 18.9201 18 17.8V6.2C18 5.0799 18 4.51984 17.782 4.09202C17.5903 3.71569 17.2843 3.40973 16.908 3.21799C16.4802 3 15.9201 3 14.8 3H9.2C8.0799 3 7.51984 3 7.09202 3.21799C6.71569 3.40973 6.40973 3.71569 6.21799 4.09202C6 4.51984 6 5.07989 6 6.2V17.8C6 18.9201 6 19.4802 6.21799 19.908C6.40973 20.2843 6.71569 20.5903 7.09202 20.782C7.51984 21 8.07989 21 9.2 21Z"
-              stroke={color}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            ></path>{' '}
-          </g>
+        <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 512 512">
+          <circle cx="256" cy="192" r="32" fill={color} />
+          <path
+            fill={color}
+            d="M256 32c-88.22 0-160 68.65-160 153c0 40.17 18.31 93.59 54.42 158.78c29 52.34 62.55 99.67 80 123.22a31.75 31.75 0 0 0 51.22 0c17.42-23.55 51-70.88 80-123.22C397.69 278.61 416 225.19 416 185c0-84.35-71.78-153-160-153m0 224a64 64 0 1 1 64-64a64.07 64.07 0 0 1-64 64"
+          />
         </svg>
       ),
     },

@@ -152,9 +152,11 @@ export default function ResumeArticle() {
     <>
       <AnimatePresence>
         <Box component={motion.div} {...varFadeInDown} pb={3}>
-          <Typography variant="paragraph" color={'text.secondary'}>
-            {aboutMeText}
-          </Typography>
+          <Typography
+            variant="paragraph"
+            color={'text.secondary'}
+            dangerouslySetInnerHTML={{ __html: aboutMeText }}
+          />
           <Box pt={2}>
             <Typography variant="h4" mb={2}>
               Currently involved in:
@@ -167,9 +169,11 @@ export default function ResumeArticle() {
             >
               <CardHeader title="Seeking Jobs" sx={{ color: 'primary.main' }} />
               <CardContent>
-                <Typography variant="paragraph" color={'text.secondary'}>
-                  {jobSearchText}
-                </Typography>
+                <Typography
+                  variant="paragraph"
+                  color={'text.secondary'}
+                  dangerouslySetInnerHTML={{ __html: jobSearchText }}
+                />
               </CardContent>
             </Card>
           </Box>

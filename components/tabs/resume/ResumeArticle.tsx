@@ -1,28 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Stack,
-  SvgIcon,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Stack, Tooltip, Typography } from '@mui/material';
 import type { MotionValue } from 'framer-motion';
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useAnimate,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
+import { useRef, useState } from 'react';
 
 import { INTERSTINGS, SKILLS_ICONS } from '@/utils';
 import { varFadeInDown, varFadeInRight } from '@/utils/animations';
 import { aboutMeText, jobSearchText } from '@/utils/texts';
 
 import DialogSlide from '../../dialog';
-
-const MOBILEICONSIZE = '29px';
-const DESKTOPICONSIZE = '35px';
 
 type CardsProps = {
   text: string;
@@ -75,74 +68,77 @@ const IconContainer = ({ mouseX, icon }: { mouseX: MotionValue; icon: JSX.Elemen
 };
 
 const Cards = ({ text, icon, title }: CardsProps) => {
-  const { breakpoints } = useTheme();
-  const isMobile = useMediaQuery(breakpoints.only('xs'));
-  const [maxHeight, setMaxHeight] = useState<number | string>('60px');
-  const [nbline, setnbline] = useState<number | string>(2);
-
-  useEffect(() => {
-    if (isMobile) {
-      setMaxHeight('120px');
-    } else setMaxHeight('60px');
-  }, [isMobile]);
-
+  const [scope, animate] = useAnimate();
   return (
     <Card
+      component={motion.div}
+      ref={scope}
       onMouseEnter={() => {
-        setMaxHeight('auto');
-        setnbline('unset');
+        animate(scope.current, { opacity: 1 });
       }}
       onMouseLeave={() => {
-        if (isMobile) setMaxHeight('120px');
-        else setMaxHeight('60px');
-        setnbline(2);
+        animate(scope.current, { opacity: 1 });
       }}
+      layout="size"
+      layoutId={title}
       sx={{
         p: 3,
         pt: 3,
+        mt: 1,
         maxWidth: '100%',
-        minHeight: '134px',
-        overflow: 'hidden',
+        height: 'auto',
+        overflow: 'visible',
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
         position: 'relative',
+        '&:hover': {
+          '& > .iconBox': {
+            border: 'unset',
+            boxShadow: ({ customShadows }) => customShadows.z16,
+          },
+          '& > div > .text': {
+            WebkitLineClamp: 'unset',
+          },
+        },
       }}
     >
       <Box
-        component={motion.div}
-        initial={{ height: 0 }}
-        animate={{ height: maxHeight }}
-        exit={{ height: maxHeight }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-        sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' } }}
-        color={'primary.main'}
+        sx={{
+          height: 50,
+          width: 50,
+          position: 'absolute',
+          top: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transform: 'translateY(-50%)',
+          bgcolor: 'background.neutral',
+          color: 'primary.main',
+          borderRadius: '50%',
+          border: (theme) => `1px solid ${theme.palette.divider}`,
+        }}
+        fontSize="large"
+        className="iconBox"
       >
-        <SvgIcon
+        {icon}
+      </Box>
+      <Box>
+        <Typography variant="subtitle1" color={'primary.main'}>
+          {title}
+        </Typography>
+        <Typography
+          className="text"
           sx={{
-            mr: 1,
-            mb: 1,
-            height: { xs: MOBILEICONSIZE, sm: DESKTOPICONSIZE },
-            width: { xs: MOBILEICONSIZE, sm: DESKTOPICONSIZE },
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            WebkitLineClamp: 2,
           }}
-          fontSize="large"
-          color={'inherit'}
+          variant="paragraph"
+          color={'text.secondary'}
         >
-          {icon}
-        </SvgIcon>
-        <Box>
-          <Typography variant="subtitle1">{title}</Typography>
-          <Typography
-            className="text"
-            sx={{
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              WebkitLineClamp: nbline,
-            }}
-            variant="paragraph"
-            color={'text.secondary'}
-          >
-            {text}
-          </Typography>
-        </Box>
+          {text}
+        </Typography>
       </Box>
     </Card>
   );

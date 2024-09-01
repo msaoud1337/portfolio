@@ -132,7 +132,7 @@ export const INTERSTINGS = [
   {
     title: 'FrontEnd Web Dev',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={30} width={30}>
         <g fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0l-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234" />
           <path
@@ -150,7 +150,7 @@ export const INTERSTINGS = [
   {
     title: 'Mobile Dev',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height={30} width={30}>
         <g fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5">
           <path strokeLinejoin="round" d="m12 19.01l.01-.011" />
           <path d="M18 18v3.4a.6.6 0 0 1-.6.6H6.6a.6.6 0 0 1-.6-.6V18M18 6V2.6a.6.6 0 0 0-.6-.6H6.6a.6.6 0 0 0-.6.6V6" />

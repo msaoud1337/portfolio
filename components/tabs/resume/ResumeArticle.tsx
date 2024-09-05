@@ -9,13 +9,11 @@ import {
   useSpring,
   useTransform,
 } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { INTERSTINGS, SKILLS_ICONS } from '@/utils';
-import { varFadeInDown, varFadeInRight } from '@/utils/animations';
+import { TRANSITION_ENTER1, varFadeInDown } from '@/utils/animations';
 import { aboutMeText, jobSearchText } from '@/utils/texts';
-
-import DialogSlide from '../../dialog';
 
 type CardsProps = {
   text: string;
@@ -79,8 +77,6 @@ const Cards = ({ text, icon, title }: CardsProps) => {
       onMouseLeave={() => {
         animate(scope.current, { opacity: 1 });
       }}
-      layout="size"
-      layoutId={title}
       sx={{
         p: 3,
         pt: 3,
@@ -145,8 +141,22 @@ const Cards = ({ text, icon, title }: CardsProps) => {
 };
 
 export default function ResumeArticle() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   const mouseX = useMotionValue(Infinity);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState<number | undefined>(68);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      const observedHeight = entries[0]?.contentRect.height;
+      if (observedHeight) setHeight(observedHeight + 75);
+    });
+
+    if (containerRef.current) resizeObserver.observe(containerRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [containerRef.current]);
 
   return (
     <>
@@ -162,24 +172,40 @@ export default function ResumeArticle() {
               Currently involved in:
             </Typography>
             <Card
-              onClick={() => setIsOpen(true)}
               component={motion.div}
-              {...varFadeInRight}
+              initial={{ x: 400, opacity: 0 }}
+              animate={{ x: 0, opacity: 1, transition: TRANSITION_ENTER1, height }}
               sx={{ cursor: 'pointer' }}
+              transition={{
+                duration: 2,
+              }}
             >
               <CardHeader title="Seeking Jobs" sx={{ color: 'primary.main' }} />
-              <CardContent>
-                <Typography
-                  variant="paragraph"
-                  color={'text.secondary'}
-                  dangerouslySetInnerHTML={{ __html: jobSearchText }}
-                />
+              <CardContent ref={containerRef}>
+                {jobSearchText.split(' ').map((text, index) => (
+                  <Typography
+                    key={index}
+                    component={motion.span}
+                    variant="paragraph"
+                    color={'text.secondary'}
+                    initial={{ display: 'none' }}
+                    animate={{ display: 'unset' }}
+                    transition={{
+                      duration: 0.25,
+                      delay: index / 20,
+                    }}
+                    sx={{
+                      textAlig: 'start',
+                    }}
+                    dangerouslySetInnerHTML={{ __html: `${text} ` }}
+                  />
+                ))}
               </CardContent>
             </Card>
           </Box>
           <Box pt={2}>
             <Typography variant="h4" mb={2}>
-              Currently interested in:
+              Currently interested in:{' '}
             </Typography>
             <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} gap={2}>
               {INTERSTINGS.map((item, id) => (
@@ -239,12 +265,6 @@ export default function ResumeArticle() {
           </Box>
         </Box>
       </AnimatePresence>
-      <DialogSlide
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Search for an internship"
-        content={jobSearchText}
-      />
     </>
   );
 }

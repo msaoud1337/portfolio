@@ -5,5 +5,5 @@
       <stop offset="100%" style="stop-color: rgb(239, 98, 159);"></stop>
     </linearGradient>
   </defs>
-  <path id="blob" d="M415,345Q360,440,256.5,429Q153,418,86,334Q19,250,78.5,153Q138,56,246,63.5Q354,71,412,160.5Q470,250,415,345Z" fill="none" stroke-width="7px" stroke="url(#gradient)"></path>
+  <path id="blob" d="M415,345Q360,440,256.5,429Q153,418,86,334Q19,250,78.5,153Q138,56,246,63.5Q354,71,412,160.5Q470,250,415,345Z" fill="none" strokeWidth="7px" stroke="url(#gradient)"></path>
 </svg>

@@ -1,6 +1,6 @@
 const DISTANCE = 400;
 
-const TRANSITION_ENTER1 = {
+export const TRANSITION_ENTER1 = {
   duration: 0.64,
   ease: [0.43, 0.13, 0.23, 0.96],
 };

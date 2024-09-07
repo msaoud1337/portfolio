@@ -67,22 +67,37 @@ const IconContainer = ({ mouseX, icon }: { mouseX: MotionValue; icon: JSX.Elemen
 
 const Cards = ({ text, icon, title }: CardsProps) => {
   const [scope, animate] = useAnimate();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [initialHeight, setHeight] = useState();
+
+  const BoxContent = () => (
+    <Box ref={containerRef} sx={{ position: 'absolute', opacity: 0 }}>
+      <Typography variant="subtitle1">{title}</Typography>
+      <Typography className="text" variant="paragraph">
+        {text}
+      </Typography>
+    </Box>
+  );
+
+  useEffect(() => {
+    setHeight(scope.current?.clientHeight);
+  }, []);
+
   return (
     <Card
       component={motion.div}
       ref={scope}
       onMouseEnter={() => {
-        animate(scope.current, { opacity: 1 });
+        animate(scope.current, { height: Number(containerRef.current?.clientHeight) + 50 });
       }}
       onMouseLeave={() => {
-        animate(scope.current, { opacity: 1 });
+        animate(scope.current, { height: initialHeight });
       }}
       sx={{
         p: 3,
         pt: 3,
         mt: 1,
-        maxWidth: '100%',
-        height: 'auto',
+        mb: 1,
         overflow: 'visible',
         display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
@@ -97,6 +112,7 @@ const Cards = ({ text, icon, title }: CardsProps) => {
           },
         },
       }}
+      layout
     >
       <Box
         sx={{
@@ -107,18 +123,21 @@ const Cards = ({ text, icon, title }: CardsProps) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          transform: 'translateY(-50%)',
+          transform: 'translateY(-50%) rotate(45deg)',
           bgcolor: 'background.neutral',
           color: 'primary.main',
           borderRadius: '50%',
           border: (theme) => `1px solid ${theme.palette.divider}`,
+          borderBottomColor: 'transparent',
+          borderRightColor: 'transparent',
         }}
         fontSize="large"
         className="iconBox"
       >
         {icon}
       </Box>
-      <Box>
+      <BoxContent />
+      <Box overflow={'hidden'}>
         <Typography variant="subtitle1" color={'primary.main'}>
           {title}
         </Typography>

@@ -157,7 +157,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   });
 
   const handleDownload = () => {
-    const fileUrl = 'my-cv.pdf';
+    const fileUrl = 'msaoudsCv.pdf';
     const anchor = document.createElement('a');
     anchor.href = fileUrl;
     anchor.download = 'msaoudCv.pdf';

@@ -59,7 +59,7 @@ export default function MyCvPDF() {
           variant="contained"
           sx={{ color: 'primary.contrastText' }}
         >
-          Full Page
+          View as pdf
         </Button>
       </Stack>
       <Stack>

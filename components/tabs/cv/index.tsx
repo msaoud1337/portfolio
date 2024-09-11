@@ -156,7 +156,7 @@ export default function MyCvPDF() {
           <Typography variant="paragraph" fontWeight={700}>
             1337 Coding School ( 42 Network )
           </Typography>
-          <Typography variant="paragraph">2021 – now</Typography>
+          <Typography variant="paragraph">Nov 2021 - Feb 2024</Typography>
         </Stack>
         <DetailItem>Software Architect</DetailItem>
         <Stack flexDirection={'row'} justifyContent={'space-between'}>

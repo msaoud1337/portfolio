@@ -99,13 +99,13 @@ export default function MyCvPDF() {
             balance rewarding system within the application.
           </DetailItem>
           <DetailItem>
-            Developed a full-stack app for a company rewards system for <b>Webhelp</b>, converting
-            employee performance points into balances for use on products and service
+            Contributed in full-stack app for a company rewards system for <b>Webhelp</b>,
+            converting employee performance points into balances for use on products and service
           </DetailItem>
           <DetailItem>
-            Developed an application that interacts with <b>EQDOM</b>, one of Morocco&apos;s largest
-            credit companies, to handle credit requests and provide customers with instant status
-            updates via API integration, using <b>Next.js</b> and <b>Express</b>.
+            Contributed in application that interacts with <b>EQDOM</b>, one of Morocco&apos;s
+            largest credit companies, to handle credit requests and provide customers with instant
+            status updates via API integration, using <b>Next.js</b> and <b>Express</b>.
           </DetailItem>
           <DetailItem>
             Maintained, debugged, and added over 15 new features to the company’s store based on

@@ -30,22 +30,8 @@ const IconContainer = ({ mouseX, icon }: { mouseX: MotionValue; icon: JSX.Elemen
     return val - bounds.x - bounds.width / 2;
   });
 
-  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
-  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
-
   const widthTransformIcon = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
   const heightTransformIcon = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
-
-  const width = useSpring(widthTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-  const height = useSpring(heightTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
 
   const widthIcon = useSpring(widthTransformIcon, {
     mass: 0.1,
@@ -59,9 +45,11 @@ const IconContainer = ({ mouseX, icon }: { mouseX: MotionValue; icon: JSX.Elemen
   });
 
   return (
-    <motion.div ref={ref} style={{ width, height }}>
-      <motion.div style={{ width: widthIcon, height: heightIcon }}>{icon}</motion.div>
+    // <motion.div ref={ref} style={{ width, height }}>
+    <motion.div ref={ref} style={{ width: widthIcon, height: heightIcon }}>
+      {icon}
     </motion.div>
+    // </motion.div>
   );
 };
 

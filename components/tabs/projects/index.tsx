@@ -1,125 +1,174 @@
-import { Box, Card, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
-import DialogSlide from 'components/dialog';
-import { Reorder } from 'framer-motion';
-import { useState } from 'react';
+import { EyeIcon } from '@heroicons/react/24/solid';
+import { Box, Button, Card, DialogContent, Stack, Typography } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import * as React from 'react';
 
 import { Projects } from '@/utils/Projects';
 
 type ProjectCardProps = {
-  description: string;
-  imagePath: string;
-  techs: string;
-  title: string;
-};
-
-type DialogContentType = {
-  title: string;
-  techs: string;
-  contents: {
-    objectif: { title: string; text: string };
-    functionalities: { title: string; steps: string[] };
-  };
   description?: string;
+  imagesPath: string[];
+  techs?: string;
+  title: string;
 };
 
-type UseStateType = {
-  dialogContent?: DialogContentType;
+const first = {
+  initial: {
+    x: 30,
+    rotate: -5,
+  },
+  hover: {
+    x: 0,
+    rotate: 0,
+  },
+};
+const second = {
+  initial: {
+    x: -30,
+    rotate: 5,
+  },
+  hover: {
+    x: 0,
+    rotate: 0,
+  },
+};
+
+type DialogProps = {
+  content: JSX.Element;
   isOpen: boolean;
+  onClose: VoidFunction;
+  title?: string;
 };
 
-type DialongContentProps = {
-  dialogContent: DialogContentType;
-};
-
-const ProjectCard = ({ description, imagePath, techs, title }: ProjectCardProps) => {
+function Dialoge({ content, onClose, isOpen, title }: DialogProps) {
   return (
-    <Card sx={{ cursor: 'pointer', ':hover': { bgcolor: (theme) => theme.palette.grey[50016] } }}>
-      <Stack direction={{ xs: 'column', sm: 'row' }}>
-        <Box
-          draggable={false}
-          component={'img'}
-          src={imagePath}
-          sx={{
-            minWidth: { xs: '100%', sm: '200px' },
-            minHeight: { xs: '300px', sm: '200px' },
-            maxWidth: { xs: '100%', sm: '200px' },
-            maxHeight: { xs: '300px', sm: '200px' },
-            objectFit: { xs: 'cover', sm: 'unset' },
-          }}
-        />
-        <Stack p={2} justifyContent={'space-between'}>
-          <Typography variant="subtitle1" color={'primary.main'}>
-            {title}
-          </Typography>
-          <Typography
-            variant="paragraph"
-            color={'text.secondary'}
-            sx={{
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              WebkitLineClamp: { xs: 2, sm: 3 },
-            }}
-          >
-            {description}
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            color={'text.primary'}
-            sx={{
-              display: '-webkit-box',
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              WebkitLineClamp: 1,
-            }}
-          >
-            Technologies :
-            <Typography variant="paragraph" color={'text.secondary'}>
-              {` ${techs}`}
-            </Typography>
-          </Typography>
-        </Stack>
-      </Stack>
-    </Card>
+    <React.Fragment>
+      <Dialog open={isOpen} TransitionProps={{ timeout: 550 }} onClose={onClose}>
+        <Box component={motion.div} layoutId={title}>
+          {content}
+        </Box>
+      </Dialog>
+    </React.Fragment>
   );
-};
+}
 
-const DialogContent = ({ dialogContent }: DialongContentProps) => {
-  const { title, contents, techs, description } = dialogContent;
+const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
+  const ViewCardButton = () => {
+    return (
+      <motion.div
+        style={{
+          position: 'absolute',
+          bottom: 15,
+          right: 5,
+          overflow: 'hidden',
+          paddingInline: '4px',
+        }}
+      >
+        <motion.div
+          variants={{
+            initial: {
+              x: '-110%',
+            },
+            hover: {
+              x: 0,
+            },
+          }}
+          transition={{
+            duration: 0.6,
+          }}
+        >
+          <Button variant="contained" endIcon={<EyeIcon height={12} width={12} />}>
+            More Details
+          </Button>
+        </motion.div>
+      </motion.div>
+    );
+  };
+
   return (
-    <Stack py={1} gap={1}>
-      <Typography variant="subtitle1" color={'primary.main'}>
+    <Box component={motion.div} initial="initial" animate="animate" whileHover="hover">
+      <ViewCardButton />
+      <Stack
+        flexDirection={'row'}
+        component={motion.div}
+        px={4}
+        pb={0}
+        gap={2}
+        initial="initial"
+        animate="animate"
+        whileHover="hover"
+      >
+        {imagesPath?.map((path, index) => (
+          <Box
+            component={motion.div}
+            key={index}
+            /* eslint-disable no-nested-ternary */
+            variants={!index ? first : index === 2 ? second : undefined}
+            flexGrow={1}
+            zIndex={index === 1 ? 1 : 0}
+          >
+            <Box
+              component={'img'}
+              src={path}
+              width={100}
+              sx={{
+                width: '100%',
+                height: '90%',
+                aspectRatio: '3/4',
+                objectFit: 'cover',
+                borderRadius: 2,
+                overflow: 'hidden',
+              }}
+            />
+          </Box>
+        ))}
+      </Stack>
+      <Typography
+        component={motion.p}
+        layoutId={`title${title}`}
+        variants={{
+          initial: {
+            x: 0,
+            y: 0,
+          },
+          hover: {
+            x: 5,
+            y: -2,
+          },
+        }}
+        variant="subtitle1"
+        color={'primary.main'}
+      >
         {title}
       </Typography>
-      <Typography variant="paragraph" color={'primary.secondary'}>
-        {`${description}`}
+      <Typography
+        variant="paragraph"
+        component={motion.p}
+        variants={{
+          initial: {
+            x: 0,
+            y: 0,
+            fontWeight: '300',
+          },
+          hover: {
+            x: 5,
+            y: -2,
+            fontWeight: '500',
+          },
+        }}
+        color={'text.secondary'}
+        sx={{
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          WebkitLineClamp: { xs: 2, sm: 3 },
+        }}
+      >
+        {description}
       </Typography>
-      <Typography variant="subtitle2">
-        {contents.objectif.title}
-        {': '}
-        <Typography variant="paragraph" color={'text.secondary'}>
-          {contents.objectif.text}
-        </Typography>
-      </Typography>
-      <Typography variant="subtitle2">
-        {contents.functionalities.title}
-        {':'}
-        <Stack>
-          {contents.functionalities.steps.map((step, index) => (
-            <Typography key={index} variant="paragraph" color={'text.secondary'}>
-              {'- '}
-              {step}
-            </Typography>
-          ))}
-        </Stack>
-      </Typography>
-      <Typography variant="subtitle1">
-        technologies :
-        <Typography variant="paragraph" color={'text.secondary'}>
-          {` ${techs}`}
-        </Typography>
-      </Typography>
-    </Stack>
+    </Box>
   );
 };
 
@@ -129,7 +178,7 @@ const initialItems = Projects.map((project, index) => ({
   component: (
     <ProjectCard
       description={project.description!}
-      imagePath={project.image}
+      imagesPath={project.images}
       techs={project.techs}
       title={project.title}
     />
@@ -137,48 +186,52 @@ const initialItems = Projects.map((project, index) => ({
 }));
 
 export default function MyProject() {
-  const [items, setItems] = useState(initialItems);
-  const [isDragging, setIsDragging] = useState(false);
-  const isMobile = useMediaQuery(useTheme().breakpoints.only('xs'));
-  const [isOpenDialog, setIsOpenDialog] = useState<UseStateType>({
-    dialogContent: undefined,
-    isOpen: false,
-  });
+  const { push, query } = useRouter();
+  const openedProjectsTitle = query.project as string;
+
+  const CustomeDialogContent = () => {
+    const openedProject = initialItems.find((item) => item.title === openedProjectsTitle);
+    console.log({ openedProject });
+    return (
+      <DialogContent>
+        <video width="600" controls>
+          <source src="video.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </DialogContent>
+    );
+  };
 
   return (
     <>
-      <Stack p={0} gap={3} axis="y" component={Reorder.Group} onReorder={setItems} values={items}>
-        {items.map((item) => (
-          <Reorder.Item
-            drag={!isMobile ? 'y' : false}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={() => setIsDragging(false)}
-            onClick={() => {
-              if (!isDragging)
-                setIsOpenDialog({
-                  dialogContent: {
-                    title: item.title,
-                    techs: item.techs,
-                    contents: item.contentDetails,
-                    description: item.description,
-                  },
-                  isOpen: true,
-                });
+      <Stack p={0} gap={3}>
+        {initialItems.map((item) => (
+          <Card
+            key={item.title}
+            layoutId={item.title}
+            component={motion.div}
+            onClick={() => push(`?tab=Projects&project=${item.title}`)}
+            sx={{
+              cursor: 'pointer',
+              boxShadow: 'none',
+              position: 'relative',
+              p: 2,
+              ':hover': {
+                borderColor: 'transparent',
+                boxShadow: (theme) => theme.customShadows.z16,
+              },
             }}
-            key={item.id}
-            as={'div'}
-            value={item}
-            id={item.id}
           >
             {item.component}
-          </Reorder.Item>
+          </Card>
         ))}
       </Stack>
-      {isOpenDialog.dialogContent && (
-        <DialogSlide
-          isOpen={isOpenDialog.isOpen}
-          onClose={() => setIsOpenDialog({ dialogContent: undefined, isOpen: false })}
-          content={<DialogContent dialogContent={isOpenDialog.dialogContent} />}
+      {openedProjectsTitle && (
+        <Dialoge
+          isOpen={!!openedProjectsTitle}
+          onClose={() => push('?tab=Projects')}
+          title={openedProjectsTitle}
+          content={<CustomeDialogContent />}
         />
       )}
     </>

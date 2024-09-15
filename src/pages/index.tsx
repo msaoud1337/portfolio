@@ -42,8 +42,8 @@ const Article = ({ tabValue }: Props) => {
           }}
         >
           <Typography
-            px={4.8}
-            py={4}
+            px={{ xs: 2, sm: 4.8 }}
+            py={{ xs: 2, sm: 4 }}
             variant="h4"
             sx={{
               position: 'relative',
@@ -67,7 +67,7 @@ const Article = ({ tabValue }: Props) => {
           const isMatchedValue = tab.value === tabValue;
           return (
             isMatchedValue && (
-              <Box px={4.8} key={id}>
+              <Box px={{ xs: 2, sm: 4.8 }} key={id}>
                 {tab.element}
               </Box>
             )

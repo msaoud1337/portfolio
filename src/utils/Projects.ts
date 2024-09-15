@@ -3,22 +3,20 @@ export const Projects = [
     title: "Eprogram's Landing Page",
     images: ['eProgramWebSite.png', 'eProgramWebSite1.png', 'eProgramWebSite2.png'],
     description: "Contributed in Eprogram's landing page",
-    techs: 'Typescript, NextJs, Mui v5, Redux(toolkit), Redux Thunk, ReactApexCharts, Axios, Css',
-    contentDetails: {
-      objectif: {
-        title: 'Objectif',
-        text: 'Developed a comprehensive coach management system to streamline the coordination between coaches, clients, and sessions',
-      },
-      functionalities: {
-        title: 'functionalities',
-        steps: [
-          'Managed coach information, session scheduling, and pricing.',
-          'Enabled coaches to oversee teams, track progress, and manage diet plans.',
-          'Implemented client session validation using an SMS service.',
-          'Handled secure client payments and profile management.',
-        ],
-      },
-    },
+    details:
+      "Contributed in Eprogram's landing page that effectively showcase the company’s business offerings and services.",
+    projectLink: 'https://eprogram.ma/',
+    techs: 'Gatsby, Javascript, Styled-components, Framer Motion, Axios.',
+    video: 'video',
+  },
+  {
+    title: "Eprogram's App",
+    images: ['appEprogram.png', 'appEprogram1.png', 'appEprogram2.png'],
+    description: "Contributed in Eprogram's landing page",
+    details: "Contributed to the development of Eprogram's ecommerce store application.",
+    projectLink: 'https://app.eprogram.store',
+    techs: 'RemixJs, Typescript, Tailwind CSS, GraphQL, Shopify, Framer Motion.',
+    video: 'video1',
   },
   // {
   //   title: 'Confidential App : Coach Management System',

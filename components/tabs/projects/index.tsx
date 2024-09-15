@@ -1,8 +1,9 @@
-import { EyeIcon } from '@heroicons/react/24/solid';
-import { Box, Button, Card, DialogContent, Stack, Typography } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
+import { ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
+import { Box, Button, Card, Dialog, Stack, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useRouter as nextRouter } from 'next/router';
 import * as React from 'react';
 
 import { Projects } from '@/utils/Projects';
@@ -35,24 +36,27 @@ const second = {
   },
 };
 
-type DialogProps = {
-  content: JSX.Element;
-  isOpen: boolean;
-  onClose: VoidFunction;
-  title?: string;
+const displayedCardImageOne = {
+  initial: {
+    x: 30,
+    rotate: -5,
+  },
+  animate: {
+    x: 0,
+    rotate: 0,
+  },
 };
 
-function Dialoge({ content, onClose, isOpen, title }: DialogProps) {
-  return (
-    <React.Fragment>
-      <Dialog open={isOpen} TransitionProps={{ timeout: 550 }} onClose={onClose}>
-        <Box component={motion.div} layoutId={title}>
-          {content}
-        </Box>
-      </Dialog>
-    </React.Fragment>
-  );
-}
+const displayedCardImageTwo = {
+  initial: {
+    x: -30,
+    rotate: 5,
+  },
+  animate: {
+    x: 0,
+    rotate: 0,
+  },
+};
 
 const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
   const ViewCardButton = () => {
@@ -127,7 +131,6 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
       </Stack>
       <Typography
         component={motion.p}
-        layoutId={`title${title}`}
         variants={{
           initial: {
             x: 0,
@@ -186,35 +189,130 @@ const initialItems = Projects.map((project, index) => ({
 }));
 
 export default function MyProject() {
-  const { push, query } = useRouter();
+  const { push } = useRouter();
+  const { query } = nextRouter();
   const openedProjectsTitle = query.project as string;
 
-  const CustomeDialogContent = () => {
-    const openedProject = initialItems.find((item) => item.title === openedProjectsTitle);
-    console.log({ openedProject });
-    return (
-      <DialogContent>
-        <video width="600" controls>
-          <source src="video.mov" type="video/mp4" />
+  const openedProject = initialItems.find((item) => item.title === openedProjectsTitle);
+
+  const CustomeDialogContent = openedProject && (
+    <Dialog
+      open
+      TransitionProps={{ timeout: 550 }}
+      onClose={() => push('?tab=Projects', { scroll: false })}
+      component={motion.div}
+      sx={{
+        '.MuiPaper-root': {
+          margin: 0,
+        },
+      }}
+    >
+      <Box component={motion.div} sx={{ p: 2 }}>
+        <Typography
+          component={Link}
+          href={openedProject.projectLink}
+          target="_blank"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1,
+            textDecoration: 'underline',
+            cursor: 'pointer',
+          }}
+          variant="subtitle1"
+          color={'primary.main'}
+        >
+          {openedProject.title}
+          <ArrowTopRightOnSquareIcon height={16} width={16} color="inherit" fontWeight={600} />
+        </Typography>
+        <Typography
+          variant="paragraph"
+          color={'text.secondary'}
+          sx={{
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            my: 1,
+          }}
+        >
+          {openedProject.details}
+        </Typography>
+        <Card
+          component={motion.div}
+          layoutId={openedProject.title}
+          transition={{
+            delay: 0.6,
+            duration: 0.6,
+          }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            p: 1,
+            gap: 2,
+          }}
+          initial="initial"
+          animate="animate"
+        >
+          {openedProject.images?.map((path, index) => (
+            <Box
+              component={motion.div}
+              key={index}
+              /* eslint-disable no-nested-ternary */
+              variants={
+                !index ? displayedCardImageOne : index === 2 ? displayedCardImageTwo : undefined
+              }
+              transition={{
+                delay: 0.8,
+                duration: 0.6,
+              }}
+              flexGrow={1}
+              zIndex={index === 1 ? 1 : 0}
+            >
+              <Box
+                component={'img'}
+                src={path}
+                width={100}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  aspectRatio: '3/4',
+                  objectFit: 'cover',
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                }}
+              />
+            </Box>
+          ))}
+        </Card>
+        <Box component={'video'} sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1' }} controls>
+          <source src={`${openedProject.video}.mov`} type="video/mp4" />
           Your browser does not support the video tag.
-        </video>
-      </DialogContent>
-    );
-  };
+        </Box>
+        <Typography variant="subtitle2" color={'text.primary'}>
+          Technologies :
+          <Typography variant="paragraph" color={'text.secondary'}>
+            {` ${openedProject.techs}`}
+          </Typography>
+        </Typography>
+      </Box>
+    </Dialog>
+  );
 
   return (
-    <>
+    <div>
       <Stack p={0} gap={3}>
         {initialItems.map((item) => (
           <Card
             key={item.title}
             layoutId={item.title}
             component={motion.div}
-            onClick={() => push(`?tab=Projects&project=${item.title}`)}
+            onClick={() => push(`?tab=Projects&project=${item.title}`, { scroll: false })}
             sx={{
               cursor: 'pointer',
               boxShadow: 'none',
               position: 'relative',
+              width: '100%',
               p: 2,
               ':hover': {
                 borderColor: 'transparent',
@@ -226,14 +324,7 @@ export default function MyProject() {
           </Card>
         ))}
       </Stack>
-      {openedProjectsTitle && (
-        <Dialoge
-          isOpen={!!openedProjectsTitle}
-          onClose={() => push('?tab=Projects')}
-          title={openedProjectsTitle}
-          content={<CustomeDialogContent />}
-        />
-      )}
-    </>
+      {CustomeDialogContent}
+    </div>
   );
 }

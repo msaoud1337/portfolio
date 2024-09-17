@@ -6,6 +6,8 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 
+import { CV_DETAILS } from '@/utils/texts';
+
 const PDFGenerator = dynamic(
   import('./CvContent').then((res) => res.default),
   {
@@ -36,39 +38,6 @@ const Links = ({ children, href }: { children: ReactNode; href: string }) => {
       {children}
     </Typography>
   );
-};
-
-const CV_DETAILS = {
-  links: [
-    {
-      title: 'Linkedin : mohamed-amine-saoud',
-      href: 'https://www.linkedin.com/in/mohamed-amine-saoud-63ab12249/',
-    },
-    {
-      title: 'Email : medsaoud.amine@gmail.com',
-      href: '',
-    },
-  ],
-  presentation:
-    'Experienced <b>FrontEnd</b> Developer with a strong background in UI/UX design. Passionate about creating high-quality, interactive, and responsive digital experiences. Proven problem solver who adapts quickly to new technologies and learns new skills efficiently. Recognized for delivering elegant solutions and staying updated with industry trends.',
-  eProgramProjectDetails: [
-    'Collaborated with two experts and an intern to develop a <b>Progressive Web App (PWA)</b> using <b>React.js</b> and <b>TypeScript</b>, handling all company business operations. Integrated credit services, payment processing, and a balance rewarding system within the application.',
-    'Contributed in full-stack app for a company rewards system for <b>Webhelp</b>, converting employee performance points into balances for use on products and service',
-    'Contributed in application that interacts with <b>EQDOM</b>, one of Morocco&apos;s largest credit companies, to handle credit requests and provide customers with instant status updates via API integration, using <b>Next.js</b> and <b>Express</b>.',
-    'Maintained, debugged, and added over 15 new features to the company’s store based on client needs.',
-    'Enhanced the company’s institutional website by adding sections and optimizing them with SEO best practices using <b>React.js</b>.',
-    'Implemented animations throughout the <b>PWA</b>, including onboarding flows, layout transitions, and other interactive elements,',
-  ],
-  donVipDetails: [
-    'Developed coach management system to streamline the coordination between coaches, clients, and sessions.',
-    'Managed coach information, session scheduling, and pricing.',
-    'Enabled coaches to oversee teams, track progress, and manage diet plans.',
-    'Handled secure client payments and profile management.',
-  ],
-  docVisitDetails: [
-    'Developed a website that Manage and Track Doctor&apos;s Visit History.',
-    'Manages visitor information, the reason for the visit, and schedules the next visit date.',
-  ],
 };
 
 const DetailItem = ({ content }: { content: string }) => {
@@ -221,7 +190,6 @@ export default function MyCvPDF() {
         <DetailItem content="<b>Markup/Styling:</b> HTML, CSS, Tailwind CSS, Material UI." />
         <DetailItem content="<b>Tools/Technologies:</b> Git, GitHub, Figma, Unix, GraphQL." />
       </Stack>
-      {/* <PDFGenerator /> */}
       <DialogSlide
         isOpen={open}
         content={<PDFGenerator />}

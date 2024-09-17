@@ -10,6 +10,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import SideBarConfig from 'components/userCard';
+import { motion } from 'framer-motion';
 import MainLayout from 'layouts/MainLayout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -40,11 +41,22 @@ const MobileNav = ({ tabValue }: Props) => {
         sx={{
           display: 'flex',
           flexDirection: 'row',
+          padding: 0,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '55px',
+          margin: 0,
+          gap: 1,
+          li: {
+            position: 'relative',
+            display: 'flex',
+            flexGrow: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          },
           'li::marker': {
             content: '""',
-          },
-          li: {
-            flexGrow: 1,
           },
         }}
       >
@@ -52,11 +64,26 @@ const MobileNav = ({ tabValue }: Props) => {
           const isActive = tabValue === tab.value;
           return (
             <li key={index}>
+              {isActive && (
+                <Box
+                  component={motion.span}
+                  layoutId="navBar"
+                  sx={{
+                    height: '3px',
+                    borderRadius: '2px',
+                    width: '100%',
+                    backgroundColor: 'primary.main',
+                    position: 'absolute',
+                    top: 0,
+                  }}
+                />
+              )}
               <Typography
                 component={Link}
                 href={`/?tab=${tab.value}`}
                 variant="body2"
                 fontWeight={700}
+                textAlign={'center'}
                 color={isActive ? 'primary.main' : 'text.secondary'}
               >
                 {tab.value}

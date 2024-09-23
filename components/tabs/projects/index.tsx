@@ -1,9 +1,10 @@
-import { ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
+import { ArrowTopRightOnSquareIcon, EyeIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import {
   Box,
   Button,
   Card,
   Dialog,
+  IconButton,
   Stack,
   Typography,
   useMediaQuery,
@@ -75,8 +76,8 @@ const ViewCardButton = () => {
     <motion.div
       style={{
         position: 'absolute',
-        bottom: 15,
-        right: 5,
+        bottom: '16px',
+        right: '11px',
         overflow: 'hidden',
         paddingInline: '4px',
       }}
@@ -218,13 +219,16 @@ export default function MyProject() {
       TransitionProps={{ timeout: 550 }}
       onClose={() => push('?tab=Projects', { scroll: false })}
       component={motion.div}
-      sx={{
-        '.MuiPaper-root': {
-          margin: 0,
-        },
-      }}
     >
-      <Box component={motion.div} sx={{ p: 2 }}>
+      <Box component={motion.div} sx={{ p: 2, position: 'relative' }}>
+        <IconButton
+          edge="end"
+          onClick={() => push('?tab=Projects', { scroll: false })}
+          aria-label="close"
+          sx={{ position: 'absolute', right: 18, top: 4, color: 'primary.main' }}
+        >
+          <XMarkIcon height={24} width={24} color="inherit" />
+        </IconButton>
         <Typography
           component={openedProject.projectLink ? Link : Typography}
           href={openedProject.projectLink}

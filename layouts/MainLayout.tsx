@@ -84,8 +84,9 @@ function MainLayout({ meta, children }: IMainProps) {
           sx={{
             justifyContent: 'center',
             alignItems: isLight ? 'flex-end' : 'flex-start',
-            py: 2,
+            py: { xs: 1, sm: 2 },
             paddingInline: { xs: 2, sm: '12%', md: 3 },
+            borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
           }}
         >
           <Box

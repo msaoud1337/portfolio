@@ -1,4 +1,5 @@
 import {
+  alpha,
   Box,
   Card,
   Container,
@@ -14,7 +15,7 @@ import { motion } from 'framer-motion';
 import MainLayout from 'layouts/MainLayout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import type { ReactElement } from 'react';
+import { type ReactElement, useEffect, useRef, useState } from 'react';
 
 import { TAB_CONFIG } from '@/utils';
 
@@ -23,76 +24,151 @@ type Props = {
 };
 
 const MobileNav = ({ tabValue }: Props) => {
+  const timeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
+  const [visible, setVisible] = useState(true);
+  const prevScrollPos = useRef(0);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+    console.log(currentScrollPos, prevScrollPos);
+    setVisible(prevScrollPos.current > currentScrollPos || currentScrollPos < 10);
+    prevScrollPos.current = currentScrollPos;
+    clearTimeout(timeoutRef.current!);
+    timeoutRef.current = setTimeout(() => setVisible(true), 400);
+  };
+
+  const addScrollListener = () => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', handleScroll);
+    }
+  };
+
+  const removeScrollListener = () => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeoutRef.current!);
+    }
+  };
+
+  useEffect(() => {
+    addScrollListener();
+
+    return () => {
+      removeScrollListener();
+    };
+  }, []);
+
+  console.log({ visible });
+
   return (
-    <Box
-      component={'nav'}
-      sx={{
+    <motion.div
+      ref={navRef}
+      animate={{ translateY: visible ? 0 : navRef?.current?.clientHeight }}
+      transition={{ duration: 0.3 }}
+      style={{
         position: 'fixed',
         bottom: 0,
-        right: 0,
-        width: '100vw',
-        backgroundColor: (theme) => theme.palette.background.neutral,
         zIndex: 1337,
+        right: 0,
       }}
-      aria-label="Main Navigation"
     >
-      <Stack
-        component={'ul'}
+      <Box
+        component={'nav'}
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          padding: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '55px',
-          margin: 0,
-          gap: 1,
-          li: {
-            position: 'relative',
+          width: '100vw',
+          backgroundColor: (theme) => theme.palette.background.neutral,
+        }}
+        aria-label="Main Navigation"
+      >
+        <Stack
+          component={'ul'}
+          sx={{
             display: 'flex',
-            flexGrow: 1,
+            flexDirection: 'row',
+            padding: 0,
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100%',
-          },
-          'li::marker': {
-            content: '""',
-          },
-        }}
-      >
-        {TAB_CONFIG.map((tab, index) => {
-          const isActive = tabValue === tab.value;
-          return (
-            <li key={index}>
-              {isActive && (
-                <Box
-                  component={motion.span}
-                  layoutId="navBar"
-                  sx={{
-                    height: '3px',
-                    borderRadius: '2px',
-                    width: '100%',
-                    backgroundColor: 'primary.main',
-                    position: 'absolute',
-                    top: 0,
-                  }}
-                />
-              )}
-              <Typography
-                component={Link}
-                href={`/?tab=${tab.value}`}
-                variant="body2"
-                fontWeight={700}
-                textAlign={'center'}
-                color={isActive ? 'primary.main' : 'text.secondary'}
+            height: '55px',
+            margin: 0,
+            li: {
+              position: 'relative',
+              display: 'flex',
+              flexGrow: 1,
+              flexDirection: 'column',
+              alignItems: 'center',
+              height: '100%',
+              gap: 1.7,
+              px: 2,
+            },
+            'li::marker': {
+              content: '""',
+            },
+          }}
+        >
+          {TAB_CONFIG.map((tab, index) => {
+            const isActive = tabValue === tab.value;
+            return (
+              <Box
+                key={index}
+                component={'li'}
+                sx={{
+                  justifyContent: 'center',
+                  position: 'relative',
+                }}
               >
-                {tab.value}
-              </Typography>
-            </li>
-          );
-        })}
-      </Stack>
-    </Box>
+                {isActive && (
+                  <Box
+                    component={motion.span}
+                    layoutId="navBar"
+                    initial={{
+                      originY: '0px',
+                    }}
+                    sx={{
+                      height: '3px',
+                      borderRadius: '2px',
+                      width: '80%',
+                      backgroundColor: 'primary.main',
+                      position: 'absolute',
+                      top: 0,
+                    }}
+                  />
+                )}
+                {isActive && (
+                  <Box
+                    component={motion.span}
+                    layoutId="navBarBackground"
+                    initial={{
+                      originY: '0px',
+                    }}
+                    sx={{
+                      height: '100%',
+                      width: '80%',
+                      background: 'red',
+                      position: 'absolute',
+                      backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.15),
+                      top: 0,
+                      // left: 0,
+                      zIndex: -1,
+                    }}
+                  />
+                )}
+                <Typography
+                  component={Link}
+                  href={`/?tab=${tab.value}`}
+                  variant="body2"
+                  fontWeight={700}
+                  textAlign={'center'}
+                  color={isActive ? 'primary.main' : 'text.secondary'}
+                >
+                  {tab.value}
+                </Typography>
+              </Box>
+            );
+          })}
+        </Stack>
+      </Box>
+    </motion.div>
   );
 };
 

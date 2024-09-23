@@ -113,7 +113,7 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
       <Stack
         flexDirection={'row'}
         component={motion.div}
-        px={4}
+        px={{ xs: 0, sm: 2 }}
         pb={0}
         gap={2}
         initial="initial"
@@ -135,11 +135,11 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
               width={100}
               sx={{
                 width: '100%',
-                height: '90%',
-                aspectRatio: '3/4',
+                aspectRatio: { xs: '3/5', sm: '3/4' },
                 objectFit: 'cover',
                 borderRadius: 2,
                 overflow: 'hidden',
+                mb: 1,
               }}
             />
           </Box>

@@ -1,5 +1,5 @@
 import { EyeIcon } from '@heroicons/react/24/solid';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import DialogSlide from 'components/dialog';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -91,16 +91,16 @@ const Project = ({
 
 export default function MyCvPDF() {
   const [open, setOpen] = useState(false);
-
+  const { contrastText } = useTheme().palette.primary;
   return (
     <Box sx={{ '*': { color: 'text.secondary' }, pb: 4 }}>
       <Stack mb={2} direction={'row'} justifyContent={'flex-end'} gap={1}>
         <Button
           onClick={() => setOpen(true)}
-          endIcon={<EyeIcon height={18} width={18} />}
+          endIcon={<EyeIcon height={18} width={18} fill={contrastText} />}
           size="small"
           variant="contained"
-          sx={{ color: 'primary.contrastText' }}
+          sx={{ color: contrastText }}
         >
           View as pdf
         </Button>

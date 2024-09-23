@@ -59,8 +59,6 @@ const MobileNav = ({ tabValue }: Props) => {
     };
   }, []);
 
-  console.log({ visible });
-
   return (
     <motion.div
       ref={navRef}
@@ -127,10 +125,11 @@ const MobileNav = ({ tabValue }: Props) => {
                     sx={{
                       height: '3px',
                       borderRadius: '2px',
-                      width: '80%',
+                      width: '70%',
                       backgroundColor: 'primary.main',
                       position: 'absolute',
                       top: 0,
+                      zIndex: 1,
                     }}
                   />
                 )}
@@ -143,13 +142,12 @@ const MobileNav = ({ tabValue }: Props) => {
                     }}
                     sx={{
                       height: '100%',
-                      width: '80%',
+                      width: '70%',
                       background: 'red',
                       position: 'absolute',
                       backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.15),
                       top: 0,
-                      // left: 0,
-                      zIndex: -1,
+                      zIndex: 0,
                     }}
                   />
                 )}
@@ -160,6 +158,7 @@ const MobileNav = ({ tabValue }: Props) => {
                   fontWeight={700}
                   textAlign={'center'}
                   color={isActive ? 'primary.main' : 'text.secondary'}
+                  zIndex={1}
                 >
                   {tab.value}
                 </Typography>
@@ -225,7 +224,7 @@ function Index() {
   const tabValue = useRouter().query.tab as string;
 
   return (
-    <Container maxWidth="lg" sx={{ pb: 2 }}>
+    <Container maxWidth="lg" sx={{ pb: 2, pt: 2 }}>
       <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={3} paddingTop={0}>

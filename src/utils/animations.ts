@@ -17,6 +17,7 @@ export const varFadeInDown = {
 export const varFadeInRight = {
   initial: { x: DISTANCE, opacity: 0 },
   animate: { x: 0, opacity: 1, transition: TRANSITION_ENTER1 },
+  whileInView: { x: 0, opacity: 1, transition: TRANSITION_ENTER1 },
 };
 
 const TRANSITION_ENTER = {

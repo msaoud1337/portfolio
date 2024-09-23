@@ -1,5 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Box, Card, CardContent, CardHeader, Stack, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Stack,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import type { MotionValue } from 'framer-motion';
 import {
   AnimatePresence,
@@ -12,7 +22,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 
 import { INTERSTINGS, SKILLS_ICONS } from '@/utils';
-import { TRANSITION_ENTER1, varFadeInDown } from '@/utils/animations';
+import { TRANSITION_ENTER1, varFadeInRight } from '@/utils/animations';
 import { aboutMeText, jobSearchText } from '@/utils/texts';
 
 type CardsProps = {
@@ -82,7 +92,7 @@ const Cards = ({ text, icon, title }: CardsProps) => {
         animate(scope.current, { height: initialHeight });
       }}
       sx={{
-        p: 3,
+        p: 2,
         pt: 3,
         mt: 1,
         mb: 1,
@@ -151,6 +161,8 @@ export default function ResumeArticle() {
   const mouseX = useMotionValue(Infinity);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState<number | undefined>(68);
+  const { breakpoints } = useTheme();
+  const isDesktop = useMediaQuery(breakpoints.up('md'));
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -168,7 +180,7 @@ export default function ResumeArticle() {
   return (
     <>
       <AnimatePresence>
-        <Box component={motion.div} {...varFadeInDown} pb={3}>
+        <Box component={motion.div} {...varFadeInRight} pb={3}>
           <Typography
             variant="paragraph"
             color={'text.secondary'}
@@ -214,7 +226,14 @@ export default function ResumeArticle() {
             <Typography variant="h4" mb={2}>
               Currently interested in:{' '}
             </Typography>
-            <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} gap={2}>
+            <Stack
+              direction={{ xs: 'column', sm: 'column', md: 'row' }}
+              gap={2}
+              component={motion.div}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+            >
               {INTERSTINGS.map((item, id) => (
                 <Box
                   key={id}
@@ -222,7 +241,18 @@ export default function ResumeArticle() {
                     maxWidth: { xs: '100%', sm: '100%', md: '50%' },
                   }}
                   component={motion.div}
-                  {...item.animation}
+                  variants={{
+                    initial: { x: 100, opacity: 0 },
+                    animate: {
+                      x: 0,
+                      opacity: 1,
+                      transition: {
+                        duration: 0.64,
+                        ease: [0.43, 0.13, 0.23, 0.96],
+                        delay: 0.4 + 0.3 * id,
+                      },
+                    },
+                  }}
                 >
                   <Cards text={item.content} title={item.title} icon={item.icon} />
                 </Box>
@@ -237,9 +267,12 @@ export default function ResumeArticle() {
               pb={2}
               gap={1}
               component={motion.div}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
               flexWrap={'wrap'}
               direction={'row'}
-              onMouseMove={(e) => mouseX.set(e.pageX)}
+              onMouseMove={(e) => isDesktop && mouseX.set(e.pageX)}
               onMouseLeave={() => mouseX.set(Infinity)}
             >
               {SKILLS_ICONS.map((icon, id) => {
@@ -260,7 +293,7 @@ export default function ResumeArticle() {
                         <motion.img
                           height={'100%'}
                           width={'100%'}
-                          {...iconFadeToRight}
+                          variants={iconFadeToRight}
                           src={icon.href}
                         />
                       </Tooltip>

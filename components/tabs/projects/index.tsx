@@ -1,5 +1,14 @@
 import { ArrowTopRightOnSquareIcon, EyeIcon } from '@heroicons/react/24/solid';
-import { Box, Button, Card, Dialog, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  Dialog,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -58,39 +67,46 @@ const displayedCardImageTwo = {
   },
 };
 
-const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
-  const ViewCardButton = () => {
-    return (
+const ViewCardButton = () => {
+  const { breakpoints } = useTheme();
+  const isDesktop = useMediaQuery(breakpoints.up('md'));
+  if (!isDesktop) return null;
+  return (
+    <motion.div
+      style={{
+        position: 'absolute',
+        bottom: 15,
+        right: 5,
+        overflow: 'hidden',
+        paddingInline: '4px',
+      }}
+    >
       <motion.div
-        style={{
-          position: 'absolute',
-          bottom: 15,
-          right: 5,
-          overflow: 'hidden',
-          paddingInline: '4px',
+        variants={{
+          initial: {
+            x: '-110%',
+          },
+          hover: {
+            x: 0,
+          },
+        }}
+        transition={{
+          duration: 0.6,
         }}
       >
-        <motion.div
-          variants={{
-            initial: {
-              x: '-110%',
-            },
-            hover: {
-              x: 0,
-            },
-          }}
-          transition={{
-            duration: 0.6,
-          }}
+        <Button
+          sx={{ boxShadow: 'unset' }}
+          variant="contained"
+          endIcon={<EyeIcon height={13} width={13} />}
         >
-          <Button variant="contained" endIcon={<EyeIcon height={12} width={12} />}>
-            More Details
-          </Button>
-        </motion.div>
+          More Details
+        </Button>
       </motion.div>
-    );
-  };
+    </motion.div>
+  );
+};
 
+const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
   return (
     <Box component={motion.div} initial="initial" animate="animate" whileHover="hover">
       <ViewCardButton />
@@ -167,6 +183,7 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden',
           WebkitLineClamp: { xs: 2, sm: 3 },
+          mb: -1.2,
         }}
       >
         {description}
@@ -209,9 +226,10 @@ export default function MyProject() {
     >
       <Box component={motion.div} sx={{ p: 2 }}>
         <Typography
-          component={Link}
+          component={openedProject.projectLink ? Link : Typography}
           href={openedProject.projectLink}
           target="_blank"
+          mb={1}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -224,19 +242,9 @@ export default function MyProject() {
           color={'primary.main'}
         >
           {openedProject.title}
-          <ArrowTopRightOnSquareIcon height={16} width={16} color="inherit" fontWeight={600} />
-        </Typography>
-        <Typography
-          variant="paragraph"
-          color={'text.secondary'}
-          sx={{
-            display: '-webkit-box',
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            my: 1,
-          }}
-        >
-          {openedProject.details}
+          {openedProject.projectLink && (
+            <ArrowTopRightOnSquareIcon height={16} width={16} color="inherit" fontWeight={600} />
+          )}
         </Typography>
         <Card
           component={motion.div}
@@ -289,9 +297,21 @@ export default function MyProject() {
           <source src={`${openedProject.video}.mov`} type="video/mp4" />
           Your browser does not support the video tag.
         </Box>
+        <Typography
+          variant="paragraph"
+          color={'text.secondary'}
+          sx={{
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            my: 1,
+          }}
+        >
+          {openedProject.details}
+        </Typography>
         <Typography variant="subtitle2" color={'text.primary'}>
           Technologies :
-          <Typography variant="paragraph" color={'text.secondary'}>
+          <Typography variant="paragraph" color={'text.secondary'} fontWeight={500}>
             {` ${openedProject.techs}`}
           </Typography>
         </Typography>

@@ -150,7 +150,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   const accordionRef = useRef<HTMLDivElement>(null);
   const isDesktop = useMediaQuery(breakpoints.up('md'));
   const isMobileOrTabllet = !isDesktop;
-  const [isOpenAccordion, setAccordion] = useState(false);
+  const [isOpenAccordion, setAccordion] = useState(true);
   const [elementsHeight, setElementsHeight] = useState({
     stack: 0,
     accordion: 0,
@@ -169,7 +169,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   const userAvatar = (
     <Box
       component={motion.div}
-      {...varFadeInUp}
+      {...(isDesktop ? varFadeInUp : {})}
       sx={{
         maxHeight: { xs: '130px', sm: '150px', md: '256px' },
         maxWidth: { xs: '130px', sm: '150px', md: '256px' },
@@ -182,7 +182,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   );
 
   const fullNameSection = (
-    <motion.div {...varFadeInUp}>
+    <motion.div {...(isDesktop ? varFadeInUp : {})}>
       <Box
         sx={{
           display: 'flex',
@@ -274,12 +274,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
           onChange={() => setAccordion((prevState) => !prevState)}
         >
           <AccordionSummary sx={{ backgroundColor: 'background.neutral' }}>
-            <motion.div
-              initial={{ height: 0, width: 0 }}
-              animate={{ height: 'auto', width: widthRef.current?.offsetWidth }}
-              exit={{ height: 0 }}
-              transition={{ duration: 0.5, ease: 'easeInOut' }}
-            >
+            <motion.div>
               <Stack
                 sx={{
                   flexDirection: { xs: 'row', sm: 'row', md: 'column' },

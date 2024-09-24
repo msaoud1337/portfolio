@@ -331,7 +331,21 @@ export default function MyProject() {
 
   return (
     <div>
-      <Stack p={0} pb={3} gap={3}>
+      <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', gap: 0.5 }}>
+        {'Here are my recent web projects (5):'.split(' ').map((item, index) => (
+          <Typography
+            component={motion.p}
+            variant="body1"
+            key={index}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 + 0.2 * index, duration: 0.4, ease: 'easeInOut' }}
+          >
+            {item}
+          </Typography>
+        ))}
+      </Typography>
+      <Stack p={0} pt={1} pb={3} gap={3}>
         {initialItems.map((item, index) => (
           <Card
             key={item.title}
@@ -343,7 +357,7 @@ export default function MyProject() {
               opacity: 1,
               y: 0,
               transition: {
-                delay: 0.3 + 0.4 * index,
+                delay: 0.4 + 0.1 * index,
                 duration: 0.6,
               },
             }}

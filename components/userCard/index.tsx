@@ -123,7 +123,7 @@ const UserLinks = ({ title, name, icon, href, tooltip }: UserLinksProps) => {
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  maxWidth: { xs: '160px', sm: 'unset', md: '140px' },
+                  maxWidth: { xs: 'unset', sm: 'unset', md: '140px' },
                 }}
                 variant="caption"
                 color={'text.primary'}

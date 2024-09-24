@@ -150,7 +150,7 @@ export default function MyCvPDF() {
           >
             PROFESSIONAL EXPERIENCE
           </Typography>
-          <Divider />
+          <Divider sx={{ my: 1 }} />
           <Stack gap={0.5}>
             <Project
               title="<b>eProgram</b> - CasaBlanca (Hybrid)"
@@ -178,7 +178,7 @@ export default function MyCvPDF() {
           >
             EDUCATION
           </Typography>
-          <Divider />
+          <Divider sx={{ my: 1 }} />
           <Stack>
             <Project
               title="<b>1337 Coding School ( 42 Network )</b>"
@@ -202,7 +202,7 @@ export default function MyCvPDF() {
           >
             PROGRAMMING SKILLS
           </Typography>
-          <Divider />
+          <Divider sx={{ my: 1 }} />
           <DetailItem content="<b>Programming Languages:</b> Javascript, Typescript, C." />
           <DetailItem
             content="<b>Frameworks/Libraries:</b> React.js, Next.js, Remix.js, React native, Nest.js, Redux,

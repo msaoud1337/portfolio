@@ -180,7 +180,7 @@ export default function ResumeArticle() {
   return (
     <>
       <AnimatePresence>
-        <Box component={motion.div} {...varFadeInRight} pb={3}>
+        <Box component={motion.div} {...varFadeInRight} pb={3} mt={-1}>
           <Typography
             variant="paragraph"
             color={'text.secondary'}

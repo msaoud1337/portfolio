@@ -14,7 +14,6 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRouter as nextRouter } from 'next/router';
-import * as React from 'react';
 
 import { Projects } from '@/utils/Projects';
 
@@ -333,12 +332,23 @@ export default function MyProject() {
   return (
     <div>
       <Stack p={0} pb={3} gap={3}>
-        {initialItems.map((item) => (
+        {initialItems.map((item, index) => (
           <Card
             key={item.title}
             layoutId={item.title}
             component={motion.div}
             onClick={() => push(`?tab=Projects&project=${item.title}`, { scroll: false })}
+            initial={{ opacity: 0, y: -50 }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              transition: {
+                delay: 0.3 + 0.4 * index,
+                duration: 0.6,
+              },
+            }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
             sx={{
               cursor: 'pointer',
               boxShadow: 'none',

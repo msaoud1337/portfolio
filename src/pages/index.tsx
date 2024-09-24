@@ -31,7 +31,6 @@ const MobileNav = ({ tabValue }: Props) => {
 
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    console.log(currentScrollPos, prevScrollPos);
     setVisible(prevScrollPos.current > currentScrollPos || currentScrollPos < 10);
     prevScrollPos.current = currentScrollPos;
     clearTimeout(timeoutRef.current!);

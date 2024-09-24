@@ -223,7 +223,18 @@ function Index() {
   const tabValue = useRouter().query.tab as string;
 
   return (
-    <Container maxWidth="lg" sx={{ py: 2, pb: { xs: '55px', sm: 2 } }}>
+    <Container
+      maxWidth="lg"
+      component={'section'}
+      sx={{
+        py: 2,
+        pb: { xs: '55px', sm: 2 },
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        flexGrow: 1,
+      }}
+    >
       <Box
         component={Grid}
         container

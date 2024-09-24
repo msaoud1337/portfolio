@@ -292,6 +292,7 @@ export default function ResumeArticle() {
                       <Tooltip title={icon.title}>
                         <motion.img
                           height={'100%'}
+                          loading="lazy"
                           width={'100%'}
                           variants={iconFadeToRight}
                           src={icon.href}

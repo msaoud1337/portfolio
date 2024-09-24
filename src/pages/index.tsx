@@ -224,16 +224,24 @@ function Index() {
   const tabValue = useRouter().query.tab as string;
 
   return (
-    <Container maxWidth="lg" sx={{ pb: 2, pt: 2 }}>
-      <Box sx={{ paddingInline: { sm: '10%', md: 'unset' } }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={3} paddingTop={0}>
-            <SideBarConfig value={tabValue || 'About'} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={9} paddingTop={0}>
-            <Article tabValue={tabValue || 'About'} />
-          </Grid>
+    <Container maxWidth="lg" sx={{ py: 2, pb: { xs: '55px', sm: 2 } }}>
+      <Box
+        component={Grid}
+        container
+        spacing={3}
+        sx={{ paddingInline: { sm: '10%', md: 'unset' } }}
+      >
+        <Grid item xs={12} sm={12} md={3} paddingTop={0}>
+          <SideBarConfig value={tabValue || 'About'} />
         </Grid>
+        <Grid item xs={12} sm={12} md={9} paddingTop={0}>
+          <Article tabValue={tabValue || 'About'} />
+        </Grid>
+      </Box>
+      <Box component={'footer'}>
+        <Typography typography={'body2'} color={'text.secondary'} align="center" py={2}>
+          © Made with Love by Msaoud
+        </Typography>
       </Box>
     </Container>
   );

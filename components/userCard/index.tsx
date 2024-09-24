@@ -177,7 +177,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       }}
     >
       <AvatarBackgroundBlop palette={palette} />
-      <ImageBox src="/me.png" />
+      <ImageBox src="/me.png" loading="lazy" alt="me.png" />
     </Box>
   );
 

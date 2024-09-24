@@ -132,6 +132,7 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
           >
             <Box
               component={'img'}
+              loading="lazy"
               src={path}
               width={100}
               sx={{
@@ -219,6 +220,11 @@ export default function MyProject() {
       TransitionProps={{ timeout: 550 }}
       onClose={() => push('?tab=Projects', { scroll: false })}
       component={motion.div}
+      sx={{
+        '.MuiDialog-paper': {
+          maxHeight: 'calc(100% - 140px)',
+        },
+      }}
     >
       <Box component={motion.div} sx={{ p: 2, position: 'relative' }}>
         <IconButton
@@ -283,6 +289,7 @@ export default function MyProject() {
             >
               <Box
                 component={'img'}
+                loading="lazy"
                 src={path}
                 width={100}
                 sx={{
@@ -325,7 +332,7 @@ export default function MyProject() {
 
   return (
     <div>
-      <Stack p={0} gap={3}>
+      <Stack p={0} pb={3} gap={3}>
         {initialItems.map((item) => (
           <Card
             key={item.title}

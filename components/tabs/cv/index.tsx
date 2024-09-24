@@ -1,6 +1,7 @@
 import { EyeIcon } from '@heroicons/react/24/solid';
 import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import DialogSlide from 'components/dialog';
+import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
@@ -89,9 +90,24 @@ const Project = ({
   );
 };
 
+const WhileInViewBox = ({ children }: { children: ReactNode }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      style={{ display: 'flex', flexDirection: 'column' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export default function MyCvPDF() {
   const [open, setOpen] = useState(false);
   const { contrastText } = useTheme().palette.primary;
+
   return (
     <Box sx={{ '*': { color: 'text.secondary' }, pb: 4 }}>
       <Stack mb={2} direction={'row'} justifyContent={'flex-end'} gap={1}>
@@ -125,70 +141,76 @@ export default function MyCvPDF() {
           variant="paragraph"
           dangerouslySetInnerHTML={{ __html: CV_DETAILS.presentation }}
         />
-        <Typography
-          variant="body1"
-          fontWeight={600}
-          textAlign={{ xs: 'center', sm: 'start' }}
-          pt={1}
-        >
-          PROFESSIONAL EXPERIENCE
-        </Typography>
-        <Divider />
-        <Stack gap={0.5}>
-          <Project
-            title="<b>eProgram</b> - CasaBlanca (Hybrid)"
-            duration="Feb 2024 - Aug 2024"
-            projectDetails={CV_DETAILS.eProgramProjectDetails}
-          />
-          <Project
-            title="<b>DonVIP</b> - (coaching website)"
-            duration="Oct 2023 - Dec 2023"
-            projectDetails={CV_DETAILS.donVipDetails}
-          />
-          <Project
-            title="<b>DocVisit</b> History - (doc visits’s history)"
-            duration="Jul 2023"
-            projectDetails={CV_DETAILS.docVisitDetails}
-          />
-        </Stack>
-        <Typography
-          variant="body1"
-          fontWeight={600}
-          textAlign={{ xs: 'center', sm: 'start' }}
-          pt={1}
-        >
-          EDUCATION
-        </Typography>
-        <Divider />
-        <Stack>
-          <Project
-            title="<b>1337 Coding School ( 42 Network )</b>"
-            duration="Nov 2021 - Feb 2024"
-            projectDetails={['Software Architect']}
-            mb={1}
-          />
-          <Project
-            title="<b>Institut Spécialisé de Technologie Appliquée de Khouribga</b>"
-            duration="2018 - 2020"
-            projectDetails={['Technicien Spécialisé Electromécanique des Systèmes Automatisés']}
-          />
-        </Stack>
-        <Typography
-          variant="body1"
-          fontWeight={600}
-          textAlign={{ xs: 'center', sm: 'start' }}
-          pt={1}
-        >
-          PROGRAMMING SKILLS
-        </Typography>
-        <Divider />
-        <DetailItem content="<b>Programming Languages:</b> Javascript, Typescript, C." />
-        <DetailItem
-          content="<b>Frameworks/Libraries:</b> React.js, Next.js, Remix.js, React native, Nest.js, Redux,
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            PROFESSIONAL EXPERIENCE
+          </Typography>
+          <Divider />
+          <Stack gap={0.5}>
+            <Project
+              title="<b>eProgram</b> - CasaBlanca (Hybrid)"
+              duration="Feb 2024 - Aug 2024"
+              projectDetails={CV_DETAILS.eProgramProjectDetails}
+            />
+            <Project
+              title="<b>DonVIP</b> - (coaching website)"
+              duration="Oct 2023 - Dec 2023"
+              projectDetails={CV_DETAILS.donVipDetails}
+            />
+            <Project
+              title="<b>DocVisit</b> History - (doc visits’s history)"
+              duration="Jul 2023"
+              projectDetails={CV_DETAILS.docVisitDetails}
+            />
+          </Stack>
+        </WhileInViewBox>
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            EDUCATION
+          </Typography>
+          <Divider />
+          <Stack>
+            <Project
+              title="<b>1337 Coding School ( 42 Network )</b>"
+              duration="Nov 2021 - Feb 2024"
+              projectDetails={['Software Architect']}
+              mb={1}
+            />
+            <Project
+              title="<b>Institut Spécialisé de Technologie Appliquée de Khouribga</b>"
+              duration="2018 - 2020"
+              projectDetails={['Technicien Spécialisé Electromécanique des Systèmes Automatisés']}
+            />
+          </Stack>
+        </WhileInViewBox>
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            PROGRAMMING SKILLS
+          </Typography>
+          <Divider />
+          <DetailItem content="<b>Programming Languages:</b> Javascript, Typescript, C." />
+          <DetailItem
+            content="<b>Frameworks/Libraries:</b> React.js, Next.js, Remix.js, React native, Nest.js, Redux,
           Frame motion."
-        />
-        <DetailItem content="<b>Markup/Styling:</b> HTML, CSS, Tailwind CSS, Material UI." />
-        <DetailItem content="<b>Tools/Technologies:</b> Git, GitHub, Figma, Unix, GraphQL." />
+          />
+          <DetailItem content="<b>Markup/Styling:</b> HTML, CSS, Tailwind CSS, Material UI." />
+          <DetailItem content="<b>Tools/Technologies:</b> Git, GitHub, Figma, Unix, GraphQL." />
+        </WhileInViewBox>
       </Stack>
       <DialogSlide
         isOpen={open}

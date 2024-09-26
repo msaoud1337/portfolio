@@ -25,9 +25,28 @@ export const Projects = [
     description: "Contributed in Eprogram's dashboard",
     details:
       'In this project, I built Eprogram’s dashboard, which manages users and provides services for client management to the convention company.',
-    projectLink: '',
     techs: 'NextJs, Typescript, Material-UI, Framer Motion, NestJs, GraphQL.',
     video: 'video2',
+  },
+  {
+    title: "DonVip's Coaching website",
+    images: ['donVip.png', 'donVip1.png', 'donVip2.png'],
+    description: 'Developed the frontend from scratch',
+    details:
+      "In this project, I designed and developed the entire frontend for DonVip's coaching website from scratch. The platform facilitates seamless management of coaching teams and clients.",
+    moreDetails:
+      'The website offers a comprehensive service that allows coaches to manage their teams, monitor client progress, handle payments, and manage subscription packages. It also provides features for scheduling sessions, tracking performance, and offering personalized coaching plans.',
+    techs: 'NextJs, Typescript, Material-UI, Framer Motion, Axios, Redux (toolkit), Redux Thunk',
+    video: 'video3',
+  },
+  {
+    title: "DonVip's Coaching website1",
+    images: ['docWebSite.png', 'docWebSite1.png', 'docWebSite2.png'],
+    description: 'Developed the frontend from scratch',
+    details:
+      'I designed and developed the complete frontend for a web application tailored for doctors, enabling efficient management of client information, visit history, and the purposes of visits',
+    techs: 'NextJs, Typescript, Material-UI, Framer Motion, Axios, Redux (toolkit), Redux Thunk',
+    video: 'video4',
   },
   // {
   //   title: 'Confidential App : Coach Management System',

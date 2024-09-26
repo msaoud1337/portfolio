@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRouter as nextRouter } from 'next/router';
+import { useState } from 'react';
 
 import { Projects } from '@/utils/Projects';
 
@@ -40,28 +41,6 @@ const second = {
     rotate: 5,
   },
   hover: {
-    x: 0,
-    rotate: 0,
-  },
-};
-
-const displayedCardImageOne = {
-  initial: {
-    x: 30,
-    rotate: -5,
-  },
-  animate: {
-    x: 0,
-    rotate: 0,
-  },
-};
-
-const displayedCardImageTwo = {
-  initial: {
-    x: -30,
-    rotate: 5,
-  },
-  animate: {
     x: 0,
     rotate: 0,
   },
@@ -206,14 +185,13 @@ const initialItems = Projects.map((project, index) => ({
   ),
 }));
 
-export default function MyProject() {
+const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItems)[0] }) => {
   const { push } = useRouter();
-  const { query } = nextRouter();
-  const openedProjectsTitle = query.project as string;
+  const [image, setImage] = useState<string | undefined>(undefined);
+  if (!openedProject) return null;
 
-  const openedProject = initialItems.find((item) => item.title === openedProjectsTitle);
-
-  const CustomeDialogContent = openedProject && (
+  // useEffect()
+  return (
     <Dialog
       open
       TransitionProps={{ timeout: 550 }}
@@ -225,7 +203,32 @@ export default function MyProject() {
         },
       }}
     >
-      <Box component={motion.div} sx={{ p: 2, position: 'relative' }}>
+      <Box component={motion.div} sx={{ p: 2, position: 'relative', opacity: 1 }}>
+        {image && (
+          <>
+            <Card
+              key={image}
+              component={motion.img}
+              transition={{ delay: 0.5 }}
+              src={image}
+              layoutId={image}
+              width={'100%'}
+              sx={{
+                position: 'relative',
+                borderRadius: 2,
+                mt: 2,
+              }}
+            />
+            <IconButton
+              edge="end"
+              onClick={() => push('?tab=Projects', { scroll: false })}
+              aria-label="close"
+              sx={{ position: 'absolute', left: 18, top: 4, color: 'primary.main' }}
+            >
+              <Typography variant="paragraph">Close image</Typography>
+            </IconButton>
+          </>
+        )}
         <IconButton
           edge="end"
           onClick={() => push('?tab=Projects', { scroll: false })}
@@ -244,7 +247,7 @@ export default function MyProject() {
             alignItems: 'center',
             justifyContent: 'center',
             gap: 1,
-            textDecoration: 'underline',
+            textDecoration: openedProject.projectLink ? 'underline' : 'unset',
             cursor: 'pointer',
           }}
           variant="subtitle1"
@@ -258,50 +261,62 @@ export default function MyProject() {
         <Card
           component={motion.div}
           layoutId={openedProject.title}
-          transition={{
-            delay: 0.6,
-            duration: 0.6,
-          }}
+          transition={
+            !image
+              ? {
+                  delay: 0.6,
+                  duration: 0.6,
+                }
+              : {
+                  delay: 0.2,
+                  duration: 0.6,
+                }
+          }
           sx={{
             display: 'flex',
             flexDirection: 'row',
             p: 1,
             gap: 2,
+            overflow: 'visible',
           }}
           initial="initial"
           animate="animate"
         >
-          {openedProject.images?.map((path, index) => (
-            <Box
-              component={motion.div}
-              key={index}
-              /* eslint-disable no-nested-ternary */
-              variants={
-                !index ? displayedCardImageOne : index === 2 ? displayedCardImageTwo : undefined
-              }
-              transition={{
-                delay: 0.8,
-                duration: 0.6,
-              }}
-              flexGrow={1}
-              zIndex={index === 1 ? 1 : 0}
-            >
+          {openedProject.images
+            ?.filter((path) => path !== image)
+            .map((path, index) => (
               <Box
-                component={'img'}
-                loading="lazy"
-                src={path}
-                width={100}
-                sx={{
-                  width: '100%',
-                  height: '100%',
-                  aspectRatio: '3/4',
-                  objectFit: 'cover',
-                  borderRadius: 2,
-                  overflow: 'hidden',
+                onClick={() => setImage(path)}
+                component={motion.div}
+                key={path}
+                layoutId={path}
+                /* eslint-disable no-nested-ternary */
+                // variants={
+                //   !index ? displayedCardImageOne : index === 2 ? displayedCardImageTwo : undefined
+                // }
+                transition={{
+                  // delay: 0.8,
+                  duration: 0.6,
                 }}
-              />
-            </Box>
-          ))}
+                flexGrow={1}
+                zIndex={index === 1 ? 1 : 0}
+              >
+                <Box
+                  component={'img'}
+                  loading="lazy"
+                  src={path}
+                  width={100}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    aspectRatio: '3/4',
+                    objectFit: 'cover',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                  }}
+                />
+              </Box>
+            ))}
         </Card>
         <Box component={'video'} sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1' }} controls>
           <source src={`${openedProject.video}.mov`} type="video/mp4" />
@@ -317,7 +332,7 @@ export default function MyProject() {
             my: 1,
           }}
         >
-          {openedProject.details}
+          {`${openedProject.details} ${openedProject.moreDetails}`}
         </Typography>
         <Typography variant="subtitle2" color={'text.primary'}>
           Technologies :
@@ -328,14 +343,22 @@ export default function MyProject() {
       </Box>
     </Dialog>
   );
+};
+
+export default function MyProject() {
+  const { push } = useRouter();
+  const { query } = nextRouter();
+  const openedProjectsTitle = query.project as string;
+  const openedProject = initialItems.find((item) => item.title === openedProjectsTitle);
 
   return (
     <div>
-      <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', gap: 0.5 }}>
+      <Typography sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap' }}>
         {'Here are my recent web projects (5):'.split(' ').map((item, index) => (
           <Typography
             component={motion.p}
-            variant="body1"
+            variant="body2"
+            color="text.secondary"
             key={index}
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
@@ -379,7 +402,7 @@ export default function MyProject() {
           </Card>
         ))}
       </Stack>
-      {CustomeDialogContent}
+      <ProjectContent key={openedProject?.id} openedProject={openedProject} />
     </div>
   );
 }

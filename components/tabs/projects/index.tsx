@@ -188,9 +188,8 @@ const initialItems = Projects.map((project, index) => ({
 const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItems)[0] }) => {
   const { push } = useRouter();
   const [image, setImage] = useState<string | undefined>(undefined);
-  if (!openedProject) return null;
 
-  // useEffect()
+  if (!openedProject) return null;
   return (
     <Dialog
       open
@@ -204,31 +203,6 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
       }}
     >
       <Box component={motion.div} sx={{ p: 2, position: 'relative', opacity: 1 }}>
-        {image && (
-          <>
-            <Card
-              key={image}
-              component={motion.img}
-              transition={{ delay: 0.5 }}
-              src={image}
-              layoutId={image}
-              width={'100%'}
-              sx={{
-                position: 'relative',
-                borderRadius: 2,
-                mt: 2,
-              }}
-            />
-            <IconButton
-              edge="end"
-              onClick={() => push('?tab=Projects', { scroll: false })}
-              aria-label="close"
-              sx={{ position: 'absolute', left: 18, top: 4, color: 'primary.main' }}
-            >
-              <Typography variant="paragraph">Close image</Typography>
-            </IconButton>
-          </>
-        )}
         <IconButton
           edge="end"
           onClick={() => push('?tab=Projects', { scroll: false })}
@@ -258,17 +232,45 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
             <ArrowTopRightOnSquareIcon height={16} width={16} color="inherit" fontWeight={600} />
           )}
         </Typography>
+        <Box component={'video'} sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1' }} controls>
+          <source src={`${openedProject.video}.mov`} type="video/mp4" />
+          Your browser does not support the video tag.
+        </Box>
+        {image && (
+          <Card
+            key={image}
+            component={motion.div}
+            transition={{ delay: 0.2 }}
+            layoutId={image}
+            sx={{
+              position: 'relative',
+              borderRadius: 2,
+              my: 2,
+            }}
+          >
+            <img key={image} alt="selected image" src={image} width={'100%'} />
+            <IconButton
+              edge="end"
+              onClick={() => setImage(undefined)}
+              aria-label="close"
+              sx={{ position: 'absolute', right: 18, top: 4, color: 'primary.main' }}
+            >
+              <XMarkIcon height={24} width={24} color="inherit" />
+            </IconButton>
+          </Card>
+        )}
         <Card
           component={motion.div}
           layoutId={openedProject.title}
+          layout={'position'}
           transition={
             !image
               ? {
-                  delay: 0.6,
+                  delay: 0.3,
                   duration: 0.6,
                 }
               : {
-                  delay: 0.2,
+                  delay: 0.3,
                   duration: 0.6,
                 }
           }
@@ -283,26 +285,18 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
           animate="animate"
         >
           {openedProject.images
-            ?.filter((path) => path !== image)
+            // ?.filter((path) => path !== image)
             .map((path, index) => (
               <Box
                 onClick={() => setImage(path)}
-                component={motion.div}
-                key={path}
-                layoutId={path}
-                /* eslint-disable no-nested-ternary */
-                // variants={
-                //   !index ? displayedCardImageOne : index === 2 ? displayedCardImageTwo : undefined
-                // }
-                transition={{
-                  // delay: 0.8,
-                  duration: 0.6,
-                }}
                 flexGrow={1}
                 zIndex={index === 1 ? 1 : 0}
+                key={path}
               >
                 <Box
-                  component={'img'}
+                  component={motion.img}
+                  key={path}
+                  layoutId={path}
                   loading="lazy"
                   src={path}
                   width={100}
@@ -318,28 +312,32 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
               </Box>
             ))}
         </Card>
-        <Box component={'video'} sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1' }} controls>
-          <source src={`${openedProject.video}.mov`} type="video/mp4" />
-          Your browser does not support the video tag.
-        </Box>
-        <Typography
-          variant="paragraph"
-          color={'text.secondary'}
-          sx={{
-            display: '-webkit-box',
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden',
-            my: 1,
+        <motion.div
+          layout
+          transition={{
+            delay: 0.3,
+            duration: 0.6,
           }}
         >
-          {`${openedProject.details} ${openedProject.moreDetails}`}
-        </Typography>
-        <Typography variant="subtitle2" color={'text.primary'}>
-          Technologies :
-          <Typography variant="paragraph" color={'text.secondary'} fontWeight={500}>
-            {` ${openedProject.techs}`}
+          <Typography
+            variant="paragraph"
+            color={'text.secondary'}
+            sx={{
+              display: '-webkit-box',
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              my: 1,
+            }}
+          >
+            {`${openedProject.details} ${openedProject.moreDetails}`}
           </Typography>
-        </Typography>
+          <Typography variant="subtitle2" color={'text.primary'}>
+            Technologies :
+            <Typography variant="paragraph" color={'text.secondary'} fontWeight={500}>
+              {` ${openedProject.techs}`}
+            </Typography>
+          </Typography>
+        </motion.div>
       </Box>
     </Dialog>
   );

@@ -232,10 +232,14 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
             <ArrowTopRightOnSquareIcon height={16} width={16} color="inherit" fontWeight={600} />
           )}
         </Typography>
-        <Box component={'video'} sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1' }} controls>
+        <Card
+          component={'video'}
+          sx={{ width: '100%', pt: 2, aspectRatio: '2/1.1', borderRadius: 1 }}
+          controls
+        >
           <source src={`${openedProject.video}.mov`} type="video/mp4" />
           Your browser does not support the video tag.
-        </Box>
+        </Card>
         {image && (
           <Card
             key={image}
@@ -244,7 +248,7 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
             layoutId={image}
             sx={{
               position: 'relative',
-              borderRadius: 2,
+              borderRadius: 1,
               my: 2,
             }}
           >
@@ -280,6 +284,7 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
             p: 1,
             gap: 2,
             overflow: 'visible',
+            borderRadius: 1,
           }}
           initial="initial"
           animate="animate"
@@ -305,7 +310,7 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
                     height: '100%',
                     aspectRatio: '3/4',
                     objectFit: 'cover',
-                    borderRadius: 2,
+                    borderRadius: 1,
                     overflow: 'hidden',
                   }}
                 />

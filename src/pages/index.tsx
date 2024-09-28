@@ -88,6 +88,7 @@ const MobileNav = ({ tabValue }: Props) => {
             alignItems: 'center',
             height: '55px',
             margin: 0,
+            paddingBottom: 'env(safe-area-inset-bottom)',
             li: {
               position: 'relative',
               display: 'flex',

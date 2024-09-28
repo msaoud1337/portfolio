@@ -110,7 +110,6 @@ const MobileNav = ({ tabValue }: Props) => {
                 key={index}
                 component={'li'}
                 sx={{
-                  justifyContent: 'center',
                   position: 'relative',
                 }}
               >
@@ -158,6 +157,7 @@ const MobileNav = ({ tabValue }: Props) => {
                   textAlign={'center'}
                   color={isActive ? 'primary.main' : 'text.secondary'}
                   zIndex={1}
+                  pt={1.8}
                 >
                   {tab.value}
                 </Typography>

@@ -1,7 +1,7 @@
 export const Projects = [
   {
     title: "Eprogram's Landing Page",
-    images: ['eProgramWebSite.png', 'eProgramWebSite1.png', 'eProgramWebSite2.png'],
+    images: ['/eProgramWebSite.png', '/eProgramWebSite1.png', '/eProgramWebSite2.png'],
     description: "Contributed in Eprogram's landing page",
     details:
       "In this project, I Contributed in Eprogram's landing page that effectively showcase the company’s business offerings and services.",
@@ -11,7 +11,7 @@ export const Projects = [
   },
   {
     title: "Eprogram's App",
-    images: ['appEprogram.png', 'appEprogram1.png', 'appEprogram2.png'],
+    images: ['/appEprogram.png', '/appEprogram1.png', '/appEprogram2.png'],
     description: "Contributed in Eprogram's landing page",
     details:
       "In this project, I Contributed to the development of Eprogram's ecommerce store application.",
@@ -21,7 +21,7 @@ export const Projects = [
   },
   {
     title: "Eprogram's Dashboard",
-    images: ['eprogramDash.png', 'eprogramDash1.png', 'eprogramDash2.png'],
+    images: ['/eprogramDash.png', '/eprogramDash1.png', '/eprogramDash2.png'],
     description: "Contributed in Eprogram's dashboard",
     details:
       'In this project, I built Eprogram’s dashboard, which manages users and provides services for client management to the convention company.',
@@ -30,7 +30,7 @@ export const Projects = [
   },
   {
     title: "DonVip's Coaching website",
-    images: ['donVip.png', 'donVip1.png', 'donVip2.png'],
+    images: ['/donVip.png', '/donVip1.png', '/donVip2.png'],
     description: 'Developed the frontend from scratch',
     details:
       "In this project, I designed and developed the entire frontend for DonVip's coaching website from scratch. The platform facilitates seamless management of coaching teams and clients.",
@@ -41,7 +41,7 @@ export const Projects = [
   },
   {
     title: "DonVip's Coaching website1",
-    images: ['docWebSite.png', 'docWebSite1.png', 'docWebSite2.png'],
+    images: ['/docWebSite.png', '/docWebSite1.png', '/docWebSite2.png'],
     description: 'Developed the frontend from scratch',
     details:
       'I designed and developed the complete frontend for a web application tailored for doctors, enabling efficient management of client information, visit history, and the purposes of visits',

@@ -11,6 +11,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRouter as nextRouter } from 'next/router';
@@ -109,19 +110,23 @@ const ProjectCard = ({ title, imagesPath, description }: ProjectCardProps) => {
             zIndex={index === 1 ? 1 : 0}
           >
             <Box
-              component={'img'}
-              loading="lazy"
-              src={path}
-              width={100}
               sx={{
+                position: 'relative',
                 width: '100%',
                 aspectRatio: { xs: '3/5', sm: '3/4' },
-                objectFit: 'cover',
                 borderRadius: 2,
                 overflow: 'hidden',
                 mb: 1,
               }}
-            />
+            >
+              <Image
+                src={path} // Correct path, starting with a "/"
+                alt={`Project's Image nb${index}`}
+                fill
+                loading="lazy"
+                style={{ objectFit: 'cover' }} // Ensures the image fills the Box
+              />
+            </Box>
           </Box>
         ))}
       </Stack>
@@ -250,9 +255,20 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
               position: 'relative',
               borderRadius: 1,
               my: 2,
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
-            <img key={image} alt="selected image" src={image} width={'100%'} />
+            <img
+              key={image}
+              alt="selected image"
+              src={image}
+              width={image.includes('app') ? '50%' : '100%'}
+              style={{
+                aspectRatio: image.includes('app') ? '1.1/2' : '2/1.1',
+                marginBottom: '-8px',
+              }}
+            />
             <IconButton
               edge="end"
               onClick={() => setImage(undefined)}
@@ -291,12 +307,17 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
         >
           {openedProject.images
             // ?.filter((path) => path !== image)
-            .map((path, index) => (
+            .map((path) => (
               <Box
                 onClick={() => setImage(path)}
-                flexGrow={1}
-                zIndex={index === 1 ? 1 : 0}
                 key={path}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexGrow: 1,
+                  borderRadius: 1,
+                }}
               >
                 <Box
                   component={motion.img}

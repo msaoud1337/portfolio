@@ -17,7 +17,7 @@ export default function Card(theme: Theme) {
       styleOverrides: {
         root: {
           padding: 0,
-          paddingInline: theme.spacing(3),
+          paddingInline: theme.spacing(2),
         },
       },
     },
@@ -27,7 +27,7 @@ export default function Card(theme: Theme) {
           padding: 0,
         },
         content: {
-          padding: theme.spacing(3),
+          padding: theme.spacing(2),
           paddingBottom: theme.spacing(1),
         },
       },

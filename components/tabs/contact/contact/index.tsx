@@ -48,7 +48,7 @@ export default function ContactMe() {
   return (
     <FormikProvider value={formik}>
       <Form>
-        <Box py={2}>
+        <Box pb={2}>
           <Stack direction={{ xs: 'column', sm: 'row' }} gap={2} mb={2}>
             <TextField
               fullWidth

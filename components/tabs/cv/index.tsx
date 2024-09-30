@@ -1,10 +1,13 @@
 import { EyeIcon } from '@heroicons/react/24/solid';
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material';
 import DialogSlide from 'components/dialog';
+import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+
+import { CV_DETAILS } from '@/utils/texts';
 
 const PDFGenerator = dynamic(
   import('./CvContent').then((res) => res.default),
@@ -15,7 +18,7 @@ const PDFGenerator = dynamic(
 
 const Links = ({ children, href }: { children: ReactNode; href: string }) => {
   const handleClick = () => {
-    if (!href) window.location.href = 'mailto:medaminesaoud8020@gmail.com';
+    if (!href) window.location.href = 'mailto:medsaoud.amine@gmail.com';
   };
 
   return (
@@ -38,153 +41,177 @@ const Links = ({ children, href }: { children: ReactNode; href: string }) => {
   );
 };
 
+const DetailItem = ({ content }: { content: string }) => {
+  return (
+    <Typography
+      variant="paragraph"
+      px={2}
+      sx={{ '&::before': { content: '"• "' } }}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  );
+};
+
+const Title = ({ title, duration }: { title: string; duration: string }) => {
+  return (
+    <Stack justifyContent={'space-between'} flexDirection={{ xs: 'column', sm: 'row' }}>
+      <Typography
+        variant="paragraph"
+        textAlign={'center'}
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
+      <Typography variant="paragraph" textAlign={'center'}>
+        {duration}
+      </Typography>
+    </Stack>
+  );
+};
+
+const Project = ({
+  title,
+  duration,
+  projectDetails,
+  mb = 0,
+}: {
+  title: string;
+  duration: string;
+  projectDetails?: string[];
+  mb?: number;
+}) => {
+  return (
+    <>
+      <Title title={title} duration={duration} />
+      <Stack mb={mb}>
+        {projectDetails?.map((details, index) => (
+          <DetailItem key={index} content={details} />
+        ))}
+      </Stack>
+    </>
+  );
+};
+
+const WhileInViewBox = ({ children }: { children: ReactNode }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      style={{ display: 'flex', flexDirection: 'column' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 export default function MyCvPDF() {
   const [open, setOpen] = useState(false);
-
-  const DetailItem = ({ children }: { children: ReactNode }) => {
-    return (
-      <Typography variant="paragraph" pl={2} sx={{ '&::before': { content: '"• "' } }}>
-        {children}
-      </Typography>
-    );
-  };
+  const { contrastText } = useTheme().palette.primary;
 
   return (
     <Box sx={{ '*': { color: 'text.secondary' }, pb: 4 }}>
       <Stack mb={2} direction={'row'} justifyContent={'flex-end'} gap={1}>
         <Button
           onClick={() => setOpen(true)}
-          endIcon={<EyeIcon height={18} width={18} />}
+          endIcon={<EyeIcon height={18} width={18} fill={contrastText} />}
           size="small"
           variant="contained"
-          sx={{ color: 'primary.contrastText' }}
+          sx={{ color: contrastText }}
         >
           View as pdf
         </Button>
       </Stack>
-      <Stack>
+      <Stack gap={1}>
         <Typography variant="h4" textAlign={'center'}>
           Mohamed amine saoud
         </Typography>
-        <Stack flexDirection={'row'} justifyContent={'center'}>
-          <Links href="">Email : medsaoud.amine@gmail.com</Links>
-          <Links href="https://www.linkedin.com/in/mohamed-amine-saoud-63ab12249/">
-            Linkedin : mohamed-amine-saoud
-          </Links>
+        <Stack
+          flexDirection={{ xs: 'column', sm: 'column', md: 'row' }}
+          justifyContent={'center'}
+          textAlign={'center'}
+          whiteSpace={'nowrap'}
+        >
+          {CV_DETAILS.links.map((link, index) => (
+            <Links key={index} href={link.href}>
+              {link.title}
+            </Links>
+          ))}
         </Stack>
-        <Typography variant="paragraph">
-          Experienced <b>FrontEnd</b> Developer with a strong background in UI/UX design. Passionate
-          about creating high-quality, interactive, and responsive digital experiences. Proven
-          problem solver who adapts quickly to new technologies and learns new skills efficiently.
-          Recognized for delivering elegant solutions and staying updated with industry trends.
-        </Typography>
-        <Typography variant="body1" fontWeight={600} pt={2}>
-          PROFESSIONAL EXPERIENCE
-        </Typography>
-        <Divider sx={{ my: 1 }} />
-        <Stack>
-          <Stack justifyContent={'space-between'} flexDirection={'row'}>
-            <Typography variant="paragraph">
-              <b>eProgram</b> - CasaBlanca (Hybrid)
-            </Typography>
-            <Typography variant="paragraph">Feb 2024 – Aug 2024</Typography>
+        <Typography
+          variant="paragraph"
+          dangerouslySetInnerHTML={{ __html: CV_DETAILS.presentation }}
+        />
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            PROFESSIONAL EXPERIENCE
+          </Typography>
+          <Divider sx={{ my: 1 }} />
+          <Stack gap={0.5}>
+            <Project
+              title="<b>eProgram</b> - CasaBlanca (Hybrid)"
+              duration="Feb 2024 - Aug 2024"
+              projectDetails={CV_DETAILS.eProgramProjectDetails}
+            />
+            <Project
+              title="<b>DonVIP</b> - (coaching website)"
+              duration="Oct 2023 - Dec 2023"
+              projectDetails={CV_DETAILS.donVipDetails}
+            />
+            <Project
+              title="<b>DocVisit</b> History - (doc visits’s history)"
+              duration="Jul 2023"
+              projectDetails={CV_DETAILS.docVisitDetails}
+            />
           </Stack>
-          <Typography variant="paragraph" pl={1}>
-            Front end developer
+        </WhileInViewBox>
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            EDUCATION
           </Typography>
-          <DetailItem>
-            Collaborated with two experts and an intern to develop a{' '}
-            <b>Progressive Web App (PWA)</b> using <b>React.js</b> and <b>TypeScript</b>, handling
-            all company business operations. Integrated credit services, payment processing, and a
-            balance rewarding system within the application.
-          </DetailItem>
-          <DetailItem>
-            Developed a full-stack app for a company rewards system for <b>Webhelp</b>, converting
-            employee performance points into balances for use on products and service
-          </DetailItem>
-          <DetailItem>
-            Developed an application that interacts with <b>EQDOM</b>, one of Morocco&apos;s largest
-            credit companies, to handle credit requests and provide customers with instant status
-            updates via API integration, using <b>Next.js</b> and <b>Express</b>.
-          </DetailItem>
-          <DetailItem>
-            Maintained, debugged, and added over 15 new features to the company’s store based on
-            client needs.
-          </DetailItem>
-          <DetailItem>
-            Enhanced the company’s institutional website by adding sections and optimizing them with
-            SEO best practices using <b>React.js</b>.
-          </DetailItem>
-          <DetailItem>
-            Implemented animations throughout the <b>PWA</b>, including onboarding flows, layout
-            transitions, and other interactive elements,
-          </DetailItem>
-          <Stack justifyContent={'space-between'} flexDirection={'row'}>
-            <Typography variant="paragraph" fontWeight={700}>
-              Freelance
-            </Typography>
-            <Typography variant="paragraph">Feb 2023 – Dec 2023</Typography>
+          <Divider sx={{ my: 1 }} />
+          <Stack>
+            <Project
+              title="<b>1337 Coding School ( 42 Network )</b>"
+              duration="Nov 2021 - Feb 2024"
+              projectDetails={['Software Architect']}
+              mb={1}
+            />
+            <Project
+              title="<b>Institut Spécialisé de Technologie Appliquée de Khouribga</b>"
+              duration="2018 - 2020"
+              projectDetails={['Technicien Spécialisé Electromécanique des Systèmes Automatisés']}
+            />
           </Stack>
-          <Typography variant="paragraph" pl={1}>
-            DonVIP - (coaching website)
+        </WhileInViewBox>
+        <WhileInViewBox>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            textAlign={{ xs: 'center', sm: 'start' }}
+            pt={1}
+          >
+            PROGRAMMING SKILLS
           </Typography>
-          <DetailItem>
-            Developed coach management system to streamline the coordination between coaches,
-            clients, and sessions.
-          </DetailItem>
-          <DetailItem>Managed coach information, session scheduling, and pricing.</DetailItem>
-          <DetailItem>
-            Enabled coaches to oversee teams, track progress, and manage diet plans.
-          </DetailItem>
-          <DetailItem>Handled secure client payments and profile management.</DetailItem>
-          <Typography variant="paragraph" pl={1}>
-            DocVisit History - (doc visits’s history)
-          </Typography>
-          <DetailItem>
-            Developed a website that Manage and Track Doctor&apos;s Visit History.{' '}
-          </DetailItem>
-          <DetailItem>
-            Manages visitor information, the reason for the visit, and schedules the next visit
-            date.
-          </DetailItem>
-        </Stack>
-        <Typography variant="body1" fontWeight={600} pt={2}>
-          EDUCATION
-        </Typography>
-        <Divider sx={{ my: 1 }} />
-        <Stack flexDirection={'row'} justifyContent={'space-between'}>
-          <Typography variant="paragraph" fontWeight={700}>
-            1337 Coding School ( 42 Network )
-          </Typography>
-          <Typography variant="paragraph">Nov 2021 - Feb 2024</Typography>
-        </Stack>
-        <DetailItem>Software Architect</DetailItem>
-        <Stack flexDirection={'row'} justifyContent={'space-between'}>
-          <Typography variant="paragraph" fontWeight={700}>
-            Institut Spécialisé de Technologie Appliquée de Khouribga
-          </Typography>
-          <Typography variant="paragraph">2018 – 2020</Typography>
-        </Stack>
-        <DetailItem>Technicien Spécialisé Electromécanique des Systèmes Automatisés</DetailItem>
-        <Typography variant="body1" fontWeight={600} pt={2}>
-          PROGRAMMING SKILLS
-        </Typography>
-        <Divider sx={{ my: 1 }} />
-        <DetailItem>
-          <b>Programming Languages:</b> Javascript, Typescript, C.
-        </DetailItem>
-        <DetailItem>
-          <b>Frameworks/Libraries:</b> React.js, Next.js, Remix.js, React native, Nest.js, Redux,
-          Frame motion.
-        </DetailItem>
-        <DetailItem>
-          <b>Markup/Styling:</b>HTML, CSS, Tailwind CSS, Material UI.
-        </DetailItem>
-        <DetailItem>
-          <b>Tools/Technologies:</b>Git, GitHub, Figma, Unix, GraphQL.
-        </DetailItem>
+          <Divider sx={{ my: 1 }} />
+          <DetailItem content="<b>Programming Languages:</b> Javascript, Typescript, C." />
+          <DetailItem
+            content="<b>Frameworks/Libraries:</b> React.js, Next.js, Remix.js, React native, Nest.js, Redux,
+          Frame motion."
+          />
+          <DetailItem content="<b>Markup/Styling:</b> HTML, CSS, Tailwind CSS, Material UI." />
+          <DetailItem content="<b>Tools/Technologies:</b> Git, GitHub, Figma, Unix, GraphQL." />
+        </WhileInViewBox>
       </Stack>
-      {/* <PDFGenerator /> */}
       <DialogSlide
         isOpen={open}
         content={<PDFGenerator />}

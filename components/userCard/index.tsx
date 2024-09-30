@@ -352,21 +352,6 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
   );
 
   useEffect(() => {
-    if (components.length > 0) {
-      const addComponentWithDelay = async () => {
-        for (const element of componentsArray) {
-          setComponents((prevState) =>
-            !prevState.includes(element) ? [...prevState, element] : [...prevState]
-          );
-        }
-      };
-
-      setComponents([]);
-      addComponentWithDelay();
-    }
-  }, [isDesktop, palette]);
-
-  useEffect(() => {
     if (components.length === 0) {
       const addComponentWithDelay = async () => {
         for (const element of componentsArray) {

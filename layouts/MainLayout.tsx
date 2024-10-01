@@ -80,7 +80,7 @@ function MainLayout({ meta, children }: IMainProps) {
       <Meta {...meta} />
       <RootStyle>
         <Stack
-          component={'nav'}
+          component={'header'}
           sx={{
             justifyContent: 'center',
             alignItems: isLight ? 'flex-end' : 'flex-start',

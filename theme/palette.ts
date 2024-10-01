@@ -154,7 +154,7 @@ const palette = {
   dark: {
     ...COMMON,
     text: { primary: '#fff', secondary: GREY[400], disabled: GREY[600] },
-    background: { paper: GREY[1000], default: GREY[900], neutral: GREY[10008] },
+    background: { paper: '#1C252E', default: '#141A21', neutral: '#28323D' },
     action: { active: GREY[500], ...COMMON.action },
   },
 };

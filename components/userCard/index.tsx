@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -24,11 +25,11 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { AvatarBackgroundBlop, userLinksConfig } from '@/utils';
 import { parentAnimation, varFadeInUp, varFadeInUpFaster } from '@/utils/animations';
 
-const ImageBox = styled('img')(() => ({
+const ImageBox = styled(Image)(() => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
+  transform: 'translate(10%, 10%)',
   objectFit: 'contain',
   maxHeight: '80%',
   maxWidth: '80%',
@@ -177,7 +178,7 @@ export default function SideBarConfig({ value }: SideBarConfigProps) {
       }}
     >
       <AvatarBackgroundBlop palette={palette} />
-      <ImageBox src="/me.png" loading="lazy" alt="me.png" />
+      <ImageBox src="/me.png" loading="lazy" alt="me.png" fill />
     </Box>
   );
 

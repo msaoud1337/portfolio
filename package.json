@@ -19,7 +19,8 @@
     "check-types": "tsc --noEmit --pretty",
     "commit": "cz",
     "prepare": "husky install",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "sitemap": "next-sitemap"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",

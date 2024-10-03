@@ -83,7 +83,7 @@ function MainLayout({ meta, children }: IMainProps) {
           component={'header'}
           sx={{
             justifyContent: 'center',
-            alignItems: isLight ? 'flex-end' : 'flex-start',
+            alignItems: 'flex-end',
             py: { xs: 1, sm: 2 },
             paddingInline: { xs: 2, sm: '12%', md: 3 },
             borderBottom: (theme) => `1px solid ${theme.palette.divider}`,

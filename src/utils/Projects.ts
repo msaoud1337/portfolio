@@ -40,7 +40,7 @@ export const Projects = [
     video: 'video3',
   },
   {
-    title: "DonVip's Coaching website1",
+    title: 'DocWebsite',
     images: ['/docWebSite.png', '/docWebSite1.png', '/docWebSite2.png'],
     description: 'Developed the frontend from scratch',
     details:

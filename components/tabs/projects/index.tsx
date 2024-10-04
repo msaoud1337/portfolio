@@ -317,6 +317,7 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
                   alignItems: 'center',
                   flexGrow: 1,
                   borderRadius: 1,
+                  cursor: 'pointer',
                 }}
               >
                 <Box

@@ -264,6 +264,7 @@ const ProjectContent = ({ openedProject }: { openedProject?: (typeof initialItem
               alt="selected image"
               src={image}
               width={image.includes('app') ? '50%' : '100%'}
+              loading="lazy"
               style={{
                 aspectRatio: image.includes('app') ? '1.1/2' : '2/1.1',
                 marginBottom: '-8px',

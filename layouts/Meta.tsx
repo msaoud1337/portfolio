@@ -20,6 +20,12 @@ const Meta = (props: IMetaProps) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://msaoud.me/" />
         <meta property="og:image" content="/images/portfolio-cover.png" />
+        <meta
+          name="description"
+          content="Explore Mohamed amine saoud portfolio showcasing expertise in front-end development. 
+      From crafting dynamic digital experiences with Next.js, React.js, Remix.js, and Tailwind CSS and more 
+      to driving SEO optimization, discover innovative solutions for your web projects."
+        />
         <link rel="canonical" href="https://msaoud.me/" />
         <script type="application/ld+json">
           {`
